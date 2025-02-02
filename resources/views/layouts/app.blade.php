@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <title>ContractorSystem</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{{ URL::asset('/assets/img/kaiadmin/favicon.ico') }}" type="image/x-icon" />
 
@@ -23,8 +23,19 @@
 
 <body>
 
-
-    @yield('content')
+    @guest {{-- ยังไม่ได้ login --}}
+        @yield('content')
+    @else
+        {{-- login แล้ว --}}
+        <div class="wrapper">
+            @include('layouts.sidebar')
+            <div class="main-panel">
+                @include('layouts.navbar')
+                @yield('content')
+                @include('layouts.footer')
+            </div>
+        </div>
+    @endguest
 
 
     <script src="{{ URL::asset('/assets/js/core/jquery-3.7.1.min.js') }}"></script>
