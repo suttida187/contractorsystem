@@ -18,6 +18,23 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/demo.css') }}" />
+    <script>
+        WebFont.load({
+          google: { families: ["Public Sans:300,400,500,600,700"] },
+          custom: {
+            families: [
+              "Font Awesome 5 Solid",
+              "Font Awesome 5 Regular",
+              "Font Awesome 5 Brands",
+              "simple-line-icons",
+            ],
+            urls: ["assets/css/fonts.min.css"],
+          },
+          active: function () {
+            sessionStorage.fonts = true;
+          },
+        });
+      </script>
 
 </head>
 
@@ -72,7 +89,7 @@
 
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="{{ URL::asset('/assets/js/setting-demo.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/demo.js') }}"></script>
+    {{-- <script src="{{ URL::asset('/assets/js/demo.js') }}"></script> --}}
 
 </body>
 
