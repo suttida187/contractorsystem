@@ -1,53 +1,68 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('/assets/images/favicon.png') }}">
-    <!-- Pignose Calender -->
-    <link href="{{ URL::asset('/assets/plugins/pg-calendar/css/pignose.calendar.min.css') }}" rel="stylesheet">
-    <!-- Chartist -->
-    <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/chartist/css/chartist.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">
-    <!-- Custom Stylesheet -->
-    <link href="{{ URL::asset('/assets/css/style.css') }}" rel="stylesheet">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="{{ URL::asset('/assets/img/kaiadmin/favicon.ico') }}" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="{{ URL::asset('/assets/js/plugin/webfont/webfont.min.js') }}"></script>
+
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/plugins.min.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/kaiadmin.min.css') }}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/demo.css') }}" />
 
 </head>
+
 <body>
-   
-    
-            @yield('content')
-
-    <script src="{{ URL::asset('/assets/plugins/common/common.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/custom.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/settings.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/gleek.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/styleSwitcher.js') }}"></script>
-
-    <!-- Chartjs -->
-    <script src="{{ URL::asset('/assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
-    <!-- Circle progress -->
-    <script src="{{ URL::asset('/assets/plugins/circle-progress/circle-progress.min.js') }}"></script>
-    <!-- Datamap -->
-    <script src="{{ URL::asset('/assets/plugins/d3v3/index.js') }}"></script>
-    <script src="{{ URL::asset('/assets/plugins/topojson/topojson.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/plugins/datamaps/datamaps.world.min.js') }}"></script>
-    <!-- Morrisjs -->
-    <script src="{{ URL::asset('/assets/plugins/raphael/raphael.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/plugins/morris/morris.min.js') }}"></script>
-    <!-- Pignose Calender -->
-    <script src="{{ URL::asset('/assets/plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/plugins/pg-calendar/js/pignose.calendar.min.js') }}"></script>
-    <!-- ChartistJS -->
-    <script src="{{ URL::asset('/assets/plugins/chartist/js/chartist.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
 
 
+    @yield('content')
 
-    <script src="{{ URL::asset('/assets/js/dashboard/dashboard-1.js') }}"></script>
+
+    <script src="{{ URL::asset('/assets/js/core/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/core/popper.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/core/bootstrap.min.js') }}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="{{ URL::asset('/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+
+    <!-- Chart JS -->
+    <script src="{{ URL::asset('/assets/js/plugin/chart.js/chart.min.js') }}"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="{{ URL::asset('/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
+
+    <!-- Chart Circle -->
+    <script src="{{ URL::asset('/assets/js/plugin/chart-circle/circles.min.js') }}"></script>
+
+    <!-- Datatables -->
+    <script src="{{ URL::asset('/assets/js/plugin/datatables/datatables.min.js') }}"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="{{ URL::asset('/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="{{ URL::asset('/assets/js/plugin/jsvectormap/jsvectormap.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/plugin/jsvectormap/world.js') }}"></script>
+
+    <!-- Sweet Alert -->
+    <script src="{{ URL::asset('/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="{{ URL::asset('/assets/js/kaiadmin.min.js') }}"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="{{ URL::asset('/assets/js/setting-demo.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/demo.js') }}"></script>
+
 </body>
+
 </html>
