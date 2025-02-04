@@ -5,7 +5,7 @@
           
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
-                    <i class="fas fa-layer-group"></i>
+                    <i class="fas fa-home"></i>
                     <p>หน้าแรก</p>
                     
                 </a>
