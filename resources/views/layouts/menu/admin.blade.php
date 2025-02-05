@@ -5,7 +5,7 @@
                 <a data-bs-toggle="collapse" href="#base">
                     <i class="fas fa-home"></i>
                     <p>หน้าแรก</p>
-                    
+
                 </a>
             </li>
             <li class="nav-item">
@@ -17,7 +17,7 @@
                 <div class="collapse" id="base">
                     <ul class="nav nav-collapse">
                         <li>
-                            <a href="{{ url('/register/admin') }}">
+                            <a href="{{ url('/register-admin') }}">
                                 <span class="sub-item">ลงทะเบียน Sale/Pm/Admin</span>
                             </a>
                         </li>
@@ -33,21 +33,21 @@
                 <a data-bs-toggle="collapse" href="#base">
                     <i class="fas fa-layer-group"></i>
                     <p>มอบหมายงาน</p>
-                    
+
                 </a>
             </li>
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="{{ url('assign.work') }}">
                     <i class="fas fa-layer-group"></i>
                     <p>ตรวจสอบงาน</p>
-                    
+
                 </a>
             </li>
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="{{ url('all.projects') }}">
                     <i class="fas fa-layer-group"></i>
                     <p>โครงการทั้งหมด</p>
-                    
+
                 </a>
             </li>
             <li class="nav-item">

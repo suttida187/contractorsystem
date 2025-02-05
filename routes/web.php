@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register/admin', [adminRegisterController::class, 'create'])->name('register/admin');
+Route::get('/register-admin', [adminRegisterController::class, 'create'])->name('register-admin');
 
 Auth::routes();
 

@@ -21,19 +21,19 @@
            <!-- End Logo Header -->
        </div>
        @if (Auth::user()->role == 'sale')
-           @include('layouts.manu.sale')
+           @include('layouts.menu.sale')
        @endif
 
        @if (Auth::user()->role == 'admin')
-           @include('layouts.manu.admin')
+           @include('layouts.menu.admin')
        @endif
 
        @if (Auth::user()->role == 'pm')
-           @include('layouts.manu.pm')
+           @include('layouts.menu.pm')
        @endif
 
        @if (Auth::user()->role == 'contractor')
-           @include('layouts.manu.contractor')
+           @include('layouts.menu.contractor')
        @endif
    </div>
    <!-- End Sidebar -->
