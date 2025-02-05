@@ -249,10 +249,11 @@
                     <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                         aria-expanded="false">
                         <div class="avatar-sm">
-                            <img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle" />
+                            <img src="{{ URL::asset('/assets/img/profile.jpg') }}" alt="..."
+                                class="avatar-img rounded-circle" />
                         </div>
                         <span class="profile-username">
-                           
+
                             <span class="fw-bold">{{ Auth::user()->username }}</span>
                         </span>
                     </a>
