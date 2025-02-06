@@ -96,7 +96,15 @@ class adminRegisterController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user =  User::find($id);
+
+        if ($user->role == 'contractor') {
+            $status_name = 1;
+        } else {
+            $status_name = 0;
+        }
+
+        return view('admin.register.edit', compact('user', 'status_name'));
     }
 
     /**

@@ -20,8 +20,7 @@
                         @if ($status_name == 0)
                             <div class="mb-3">
                                 <label class="form-label">เลือกประเภท: </label>
-                                <select name="role" class="form-select @error('role') is-invalid @enderror"
-                                    value="{{ old('email') }}">
+                                <select name="role" class="form-select @error('role') is-invalid @enderror">
                                     <option disabled selected>กรุณาเลือกประเภท</option>
                                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>admin</option>
                                     <option value="sale" {{ old('role') == 'sale' ? 'selected' : '' }}>sale</option>
@@ -141,8 +140,8 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">ซอย/ถนน: </label>
-                            <input name="street" type="text"
-                                class="form-control @error('street') is-invalid @enderror" value="{{ old('street') }}">
+                            <input name="street" type="text" class="form-control @error('street') is-invalid @enderror"
+                                value="{{ old('street') }}">
                             @error('street')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

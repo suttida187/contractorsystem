@@ -1,18 +1,26 @@
 @php
+    use Illuminate\Support\Str;
+
     $activeRoute = request()->path();
 
     // กลุ่ม Route ที่มีเมนูย่อย
     $submenuRoutes = [
         'register' => ['register-admin', 'register-contractor'],
-        'list' => ['list-sale-pm-admin', 'list-contractor'],
+        'list' => ['list-sale-pm-admin', 'list-contractor', 'list-edit-contractor/*', 'list-edit-admin/*'],
     ];
 
     // กำหนด active & show สำหรับแต่ละเมนูย่อย
     $submenuStates = [];
     foreach ($submenuRoutes as $key => $routes) {
-        $submenuStates[$key] = in_array($activeRoute, $routes) ? 'active open submenu' : '';
-        $submenuStates[$key . '_show'] = in_array($activeRoute, $routes) ? 'show' : '';
+        $submenuStates[$key] = collect($routes)->contains(fn($route) => Str::is($route, $activeRoute))
+            ? 'active open submenu'
+            : '';
+
+        $submenuStates[$key . '_show'] = collect($routes)->contains(fn($route) => Str::is($route, $activeRoute))
+            ? 'show'
+            : '';
     }
+
 @endphp
 
 <div class="sidebar-wrapper scrollbar scrollbar-inner">
@@ -76,14 +84,17 @@
                     <p>รายชื่อ</p>
                     <span class="caret"></span>
                 </a>
+
                 <div class="collapse {{ $submenuStates['list_show'] }}" id="base">
                     <ul class="nav nav-collapse">
-                        <li class="{{ $activeRoute == 'list-sale-pm-admin' ? 'active' : '' }}">
+                        <li
+                            class="{{ Str::is(['list-sale-pm-admin', 'list-edit-admin/*'], $activeRoute) ? 'active' : '' }}">
                             <a href="{{ url('list-sale-pm-admin') }}">
                                 <span class="sub-item">รายชื่อ Sale/Pm/Admin</span>
                             </a>
                         </li>
-                        <li class="{{ $activeRoute == 'list-contractor' ? 'active' : '' }}">
+                        <li
+                            class="{{ Str::is(['list-contractor', 'list-edit-contractor/*'], $activeRoute) ? 'active' : '' }}">
                             <a href="{{ url('list-contractor') }}">
                                 <span class="sub-item">รายชื่อผู้รับเหมา</span>
                             </a>

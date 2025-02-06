@@ -18,7 +18,7 @@
     <!-- jQuery สำหรับค้นหาแบบสด (Live Search & Filter) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- CSS Just for demo purpose, don't include it in your project -->
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/demo.css') }}" />
     <script>

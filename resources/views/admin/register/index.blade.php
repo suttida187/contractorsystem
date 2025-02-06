@@ -6,9 +6,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">รายชื่อทั้งหมด</div>
-
                         <!-- Select Dropdown สำหรับเลือกประเภท -->
-
                         <div class="d-flex align-items-center">
                             <div class="col-md-6 col-lg-6" {{ $routeActive == 'list-contractor' ? 'hidden' : '' }}>
                                 <div class="mt-3 d-flex align-items-center">
@@ -23,21 +21,15 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!-- ใช้ ms-auto เพื่อให้ปุ่มชิดขวา -->
                             <a href="{{ $routeActive == 'list-contractor' ? url('register-contractor') : url('register-admin') }}"
                                 class="btn btn-primary ms-auto">เพิ่มรายชื่อ</a>
                         </div>
-
-
-
-
                         <!-- ช่องค้นหาข้อมูล -->
                         <div class="mb-3 mt-3">
                             <input type="text" id="searchInput" placeholder="Search ..." class="form-control" />
 
                         </div>
-
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -63,7 +55,8 @@
                                                     data-bs-target="#exampleModal" data-user='@json($user)'>
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="#" class="icon-action edit"><i class="far fa-edit"></i></a>
+                                                <a href="{{ $routeActive == 'list-contractor' ? url('list-edit-contractor', $user->id) : url('list-edit-admin', $user->id) }}"
+                                                    class="icon-action edit"><i class="far fa-edit"></i></a>
                                                 <a href="#" class="icon-action delete"><i
                                                         class="fas fa-trash"></i></a>
                                             </td>

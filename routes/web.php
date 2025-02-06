@@ -23,6 +23,8 @@ Route::post('/register-store', [adminRegisterController::class, 'store'])->name(
 Route::put('/register-update', [adminRegisterController::class, 'update'])->name('register-update');
 Route::get('/list-sale-pm-admin', [adminRegisterController::class, 'index'])->name('list-sale-pm-admin');
 Route::get('/list-contractor', [adminRegisterController::class, 'index'])->name('list-sale-pm-admin');
+Route::get('/list-edit-admin/{id}', [adminRegisterController::class, 'edit'])->name('list-edit-admin');
+Route::get('/list-edit-contractor/{id}', [adminRegisterController::class, 'edit'])->name('list-edit-contractor');
 
 Auth::routes();
 
