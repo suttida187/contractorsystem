@@ -103,3 +103,33 @@ function getCheckmark() {
   $(".btnSwitch").find("button").empty();
   $(".btnSwitch").find("button.selected").append(checkmark);
 }
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".icon-action.delete").forEach(function (btn) {
+    btn.addEventListener("click", function (event) {
+      event.preventDefault(); // ป้องกันไม่ให้ลิงก์ทำงานทันที
+
+      let userEmail = this.getAttribute("data-email");
+      let userId = this.getAttribute("data-user-id");
+
+
+
+      Swal.fire({
+        title: "คุณแน่ใจหรือไม่?",
+        text: `คุณต้องการลบผู้ใช้ที่มีอีเมล ${userEmail} ใช่หรือไม่?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "ใช่, ลบเลย!",
+        cancelButtonText: "ยกเลิก"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/delete-user/${userId}`;
+        }
+      });
+    });
+  });
+});

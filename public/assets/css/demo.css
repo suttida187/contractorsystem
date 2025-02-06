@@ -515,3 +515,8 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   font-size: 16px;
   color: #08620b;
 }
+
+.no-edit {
+  pointer-events: none;
+  background-color: #ffffff;
+}

@@ -59,8 +59,10 @@
                                                 </a>
                                                 <a href="{{ $routeActive == 'list-contractor' ? url('list-edit-contractor', $user->id) : url('list-edit-admin', $user->id) }}"
                                                     class="icon-action edit"><i class="far fa-edit"></i></a>
-                                                <a href="#" class="icon-action delete"><i
-                                                        class="fas fa-trash"></i></a>
+                                                <a href="javascript:void(0);" class="icon-action delete"
+                                                    data-email="{{ $user->email }}" data-user-id="{{ $user->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -98,7 +100,7 @@
                         @if ($routeActive == 'list-sale-pm-admin')
                             <div class="mb-3">
                                 <label class="form-label">เลือกประเภท: </label>
-                                <input name="role" id="modalRole" type="text" class="form-control">
+                                <input name="role" id="modalRole" type="text" class="form-control  no-edit">
                             </div>
                         @else
                             <input name="role" type="text" class="form-control" value="contractor" hidden>
@@ -107,14 +109,15 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Email: </label>
-                            <input name="email" id="modalEmail" type="email" class="form-control">
+                            <input name="email" id="modalEmail" type="email" class="form-control no-edit">
 
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Username: </label>
                             <input name="username" type="text" id="modalUsername"
-                                class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}">
+                                class="form-control  no-edit @error('username') is-invalid @enderror"
+                                value="{{ old('username') }}">
                             @error('username')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -122,12 +125,12 @@
 
                         <div class="col-md-2 mb-3">
                             <label class="form-label">คำนำหน้า: </label>
-                            <input name="prefix" id="modalPrefix" type="text" class="form-control">
+                            <input name="prefix" id="modalPrefix" type="text" class="form-control  no-edit">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">ชื่อ: </label>
                             <input name="first_name" type="text" id="modalFirst_name"
-                                class="form-control  @error('first_name') is-invalid @enderror">
+                                class="form-control  no-edit  @error('first_name') is-invalid @enderror">
                             @error('first_name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -136,7 +139,7 @@
                         <div class="col-md-4 mb-3">
                             <label class="form-label">นามสกุล: </label>
                             <input name="last_name" type="text" id="modalLast_name"
-                                class="form-control @error('last_name') is-invalid @enderror">
+                                class="form-control  no-edit @error('last_name') is-invalid @enderror">
                             @error('last_name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -150,7 +153,7 @@
                             <div class="mb-3">
                                 <label class="form-label">ชื่อบริษัท: </label>
                                 <input name="company_name" type="text" id="modalCompany_name"
-                                    class="form-control @error('company_name') is-invalid @enderror"
+                                    class="form-control  no-edit @error('company_name') is-invalid @enderror"
                                     value="{{ old('company_name') }}">
                                 @error('company_name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -159,8 +162,9 @@
                             <div class="mb-3" @if ($routeActive != 'list-contractor') hidden @endif>
                                 <label class="form-label">เลขประจําตัวผู้เสียภาษี: </label>
                                 <input name="tax_id" type="text" id="modalTax_id"
-                                    class="form-control @error('tax_id')is-invalid @enderror" value="{{ old('tax_id') }}"
-                                    oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="13">
+                                    class="form-control  no-edit @error('tax_id')is-invalid @enderror"
+                                    value="{{ old('tax_id') }}" oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                                    maxlength="13">
                                 @error('tax_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -169,7 +173,7 @@
                             <div class="mb-3">
                                 <label class="form-label">ที่อยู่: </label>
                                 <input name="address" type="text" id="modalAddress"
-                                    class="form-control @error('address') is-invalid @enderror"
+                                    class="form-control  no-edit @error('address') is-invalid @enderror"
                                     value="{{ old('address') }}">
                                 @error('address')
                                     <span class="text-danger">{{ $message }}</span>
@@ -179,7 +183,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">ซอย/ถนน: </label>
                                 <input name="street" type="text" id="modalStreet"
-                                    class="form-control @error('street') is-invalid @enderror"
+                                    class="form-control  no-edit @error('street') is-invalid @enderror"
                                     value="{{ old('street') }}">
                                 @error('street')
                                     <span class="text-danger">{{ $message }}</span>
@@ -189,7 +193,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">ตำบล/แขวง: </label>
                                 <input name="sub_district" type="text" id="modalSub_district"
-                                    class="form-control @error('sub_district') is-invalid @enderror"
+                                    class="form-control  no-edit @error('sub_district') is-invalid @enderror"
                                     value="{{ old('sub_district') }}">
                                 @error('sub_district')
                                     <span class="text-danger">{{ $message }}</span>
@@ -199,7 +203,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">อำเภอ/เขต: </label>
                                 <input name="district" type="text" id="modalDistrict"
-                                    class="form-control @error('district') is-invalid @enderror"
+                                    class="form-control  no-edit @error('district') is-invalid @enderror"
                                     value="{{ old('district') }}">
                                 @error('district')
                                     <span class="text-danger">{{ $message }}</span>
@@ -209,7 +213,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">จังหวัด: </label>
                                 <input name="province" type="text" id="modalProvince"
-                                    class="form-control @error('province') is-invalid @enderror"
+                                    class="form-control  no-edit @error('province') is-invalid @enderror"
                                     value="{{ old('province') }}">
                                 @error('province')
                                     <span class="text-danger">{{ $message }}</span>
@@ -219,7 +223,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">รหัสไปรษณีย์: </label>
                                 <input name="postal_code" type="text" id="modalPostal_code"
-                                    class="form-control @error('postal_code') is-invalid @enderror"
+                                    class="form-control  no-edit @error('postal_code') is-invalid @enderror"
                                     oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="5"
                                     value="{{ old('postal_code') }}">
                                 @error('postal_code')
@@ -230,7 +234,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">เบอร์โทรศัพท์: </label>
                                 <input name="phone" type="text" id="modalPhone"
-                                    class="form-control @error('phone') is-invalid @enderror"
+                                    class="form-control  no-edit @error('phone') is-invalid @enderror"
                                     oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10"
                                     value="{{ old('phone') }}">
                                 @error('phone')

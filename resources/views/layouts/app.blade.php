@@ -59,6 +59,7 @@
         </div>
     @endguest
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="{{ URL::asset('/assets/js/core/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/core/popper.min.js') }}"></script>
