@@ -103,7 +103,7 @@
                         @if ($routeActive == 'list-sale-pm-admin')
                             <div class="mb-3">
                                 <label class="form-label">เลือกประเภท: </label>
-                                <select name="role" id="modalRole"
+                                {{--   <select name="role" id="modalRole"
                                     class="form-select @error('role') is-invalid @enderror" value="{{ old('email') }}">
                                     <option disabled selected>กรุณาเลือกประเภท</option>
                                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>admin</option>
@@ -112,7 +112,8 @@
                                 </select>
                                 @error('role')
                                     <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                @enderror --}}
+                                <input name="role" id="modalRole" type="text" class="form-control">
                             </div>
                         @else
                             <input name="role" type="text" class="form-control" value="contractor" hidden>
@@ -136,14 +137,14 @@
 
                         <div class="col-md-2 mb-3">
                             <label class="form-label">คำนำหน้า: </label>
-                            <select name="prefix" class="form-select" id="modalPrefix">
+                            {{--  <select name="prefix" class="form-select" id="modalPrefix">
                                 <option disabled selected>เลือกคำนำหน้า</option>
                                 <option value="นาย" {{ old('prefix') == 'นาย' ? 'selected' : '' }}>นาย</option>
                                 <option value="นาง" {{ old('prefix') == 'นาง' ? 'selected' : '' }}>นาง</option>
                                 <option value="นางสาว" {{ old('prefix') == 'นางสาว' ? 'selected' : '' }}>นางสาว
                                 </option>
-                            </select>
-
+                            </select> --}}
+                            <input name="prefix" id="modalPrefix" type="text" class="form-control">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">ชื่อ: </label>
