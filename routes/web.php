@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\adminRegisterController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Sale
+Auth::routes();
+
+Route::get('register', function () {
+    abort(403, 'การลงทะเบียนถูกปิดใช้งาน');
+}); //
+// Admin
 Route::get('/register-admin', [adminRegisterController::class, 'create'])->name('register-admin');
 Route::get('/register-contractor', [adminRegisterController::class, 'createContractor'])->name('register-contractor');
 Route::post('/register-store', [adminRegisterController::class, 'store'])->name('register-store');
@@ -26,6 +34,6 @@ Route::get('/list-contractor', [adminRegisterController::class, 'index'])->name(
 Route::get('/list-edit-admin/{id}', [adminRegisterController::class, 'edit'])->name('list-edit-admin');
 Route::get('/list-edit-contractor/{id}', [adminRegisterController::class, 'edit'])->name('list-edit-contractor');
 
-Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
