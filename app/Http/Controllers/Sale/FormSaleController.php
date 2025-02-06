@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Sale;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class FormSaleController extends Controller
 {
@@ -20,7 +22,10 @@ class FormSaleController extends Controller
      */
     public function create()
     {
-        return view('sale.create');
+        $work_types =   DB::table('work_types')->get();
+        $warranty_options =   DB::table('warranty_options')->get();
+        $solutions =   DB::table('solutions')->get();
+        return view('sale.create', compact('work_types', 'warranty_options', 'solutions'));
     }
 
     /**
