@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class adminRegisterController extends Controller
 {
@@ -19,7 +20,19 @@ class adminRegisterController extends Controller
     public function index()
     {
 
-        dd('index222');
+        $routeActive = request()->path();
+
+        $users = DB::table('users');
+
+
+        if ($routeActive == 'list-sale-pm-admin') {
+            $users = $users->where('role', '!=', 'contractor')->get();
+        } else {
+            $users = $users->where('role', 'contractor')->get();
+        }
+
+
+        return view('admin.register.index', compact('users', 'routeActive'));
     }
 
     /**

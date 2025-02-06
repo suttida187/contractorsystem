@@ -460,3 +460,46 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   height: 90vh;
   /* ทำให้ความสูงเต็มจอ */
 }
+
+/* ปรับขนาดไอคอน */
+.icon-action i {
+  font-size: 20px;
+  color: #1e2129;
+  /* เว้นระยะห่างซ้าย-ขวา */
+  transition: color 0.3s ease-in-out;
+  /* ทำให้เปลี่ยนสีแบบนุ่มนวล */
+}
+
+/* 
+/* เปลี่ยนสีเมื่อ hover */
+
+.icon-action.view:hover i {
+  color: green;
+  /* สีฟ้า */
+}
+
+.icon-action.edit i {
+  margin-left: 12px;
+  /* สีเขียว */
+}
+
+.icon-action.edit:hover i {
+  color: #3068ff;
+  /* สีเขียว */
+}
+
+.icon-action.delete i {
+  margin-left: 12px;
+  /* สีแดง */
+}
+
+.icon-action.delete:hover i {
+  color: #ff0019;
+  /* สีแดง */
+}
+
+.message-text-color {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #08620b;
+}
