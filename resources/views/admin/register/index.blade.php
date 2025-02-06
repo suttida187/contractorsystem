@@ -8,9 +8,10 @@
                         <div class="card-title">รายชื่อทั้งหมด</div>
 
                         <!-- Select Dropdown สำหรับเลือกประเภท -->
+
                         <div class="d-flex">
-                            <div class="col-md-6 col-lg-6">
-                                <div class="mb-3 mt-3 d-flex align-items-center">
+                            <div class="col-md-6 col-lg-6" {{ $routeActive == 'list-contractor' ? 'hidden' : '' }}>
+                                <div class=" mt-3 d-flex align-items-center">
                                     <label class="form-label me-3">เลือกประเภท:</label>
                                     <div class="flex-grow-1">
                                         <select id="roleFilter" class="form-select w-100">
@@ -24,8 +25,10 @@
                             </div>
                         </div>
 
+
+
                         <!-- ช่องค้นหาข้อมูล -->
-                        <div class="mb-3">
+                        <div class="mb-3 mt-3">
                             <input type="text" id="searchInput" placeholder="Search ..." class="form-control" />
                         </div>
 
