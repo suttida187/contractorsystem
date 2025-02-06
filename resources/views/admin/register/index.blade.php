@@ -36,6 +36,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">บริษัท</th>
+                                        <th scope="col">Email</th>
                                         <th scope="col">ชื่อ-นามสกุล</th>
                                         <th scope="col">สถานะ</th>
                                         <th scope="col" class="col-2">จัดการ</th>
@@ -44,9 +45,10 @@
                                 <tbody id="userTable">
                                     @php $i = 1; @endphp
                                     @foreach ($users as $user)
-                                        <tr data-role="{{ $user->role }}">
+                                        <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $user->company_name }}</td>
+                                            <td>{{ $user->email }}</td>
                                             <td>{{ implode(' ', [$user->prefix, $user->first_name, $user->last_name]) }}
                                             </td>
                                             <td>{{ $user->role }}</td>
@@ -96,16 +98,6 @@
                         @if ($routeActive == 'list-sale-pm-admin')
                             <div class="mb-3">
                                 <label class="form-label">เลือกประเภท: </label>
-                                {{--   <select name="role" id="modalRole"
-                                    class="form-select @error('role') is-invalid @enderror" value="{{ old('email') }}">
-                                    <option disabled selected>กรุณาเลือกประเภท</option>
-                                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>admin</option>
-                                    <option value="sale" {{ old('role') == 'sale' ? 'selected' : '' }}>sale</option>
-                                    <option value="pm" {{ old('role') == 'pm' ? 'selected' : '' }}>pm</option>
-                                </select>
-                                @error('role')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror --}}
                                 <input name="role" id="modalRole" type="text" class="form-control">
                             </div>
                         @else
@@ -130,13 +122,6 @@
 
                         <div class="col-md-2 mb-3">
                             <label class="form-label">คำนำหน้า: </label>
-                            {{--  <select name="prefix" class="form-select" id="modalPrefix">
-                                <option disabled selected>เลือกคำนำหน้า</option>
-                                <option value="นาย" {{ old('prefix') == 'นาย' ? 'selected' : '' }}>นาย</option>
-                                <option value="นาง" {{ old('prefix') == 'นาง' ? 'selected' : '' }}>นาง</option>
-                                <option value="นางสาว" {{ old('prefix') == 'นางสาว' ? 'selected' : '' }}>นางสาว
-                                </option>
-                            </select> --}}
                             <input name="prefix" id="modalPrefix" type="text" class="form-control">
                         </div>
                         <div class="col-md-4 mb-3">
@@ -264,45 +249,45 @@
     </div>
 
     <script>
-        $(document).ready(function() {
+        document.addEventListener("DOMContentLoaded", function() {
+            let typingTimer;
+            let doneTypingInterval = 500; // หน่วงเวลา 0.5 วินาที
 
-            var typingTimer;
-            var doneTypingInterval = 500; // กำหนดเวลาหน่วง (0.5 วินาที)
-
-            // ฟังก์ชันกรองตาราง
             function filterTable() {
-                var selectedRole = $("#roleFilter").val().toLowerCase();
-                var searchText = $("#searchInput").val().toLowerCase();
+                let selectedRole = document.getElementById("roleFilter").value.toLowerCase().trim();
+                let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
 
-                $("#userTable tr").each(function() {
-                    var role = $(this).data("role").toLowerCase();
-                    var textMatch = $(this).text().toLowerCase().indexOf(searchText) > -1;
+                document.querySelectorAll("#userTable tr").forEach(function(row) {
+                    let role = row.children[4].textContent.toLowerCase().trim(); // คอลัมน์ที่ 5 = สถานะ
+                    let rowText = row.textContent.toLowerCase();
 
-                    if ((selectedRole === "" || role === selectedRole) && textMatch) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
+                    let matchesRole = selectedRole === "" || selectedRole === "กรุณาเลือกประเภท"
+                        .toLowerCase() || role === selectedRole;
+                    let matchesSearch = searchText === "" || rowText.includes(searchText);
+
+                    // แสดงเฉพาะแถวที่ตรงเงื่อนไข
+                    row.style.display = matchesRole && matchesSearch ? "" : "none";
                 });
             }
 
             // เมื่อเลือกประเภทใน Select ให้กรองทันที
-            $("#roleFilter").change(function() {
-                filterTable();
-            });
+            document.getElementById("roleFilter").addEventListener("change", filterTable);
 
             // เมื่อพิมพ์ในช่องค้นหา รอ 0.5 วินาที ก่อนกรอง
-            $("#searchInput").on("input", function() {
+            document.getElementById("searchInput").addEventListener("input", function() {
                 clearTimeout(typingTimer);
                 typingTimer = setTimeout(filterTable, doneTypingInterval);
             });
 
             // รีเซ็ตเวลา ถ้ายังพิมพ์อยู่
-            $("#searchInput").on("keydown", function() {
+            document.getElementById("searchInput").addEventListener("keydown", function() {
                 clearTimeout(typingTimer);
             });
 
+            // แสดงข้อมูลทั้งหมดเมื่อโหลดหน้า
+            filterTable();
         });
+
 
 
         document.addEventListener("DOMContentLoaded", function() {

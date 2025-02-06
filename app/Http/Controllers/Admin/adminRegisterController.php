@@ -168,6 +168,8 @@ class adminRegisterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $flight =  User::find($id);
+        $flight->delete();
+        return redirect()->back()->with('message', 'ลบข้อมูลเรียบร้อยแล้ว');
     }
 }

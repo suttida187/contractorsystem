@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\adminRegisterController;
+use App\Http\Controllers\Sale\FormSaleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +20,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Sale
+// Auth
 Auth::routes();
-
 Route::get('register', function () {
     abort(403, 'การลงทะเบียนถูกปิดใช้งาน');
 }); //
+
+//Sale
+Route::get('/create-form', [FormSaleController::class, 'create'])->name('create-form');
+
+
+
 // Admin
 Route::get('/register-admin', [adminRegisterController::class, 'create'])->name('register-admin');
 Route::get('/register-contractor', [adminRegisterController::class, 'createContractor'])->name('register-contractor');
@@ -33,6 +40,7 @@ Route::get('/list-sale-pm-admin', [adminRegisterController::class, 'index'])->na
 Route::get('/list-contractor', [adminRegisterController::class, 'index'])->name('list-sale-pm-admin');
 Route::get('/list-edit-admin/{id}', [adminRegisterController::class, 'edit'])->name('list-edit-admin');
 Route::get('/list-edit-contractor/{id}', [adminRegisterController::class, 'edit'])->name('list-edit-contractor');
+Route::get('/delete-user/{id}', [adminRegisterController::class, 'destroy'])->name('delete-user');
 
 
 

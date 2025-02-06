@@ -1,17 +1,23 @@
 <div class="sidebar-wrapper scrollbar scrollbar-inner">
     <div class="sidebar-content">
         <ul class="nav nav-secondary">
+            @php
+                use Illuminate\Support\Str;
 
+                $activeRoute = request()->path();
 
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#base">
+            @endphp
+
+            <li class="nav-item {{ $activeRoute === 'home' ? 'active' : '' }}">
+                <a href="{{ url('home') }}">
                     <i class="fas fa-home"></i>
                     <p>หน้าแรก</p>
 
                 </a>
+
             </li>
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="">
+            <li class="nav-item  {{ $activeRoute === 'create-form' ? 'active' : '' }}">
+                <a href="{{ url('create-form') }}">
                     <i class="fa-solid fa-square-plus"></i>
                     <p>เเบบฟอร์มขอคิวงาน</p>
                 </a>
