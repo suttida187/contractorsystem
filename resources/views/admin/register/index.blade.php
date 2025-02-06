@@ -88,6 +88,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <div class="row">
                         <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
                         <h5 class="col-12 mt-3 mb-3 text-primary"><strong>
@@ -126,9 +127,11 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Username: </label>
-                            <input name="username" type="text" id="modalUsername" class="form-control"
-                                value="{{ old('username') }}">
-
+                            <input name="username" type="text" id="modalUsername"
+                                class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}">
+                            @error('username')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-2 mb-3">
@@ -137,20 +140,27 @@
                                 <option disabled selected>เลือกคำนำหน้า</option>
                                 <option value="นาย" {{ old('prefix') == 'นาย' ? 'selected' : '' }}>นาย</option>
                                 <option value="นาง" {{ old('prefix') == 'นาง' ? 'selected' : '' }}>นาง</option>
-                                <option value="นางสาว" {{ old('prefix') == 'นางสาว' ? 'selected' : '' }}>นางสาว</option>
+                                <option value="นางสาว" {{ old('prefix') == 'นางสาว' ? 'selected' : '' }}>นางสาว
+                                </option>
                             </select>
 
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">ชื่อ: </label>
-                            <input name="first_name" type="text" id="modalFirst_name" class="form-control">
-
+                            <input name="first_name" type="text" id="modalFirst_name"
+                                class="form-control  @error('first_name') is-invalid @enderror">
+                            @error('first_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-4 mb-3">
                             <label class="form-label">นามสกุล: </label>
-                            <input name="last_name" type="text" id="modalLast_name" class="form-control">
-
+                            <input name="last_name" type="text" id="modalLast_name"
+                                class="form-control @error('last_name') is-invalid @enderror">
+                            @error('last_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
 
@@ -253,7 +263,6 @@
                     </div>
                     <div class="modal-footer mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
                     </div>
                 </div>
             </div>

@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('/register-admin', [adminRegisterController::class, 'create'])->name('register-admin');
 Route::get('/register-contractor', [adminRegisterController::class, 'createContractor'])->name('register-contractor');
 Route::post('/register-store', [adminRegisterController::class, 'store'])->name('register-store');
+Route::put('/register-update', [adminRegisterController::class, 'update'])->name('register-update');
 Route::get('/list-sale-pm-admin', [adminRegisterController::class, 'index'])->name('list-sale-pm-admin');
 Route::get('/list-contractor', [adminRegisterController::class, 'index'])->name('list-sale-pm-admin');
 
