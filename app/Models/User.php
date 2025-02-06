@@ -18,9 +18,22 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'role',
         'email',
+        'username',
         'password',
+        'prefix',
+        'first_name',
+        'last_name',
+        'company_name',
+        'address',
+        'street',
+        'sub_district',
+        'district',
+        'province',
+        'phone',
+        'postal_code',
+        'tax_id', // อนุญาตให้ tax_id ถูกบันทึกได้
     ];
 
     /**

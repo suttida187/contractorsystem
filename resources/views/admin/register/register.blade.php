@@ -3,26 +3,42 @@
     <div class="container">
         <div class="page-inner">
             <div class="card">
-                <form wire:submit.prevent="save" style="padding:16px;">
+                <form method="POST" action="{{ route('register-store') }}" style="padding:16px;">
+                    @csrf
+
                     <div class="row">
                         <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
-                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลส่วนบุคคล</strong></h5>
-                        <div class="mb-3">
-                            <label class="form-label">เลือกประเภท: </label>
-                            <select wire:model="role" class="form-select @error('role') is-invalid @enderror">
-                                <option value="" disabled selected>กรุณาเลือกประเภท</option>
-                                <option value="admin">admin</option>
-                                <option value="sale">sale</option>
-                                <option value="pm">pm</option>
-                            </select>
-                            @error('role')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>
+                                @if ($status_name == 0)
+                                    ลงทะเบียน Sale / PM / Admin
+                                @else
+                                    ลงทะเบียนผู้รับเหมา
+                                @endif
+                            </strong></h5>
+
+
+                        @if ($status_name == 0)
+                            <div class="mb-3">
+                                <label class="form-label">เลือกประเภท: </label>
+                                <select name="role" class="form-select @error('role') is-invalid @enderror"
+                                    value="{{ old('email') }}">
+                                    <option disabled selected>กรุณาเลือกประเภท</option>
+                                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>admin</option>
+                                    <option value="sale" {{ old('role') == 'sale' ? 'selected' : '' }}>sale</option>
+                                    <option value="pm" {{ old('role') == 'pm' ? 'selected' : '' }}>pm</option>
+                                </select>
+                                @error('role')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @else
+                            <input name="role" type="text" class="form-control" value="contractor" hidden>
+                        @endif
+
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Email: </label>
-                            <input wire:model="email" type="email"
+                            <input name="email" type="email" value="{{ old('email') }}"
                                 class="form-control @error('email') is-invalid @enderror">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
@@ -31,8 +47,8 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Username: </label>
-                            <input wire:model="username" type="text"
-                                class="form-control @error('username') is-invalid @enderror">
+                            <input name="username" type="text"
+                                class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}">
                             @error('username')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -40,8 +56,8 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Password: </label>
-                            <input wire:model="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror">
+                            <input name="password" type="password"
+                                class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}">
                             @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -49,8 +65,9 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Confirm-Password: </label>
-                            <input wire:model="password_confirmation" type="password"
-                                class="form-control @error('password_confirmation') is-invalid @enderror">
+                            <input name="password_confirmation" type="password"
+                                class="form-control @error('password_confirmation') is-invalid @enderror"
+                                value="{{ old('password_confirmation') }}">
                             @error('password_confirmation')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -58,11 +75,11 @@
 
                         <div class="col-md-4 mb-3">
                             <label class="form-label">คำนำหน้า: </label>
-                            <select wire:model="prefix" class="form-select @error('prefix') is-invalid @enderror">
-                                <option value="" disabled selected>เลือกคำนำหน้า</option>
-                                <option value="นาย">นาย</option>
-                                <option value="นาง">นาง</option>
-                                <option value="นางสาว">นางสาว</option>
+                            <select name="prefix" class="form-select @error('prefix') is-invalid @enderror">
+                                <option disabled selected>เลือกคำนำหน้า</option>
+                                <option value="นาย" {{ old('prefix') == 'นาย' ? 'selected' : '' }}>นาย</option>
+                                <option value="นาง" {{ old('prefix') == 'นาง' ? 'selected' : '' }}>นาง</option>
+                                <option value="นางสาว" {{ old('prefix') == 'นางสาว' ? 'selected' : '' }}>นางสาว</option>
                             </select>
                             @error('prefix')
                                 <span class="text-danger">{{ $message }}</span>
@@ -71,8 +88,9 @@
 
                         <div class="col-md-4 mb-3">
                             <label class="form-label">ชื่อ: </label>
-                            <input wire:model="first_name" type="text"
-                                class="form-control @error('first_name') is-invalid @enderror">
+                            <input name="first_name" type="text"
+                                class="form-control @error('first_name') is-invalid @enderror"
+                                value="{{ old('first_name') }}">
                             @error('first_name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -80,8 +98,9 @@
 
                         <div class="col-md-4 mb-3">
                             <label class="form-label">นามสกุล: </label>
-                            <input wire:model="last_name" type="text"
-                                class="form-control @error('last_name') is-invalid @enderror">
+                            <input name="last_name" type="text"
+                                class="form-control @error('last_name') is-invalid @enderror"
+                                value="{{ old('last_name') }}">
                             @error('last_name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -89,20 +108,32 @@
                     </div>
 
                     <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลเกี่ยวกับบริษัท</strong></h5>
+
+
                     <div class="row">
                         <div class="mb-3">
                             <label class="form-label">ชื่อบริษัท: </label>
-                            <input wire:model="company_name" type="text"
-                                class="form-control @error('company_name') is-invalid @enderror">
+                            <input name="company_name" type="text"
+                                class="form-control @error('company_name') is-invalid @enderror"
+                                value="{{ old('company_name') }}">
                             @error('company_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-3" @if ($status_name == 0) hidden @endif>
+                            <label class="form-label">เลขประจําตัวผู้เสียภาษี: </label>
+                            <input name="tax_id" type="text" class="form-control @error('tax_id')is-invalid @enderror"
+                                value="{{ old('tax_id') }}" oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                                maxlength="13">
+                            @error('tax_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">ที่อยู่: </label>
-                            <input wire:model="address" type="text"
-                                class="form-control @error('address') is-invalid @enderror">
+                            <input name="address" type="text"
+                                class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}">
                             @error('address')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -110,8 +141,8 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">ซอย/ถนน: </label>
-                            <input wire:model="street" type="text"
-                                class="form-control @error('street') is-invalid @enderror">
+                            <input name="street" type="text"
+                                class="form-control @error('street') is-invalid @enderror" value="{{ old('street') }}">
                             @error('street')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -119,8 +150,9 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">ตำบล/แขวง: </label>
-                            <input wire:model="sub_district" type="text"
-                                class="form-control @error('sub_district') is-invalid @enderror">
+                            <input name="sub_district" type="text"
+                                class="form-control @error('sub_district') is-invalid @enderror"
+                                value="{{ old('sub_district') }}">
                             @error('sub_district')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -128,8 +160,9 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">อำเภอ/เขต: </label>
-                            <input wire:model="district" type="text"
-                                class="form-control @error('district') is-invalid @enderror">
+                            <input name="district" type="text"
+                                class="form-control @error('district') is-invalid @enderror"
+                                value="{{ old('district') }}">
                             @error('district')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -137,8 +170,9 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">จังหวัด: </label>
-                            <input wire:model="province" type="text"
-                                class="form-control @error('province') is-invalid @enderror">
+                            <input name="province" type="text"
+                                class="form-control @error('province') is-invalid @enderror"
+                                value="{{ old('province') }}">
                             @error('province')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -146,9 +180,10 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">รหัสไปรษณีย์: </label>
-                            <input wire:model="postal_code" type="text"
+                            <input name="postal_code" type="text"
                                 class="form-control @error('postal_code') is-invalid @enderror"
-                                oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="5">
+                                oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="5"
+                                value="{{ old('postal_code') }}">
                             @error('postal_code')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -156,9 +191,10 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">เบอร์โทรศัพท์: </label>
-                            <input wire:model="phone" type="text"
+                            <input name="phone" type="text"
                                 class="form-control @error('phone') is-invalid @enderror"
-                                oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10">
+                                oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="10"
+                                value="{{ old('phone') }}">
                             @error('phone')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -169,6 +205,7 @@
                         <button type="submit" class="btn btn-primary">บันทึก</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class adminRegisterController extends Controller
 {
@@ -26,7 +27,15 @@ class adminRegisterController extends Controller
      */
     public function create()
     {
-        return view('admin.register.register');
+
+        $status_name = 0;
+        return view('admin.register.register', compact('status_name'));
+    }
+    public function createContractor()
+    {
+
+        $status_name = 1;
+        return view('admin.register.register', compact('status_name'));
     }
 
     /**
@@ -34,7 +43,31 @@ class adminRegisterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validatedData = $request->validate([
+            'role' => 'required|in:admin,sale,pm,contractor', // ตรวจสอบค่าที่ส่งจากฟอร์ม
+            'email' => 'required|email|unique:users,email',
+            'username' => 'required|unique:users,username',
+            'password' => 'required|confirmed|min:8',
+            'password_confirmation' => 'required_with:password|same:password',
+            'prefix' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'company_name' => 'required|string',
+            'address' => 'required|string',
+            'street' => 'required|string',
+            'sub_district' => 'required|string',
+            'district' => 'required|string',
+            'province' => 'required|string',
+            'phone' => 'required|numeric|digits:10',
+            'postal_code' => 'required|numeric|digits:5',
+            'tax_id' => 'nullable|digits:13|numeric|unique:users_contractor,tax_id',
+        ]);
+
+
+
+        User::create($validatedData);
+        return redirect('home')->with('message', "บันทึกสำเร็จ");
     }
 
     /**

@@ -48,11 +48,27 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+
+        dd($data);
+        /*  return Validator::make($data, [
+            'role' => 'required|in:admin,sale,pm', // ตรวจสอบค่าที่ส่งจากฟอร์ม
+            'email' => 'required|email|unique:users,email',
+            'username' => 'required|unique:users,username',
+            'password' => 'required|confirmed|min:8',
+            'password_confirmation' => 'required_with:password|same:password',
+            'prefix' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'company_name' => 'required|string',
+            'address' => 'required|string',
+            'street' => 'required|string',
+            'sub_district' => 'required|string',
+            'district' => 'required|string',
+            'province' => 'required|string',
+            'phone' => 'required|numeric|digits:10',
+            'postal_code' => 'required|numeric|digits:5',
+            'tax_id' => 'required|digits:13|numeric|unique:users_contractor,tax_id',
+        ]); */
     }
 
     /**
@@ -63,10 +79,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+
         return User::create([
-            'name' => $data['name'],
+            'role' => $data['role'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'password_confirmation' => Hash::make($data['password_confirmation']),
+            'prefix' => $data['prefix'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'company_name' => $data['company_name'],
+            'address' => $data['address'],
+            'street' => $data['street'],
+            'sub_district' => $data['sub_district'],
+            'district' => $data['district'],
+            'province' => $data['province'],
+            'phone' => $data['phone'],
+            'postal_code' => $data['postal_code'],
+            'tax_id' => $data['tax_id'],
         ]);
     }
 }

@@ -17,12 +17,12 @@
                 <div class="collapse" id="base">
                     <ul class="nav nav-collapse">
                         <li>
-                            <a href="{{ url('/register-admin') }}">
+                            <a href="{{ url('register-admin') }}">
                                 <span class="sub-item">ลงทะเบียน Sale/Pm/Admin</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url('register.contractor') }}">
+                            <a href="{{ url('register-contractor') }}">
                                 <span class="sub-item">ลงทะเบียนผู้รับเหมา</span>
                             </a>
                         </li>
