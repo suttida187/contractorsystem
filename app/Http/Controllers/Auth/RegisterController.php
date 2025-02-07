@@ -49,7 +49,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
 
-        dd($data);
+       
         /*  return Validator::make($data, [
             'role' => 'required|in:admin,sale,pm', // ตรวจสอบค่าที่ส่งจากฟอร์ม
             'email' => 'required|email|unique:users,email',

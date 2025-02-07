@@ -265,9 +265,9 @@
                     let role = row.children[4].textContent.toLowerCase().trim(); // คอลัมน์ที่ 5 = สถานะ
                     let rowText = row.textContent.toLowerCase();
 
-                    let matchesRole = selectedRole === "" || selectedRole === "กรุณาเลือกประเภท"
+                    let matchesRole = selectedRole == "" || selectedRole == "กรุณาเลือกประเภท"
                         .toLowerCase() || role === selectedRole;
-                    let matchesSearch = searchText === "" || rowText.includes(searchText);
+                    let matchesSearch = searchText == "" || rowText.includes(searchText);
 
                     // แสดงเฉพาะแถวที่ตรงเงื่อนไข
                     row.style.display = matchesRole && matchesSearch ? "" : "none";
@@ -282,6 +282,13 @@
                 clearTimeout(typingTimer);
                 typingTimer = setTimeout(filterTable, doneTypingInterval);
             });
+
+            document.getElementById("searchInput").addEventListener("keydown", function(event) {
+                if (event.key === "Backspace" && this.value.length === 1) {
+                    setTimeout(filterTable, 50);
+                }
+            });
+
 
             // รีเซ็ตเวลา ถ้ายังพิมพ์อยู่
             document.getElementById("searchInput").addEventListener("keydown", function() {
