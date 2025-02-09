@@ -4,41 +4,21 @@
         <div class="page-inner">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Basic Table</div>
+                    <div class="card-title">อัพเดตสถานะ</div>
                 </div>
                 <div class="card-body">
-                    <div class="card-sub">
-                        This is the basic table view of the ready dashboard :
-                    </div>
-                    <table class="table mt-3">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    @foreach ($data as $da)
+                        <div class="row">
+                            <div class="project-box">
+                                <span class="project-title">{{ $da->project_name }}</span>
+                                <br>
+                                <span>{{ \Carbon\Carbon::parse($da->updated_at)->format('d/m/') . (\Carbon\Carbon::parse($da->updated_at)->year + 543) . ' ' . \Carbon\Carbon::parse($da->updated_at)->format('H:i') }}</span>
+
+
+                            </div>
+                            <div class="project-status">รอ PM ตรวจสอบ</div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

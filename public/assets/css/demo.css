@@ -520,3 +520,81 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   pointer-events: none;
   background-color: #ffffff;
 }
+
+
+
+
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 16px 14px 16px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s ease-in-out forwards;
+  cursor: pointer;
+
+}
+
+.project-box,
+.project-status {
+  padding: 16px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  width: 25%;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.project-box {
+  display: flex;
+  padding: 16px;
+  justify-content: space-between;
+  width: 74%;
+}
+
+.project-status {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-box:hover,
+.project-status:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .project-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .project-box,
+  .project-status {
+    width: 100%;
+    text-align: left;
+    margin-top: 5px;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
