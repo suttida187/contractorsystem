@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sale;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\SalesProjects;
 
 
 class FormSaleController extends Controller
@@ -33,7 +34,29 @@ class FormSaleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'project_name' => 'required|string|max:255',
+            'work_type' => 'required|string',
+            'other_work_type' => 'nullable|required_if:work_type,Other|string|max:255',
+            'solution' => 'required|string',
+            'other_solution' => 'nullable|required_if:solution,Other|string|max:255',
+            'work_description' => 'required|string',
+            'meeting_date' => 'required|date',
+            'meeting_time' => 'required|date_format:H:i',
+            'end_date' => 'required|date',
+            'company_name' => 'required|string|max:255',
+            'contact_name' => 'required|string|max:255',
+            'contact_phone' => 'required|regex:/^[0-9]{9,10}$/',
+            'contact_position' => 'required|string|max:255',
+            'location' => 'required|url',
+            'warranty' => 'required|string',
+            'additional_notes' => 'nullable|string',
+            'needs_documents' => 'required|string',
+        ]);
+
+       
+        SalesProjects::create($validatedData);
+        return redirect('home')->with('message', "บันทึกสำเร็จ");
     }
 
     /**
