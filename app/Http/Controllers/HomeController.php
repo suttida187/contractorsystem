@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $data = DB::table('sales_projects')
+            ->where(function ($query) {
+                $query->whereNull('status')
+                    ->orWhereNull('responsible_admin')
+                    ->orWhereNull('responsible_pm')
+                    ->orWhereNull('responsible_contractor');
+            })
+            ->get();
+
+
+        if (Auth::user()->role == "sale") {
+            $notifications = DB::table('notifications')->whereNull('read_at')->latest()->get();
+        }
+        if (Auth::user()->role == "admin") {
+            $notifications = DB::table('notifications')->whereNull('read_at')->latest()->get();
+        }
+
+
+        return view('home', compact('data', 'notifications'));
     }
 }

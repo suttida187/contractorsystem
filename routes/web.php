@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\adminRegisterController;
 use App\Http\Controllers\Sale\FormSaleController;
-
-
+use App\Models\User;
+use App\Notifications\SalesProjectUpdated;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,3 +46,31 @@ Route::get('/delete-user/{id}', [adminRegisterController::class, 'destroy'])->na
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+use App\Models\SalesProjects;
+
+Route::get('/test-update-admin/{project_id}/{admin_id}', function ($project_id, $admin_id) {
+    $project = SalesProjects::find($project_id);
+    if ($project) {
+        $project->responsible_admin = $admin_id;
+        $project->save();
+
+        // ✅ ตรวจสอบว่า User มีอยู่จริงก่อนส่ง Notification
+        $admin = User::find($admin_id);
+        if ($admin) {
+            $admin->notify(new SalesProjectUpdated($project)); // 🎯 ส่งการแจ้งเตือน
+        }
+
+        return 'Updated successfully and notification sent!';
+    }
+    return 'Project not found!';
+});
+
+
+Route::get('/mark-as-read/{id}', function ($id) {
+    $notification = auth()->user()->notifications()->where('id', $id)->first();
+    if ($notification) {
+        $notification->markAsRead();
+    }
+    return redirect()->back();
+})->name('notifications.markAsRead');
