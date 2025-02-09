@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cancelButtonText: "ยกเลิก"
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = `/delete-user/${userId}`;
+          window.location.href = `delete-user/${userId}`;
         }
       });
     });
