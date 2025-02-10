@@ -35,14 +35,9 @@ class HomeController extends Controller
             ->get();
 
 
-        if (Auth::user()->role == "sale") {
-            $notifications = DB::table('notifications')->whereNull('read_at')->latest()->get();
-        }
-        if (Auth::user()->role == "admin") {
-            $notifications = DB::table('notifications')->whereNull('read_at')->latest()->get();
-        }
+    
 
 
-        return view('home', compact('data', 'notifications'));
+        return view('home', compact('data'));
     }
 }
