@@ -205,7 +205,6 @@
                     </div>
 
                     <div class="text-end">
-                        <button wire:navigate href="/sale-list-project" class="btn btn-secondary">ย้อนกลับ</button>
                         <button type="submit" class="btn btn-primary">บันทึก</button>
                     </div>
                 </form>
