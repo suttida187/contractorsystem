@@ -133,3 +133,49 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+
+function fetchNotifications() {
+  $.ajax({
+    url: "notifications-fetch", // ดึงข้อมูลจาก Route
+    type: "GET",
+    success: function (data) {
+      let notificationDropdown = $("#notif-center");
+      let notificationCount = $(".notification");
+      let notifCountText = $("#notif-count");
+
+      notificationDropdown.empty(); // ล้างรายการเดิม
+
+      if (data.length > 0) {
+        notificationCount.text(data.length).show(); // แสดงจำนวนแจ้งเตือน
+        notifCountText.text(data.length);
+
+        data.forEach(notification => {
+          let notifItem = `
+                      <a href="${notification.url}">
+                          <div class="notif-icon notif-primary" style="width: 55px">
+                              <i class="fa fa-project-diagram"></i>
+                          </div>
+                          <div class="notif-content">
+                              <span class="block">${notification.message}</span>
+                              <span class="time">${notification.time}</span>
+                          </div>
+                      </a>
+                  `;
+          notificationDropdown.append(notifItem);
+        });
+      } else {
+        notificationCount.hide();
+        notifCountText.text(0);
+        notificationDropdown.append(`<p class="text-center p-2">ไม่มีการแจ้งเตือนใหม่</p>`);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Error fetching notifications:", error);
+    }
+  });
+}
+
+
+
+fetchNotifications(); // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้า

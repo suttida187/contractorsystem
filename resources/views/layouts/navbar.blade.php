@@ -33,45 +33,31 @@
             @endphp
 
             <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                <li class="nav-item topbar-icon dropdown hidden-caret">
+                <li class="nav-item topbar-icon dropdown hidden-caret" id="notifications">
                     <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bell"></i>
-                        @if ($notifications->count() > 0)
-                            <span class="notification">{{ $notifications->count() }}</span>
-                        @endif
+                        <span class="notification" style="display: none;"></span> <!-- ซ่อนตอนเริ่ม -->
                     </a>
                     <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                         <li>
                             <div class="dropdown-title">
-                                คุณมี {{ $notifications->count() }} การแจ้งเตือนใหม่
+                                คุณมี <span id="notif-count">0</span> การแจ้งเตือนใหม่
                             </div>
                         </li>
                         <li>
                             <div class="notif-scroll scrollbar-outer">
-                                <div class="notif-center">
-                                    @foreach ($notifications as $notification)
-                                        <a href="{{ route('notifications.markAsRead', $notification->id) }}">
-                                            <div class="notif-icon notif-primary" style="width: 55px">
-                                                <i class="fa fa-project-diagram"></i>
-                                            </div>
-                                            <div class="notif-content">
-                                                <span
-                                                    class="block">{{ json_decode($notification->data, true)['message'] }}</span>
-                                                <span
-                                                    class="time">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
-                                                </span>
-                                            </div>
-                                        </a>
-                                    @endforeach
+                                <div class="notif-center" id="notif-center">
+                                    <p class="text-center p-2">กำลังโหลด...</p> <!-- ข้อความโหลด -->
                                 </div>
                             </div>
                         </li>
                         <li>
-                            {{--  <a class="see-all" href="{{ route('notifications.index') }}">ดูการแจ้งเตือนทั้งหมด</a> --}}
+                            {{-- <a class="see-all" href="{{ route('notifications.index') }}">ดูการแจ้งเตือนทั้งหมด</a> --}}
                         </li>
                     </ul>
                 </li>
+
 
 
                 <li class="nav-item topbar-user dropdown hidden-caret">

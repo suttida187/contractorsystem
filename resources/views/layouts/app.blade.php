@@ -19,6 +19,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
 
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/demo.css') }}" />
     <script>
@@ -41,6 +43,24 @@
         });
     </script>
 
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('fcf3b678d6f5503b4975', {
+            cluster: 'ap2'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+          
+            if (data.message.length > 0) {
+
+                fetchNotifications();
+            }
+        });
+    </script>
+
 </head>
 
 <body>
@@ -59,7 +79,9 @@
         </div>
     @endguest
 
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script src="{{ URL::asset('/assets/js/core/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/core/popper.min.js') }}"></script>

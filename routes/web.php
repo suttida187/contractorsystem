@@ -5,6 +5,15 @@ use App\Http\Controllers\Admin\adminRegisterController;
 use App\Http\Controllers\Sale\FormSaleController;
 use App\Models\User;
 use App\Notifications\SalesProjectUpdated;
+use App\Http\Controllers\NotificationController;
+use App\Events\UpdateNotification;
+
+use Illuminate\Support\Facades\DB;
+
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +35,7 @@ Route::get('register', function () {
     abort(403, 'การลงทะเบียนถูกปิดใช้งาน');
 }); //
 
+
 //Sale
 Route::get('/create-form', [FormSaleController::class, 'create'])->name('create-form');
 Route::post('/create-project-store', [FormSaleController::class, 'store'])->name('create-project-store');
@@ -46,31 +56,16 @@ Route::get('/delete-user/{id}', [adminRegisterController::class, 'destroy'])->na
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-use App\Models\SalesProjects;
-
-Route::get('/test-update-admin/{project_id}/{admin_id}', function ($project_id, $admin_id) {
-    $project = SalesProjects::find($project_id);
-    if ($project) {
-        $project->responsible_admin = $admin_id;
-        $project->save();
-
-        // ✅ ตรวจสอบว่า User มีอยู่จริงก่อนส่ง Notification
-        $admin = User::find($admin_id);
-        if ($admin) {
-            $admin->notify(new SalesProjectUpdated($project)); // 🎯 ส่งการแจ้งเตือน
-        }
-
-        return 'Updated successfully and notification sent!';
-    }
-    return 'Project not found!';
-});
-
-
+// notifications
+Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');
 Route::get('/mark-as-read/{id}', function ($id) {
-    $notification = auth()->user()->notifications()->where('id', $id)->first();
-    if ($notification) {
-        $notification->markAsRead();
-    }
-    return redirect()->back();
+
+    dd("aaa");
 })->name('notifications.markAsRead');
+
+// เทส ยิง  notifications
+Route::get('test', function () {
+    $notifications = "notifications success";
+    event(new UpdateNotification($notifications));
+    return response()->json(['success' => true, 'message' => 'Notification sent']);
+}); //
