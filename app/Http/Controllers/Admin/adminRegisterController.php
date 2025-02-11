@@ -59,6 +59,7 @@ class adminRegisterController extends Controller
     public function store(Request $request)
     {
 
+
         $validatedData = $request->validate([
             'role' => 'required|in:admin,sale,pm,contractor', // ตรวจสอบค่าที่ส่งจากฟอร์ม
             'email' => 'required|email|unique:users,email',
@@ -76,13 +77,16 @@ class adminRegisterController extends Controller
             'province' => 'required|string',
             'phone' => 'required|numeric|digits:10',
             'postal_code' => 'required|numeric|digits:5',
-            'tax_id' => 'nullable|digits:13|numeric|unique:users_contractor,tax_id',
+            'tax_id' => 'nullable|digits:13|numeric|unique:users,tax_id',
         ]);
 
 
 
         User::create($validatedData);
-        return redirect('home')->with('message', "บันทึกสำเร็จ");
+
+
+
+        return redirect($request->role != 'contractor' ? 'list-sale-pm-admin' : 'list-contractor')->with('message', "บันทึกสำเร็จ");
     }
 
     /**
