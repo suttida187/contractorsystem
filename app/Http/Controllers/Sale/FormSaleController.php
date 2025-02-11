@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\SalesProjects;
+use App\Events\UpdateNotification;
 
 
 class FormSaleController extends Controller
@@ -54,8 +55,12 @@ class FormSaleController extends Controller
             'needs_documents' => 'required|string',
         ]);
 
-       
+
         SalesProjects::create($validatedData);
+
+
+        $notifications = "notifications success";
+        event(new UpdateNotification($notifications));
         return redirect('home')->with('message', "บันทึกสำเร็จ");
     }
 

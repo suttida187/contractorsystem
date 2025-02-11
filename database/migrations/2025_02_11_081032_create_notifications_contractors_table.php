@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('notifications_contractors', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
+            $table->string('notifiable_id');
+            $table->text('data');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }
