@@ -58,7 +58,7 @@ class FormSaleController extends Controller
         ]);
 
         $project = SalesProjects::create($validatedData);
-        $updatedAt = $project->updated_at;
+        $updatedAt =  $project->updated_at;
 
         $id = Auth::user()->id;
         $role = "admin"; // ส่งเเจ้งเตือนให้กับ Admin
@@ -74,7 +74,7 @@ class FormSaleController extends Controller
 
 
         // Notification เเล้ว เพิ่มข้อมูลลง NotificationsAdmin
-        app(NotificationController::class)->AdminNotifications($id, $data, $role);
+        app(NotificationController::class)->CreateNotifications($id, $data, $role);
 
         return redirect('home')->with('message', "บันทึกสำเร็จ");
     }

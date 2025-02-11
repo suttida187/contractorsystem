@@ -50,9 +50,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            {{-- <a class="see-all" href="{{ route('notifications.index') }}">ดูการแจ้งเตือนทั้งหมด</a> --}}
-                        </li>
+
                     </ul>
                 </li>
 

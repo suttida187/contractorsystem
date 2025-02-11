@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\NotificationsAdmin;
+use App\Models\NotificationsSale;
+use App\Models\NotificationsPm;
+use App\Models\NotificationsContractor;
 use App\Events\UpdateNotification;
 
 class NotificationController extends Controller
@@ -79,10 +82,10 @@ class NotificationController extends Controller
 
 
 
-    public function AdminNotifications($id, $data, $role)
+    public function CreateNotifications($id, $data, $role)
     {
         if ($role == 'sale') {
-            NotificationsAdmin::create([
+            NotificationsSale::create([
                 'notifiable_id' => $id,
                 'data' => $data,
             ]);
@@ -95,13 +98,13 @@ class NotificationController extends Controller
         }
 
         if ($role == 'pm') {
-            NotificationsAdmin::create([
+            NotificationsPm::create([
                 'notifiable_id' => $id,
                 'data' => $data,
             ]);
         }
         if ($role == 'contractor') {
-            NotificationsAdmin::create([
+            NotificationsContractor::create([
                 'notifiable_id' => $id,
                 'data' => $data,
             ]);
@@ -110,5 +113,31 @@ class NotificationController extends Controller
 
         $notifications = "notifications success";
         event(new UpdateNotification($notifications));
+    }
+
+
+    public function UpdateReadAt(string $id)
+    {
+
+        $role = Auth::user()->role;
+        if ($role == 'sale') {
+            NotificationsSale::where('id', $id)
+                ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+        }
+        if ($role == 'admin') {
+            NotificationsAdmin::where('id', $id)
+                ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+        }
+
+        if ($role == 'pm') {
+            NotificationsPm::where('id', $id)
+                ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+        }
+        if ($role == 'contractor') {
+            NotificationsContractor::where('id', $id)
+                ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+        }
+
+        return back();
     }
 }
