@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Models\NotificationsAdmin;
+use App\Events\UpdateNotification;
 
 class NotificationController extends Controller
 {
@@ -72,9 +74,41 @@ class NotificationController extends Controller
                 });
         }
 
-
-
-
         return response()->json($notifications);
+    }
+
+
+
+    public function AdminNotifications($id, $data, $role)
+    {
+        if ($role == 'sale') {
+            NotificationsAdmin::create([
+                'notifiable_id' => $id,
+                'data' => $data,
+            ]);
+        }
+        if ($role == 'admin') {
+            NotificationsAdmin::create([
+                'notifiable_id' => $id,
+                'data' => $data,
+            ]);
+        }
+
+        if ($role == 'pm') {
+            NotificationsAdmin::create([
+                'notifiable_id' => $id,
+                'data' => $data,
+            ]);
+        }
+        if ($role == 'contractor') {
+            NotificationsAdmin::create([
+                'notifiable_id' => $id,
+                'data' => $data,
+            ]);
+        }
+
+
+        $notifications = "notifications success";
+        event(new UpdateNotification($notifications));
     }
 }

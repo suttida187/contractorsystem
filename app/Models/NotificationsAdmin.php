@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class NotificationsAdmin extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'notifiable_id',
+        'data',
+        'read_at',
+    ];
 }

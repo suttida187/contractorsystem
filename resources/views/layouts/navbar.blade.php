@@ -28,9 +28,7 @@
                 @endif
             </nav>
 
-            @php
-                $notifications = DB::table('notifications')->whereNull('read_at')->latest()->get();
-            @endphp
+
 
             <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                 <li class="nav-item topbar-icon dropdown hidden-caret" id="notifications">

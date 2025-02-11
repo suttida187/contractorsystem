@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\SalesProjects;
-use App\Events\UpdateNotification;
+use App\Http\Controllers\NotificationController;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class FormSaleController extends Controller
@@ -55,12 +57,25 @@ class FormSaleController extends Controller
             'needs_documents' => 'required|string',
         ]);
 
+        $project = SalesProjects::create($validatedData);
+        $updatedAt = $project->updated_at;
 
-        SalesProjects::create($validatedData);
+        $id = Auth::user()->id;
+        $role = "admin"; // ส่งเเจ้งเตือนให้กับ Admin
+        $projectName = "มีอัปเดต: $request->project_name มาใหม่";
 
 
-        $notifications = "notifications success";
-        event(new UpdateNotification($notifications));
+        // JSON Encode ให้ถูกต้อง
+        $data = json_encode([
+            'message' => $projectName,
+            'time' => $updatedAt
+        ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
+
+
+
+        // Notification เเล้ว เพิ่มข้อมูลลง NotificationsAdmin
+        app(NotificationController::class)->AdminNotifications($id, $data, $role);
+
         return redirect('home')->with('message', "บันทึกสำเร็จ");
     }
 
