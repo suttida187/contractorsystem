@@ -81,25 +81,15 @@
         <div class="modal-dialog  modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">รายละเอียด</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                     <div class="row">
-                        <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
-                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>
-                                @if ($routeActive == 'list-sale-pm-admin')
-                                    ลงทะเบียน Sale / PM / Admin
-                                @else
-                                    ลงทะเบียนผู้รับเหมา
-                                @endif
-                            </strong></h5>
-
-
                         @if ($routeActive == 'list-sale-pm-admin')
                             <div class="mb-3">
-                                <label class="form-label">เลือกประเภท: </label>
+                                <label class="form-label">ประเภท: </label>
                                 <input name="role" id="modalRole" type="text" class="form-control  no-edit">
                             </div>
                         @else
