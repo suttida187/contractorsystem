@@ -27,7 +27,9 @@
             </div>
         </div>
     </div>
-
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="exampleModalAutoClick" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-lg">
@@ -213,75 +215,7 @@
                 btn.addEventListener("click", function() {
                     // ดึงค่า JSON จาก `data-user`
                     var userData = JSON.parse(this.getAttribute("data-user"));
-
-                    console.log("userData", userData.status);
-
-                    if (userData.status == null) {
-                        document.getElementById("stepStatusNull").style.display = "block";
-                        document.getElementById("stepStatus").style.display = "none";
-                    } else {
-                        document.getElementById("stepStatusNull").style.display = "none";
-                        document.getElementById("stepStatus").style.display = "block";
-                    }
-                    // ใส่ข้อมูลลงใน Modal
-
-                    // เติมค่าลงใน Modal
-                    document.getElementById("project_name").value = userData.project_name || "";
-                    document.getElementById("work_type").value = userData.work_type || "";
-                    document.getElementById("solution").value = userData.solution || "";
-                    document.getElementById("work_description").value = userData.work_description ||
-                        "";
-                    document.getElementById("meeting_date").value = userData.meeting_date || "";
-                    document.getElementById("meeting_time").value = userData.meeting_time || "";
-                    document.getElementById("end_date").value = userData.end_date || "";
-                    document.getElementById("company_name").value = userData.company_name || "";
-                    document.getElementById("contact_name").value = userData.contact_name || "";
-                    document.getElementById("contact_phone").value = userData.contact_phone || "";
-                    document.getElementById("contact_position").value = userData.contact_position ||
-                        "";
-                    document.getElementById("location").value = userData.location || "";
-
-                    var locationLink = document.getElementById("location_link");
-                    if (userData.location) {
-                        locationLink.href = userData.location;
-                        locationLink.classList.remove("d-none"); // แสดงลิงก์
-                    } else {
-                        locationLink.classList.add("d-none"); // ซ่อนลิงก์ถ้าไม่มีค่า
-                    }
-                    document.getElementById("warranty").value = userData.warranty || "";
-                    document.getElementById("additional_notes").value = userData.additional_notes ||
-                        "";
-                    document.getElementById("needs_documents").value = userData.needs_documents ||
-                        "";
-
-                    let adminName = [userData.admin_prefix, userData.admin_first_name, userData
-                            .admin_last_name
-                        ]
-                        .filter(Boolean) // ลบค่าที่เป็น null หรือ undefined
-                        .join(" "); // รวมเป็น string
-
-                    document.getElementById("caretaker_admin").value = adminName || "";
-                    document.getElementById("caretaker_admin_phone").value = userData.admin_phone ||
-                        "";
-
-                    // ✅ เช็คค่า PM
-                    let pmName = [userData.pm_prefix, userData.pm_first_name, userData.pm_last_name]
-                        .filter(Boolean)
-                        .join(" ");
-
-                    document.getElementById("caretaker_pm").value = pmName || "";
-                    document.getElementById("caretaker_pm_phone").value = userData.pm_phone || "";
-
-                    // ✅ เช็คค่า Contractor
-                    let contractorName = [userData.contractor_prefix, userData
-                            .contractor_first_name, userData.contractor_last_name
-                        ]
-                        .filter(Boolean)
-                        .join(" ");
-
-                    document.getElementById("caretaker_contractor").value = contractorName || "";
-                    document.getElementById("caretaker_contractor_phone").value = userData
-                        .contractor_phone || "";
+                    userDataFuc(userData);
 
                 });
             });
