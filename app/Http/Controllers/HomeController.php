@@ -57,7 +57,8 @@ class HomeController extends Controller
         if (Auth::user()->role == "pm") {
             $data = DB::table('sales_projects')
                 ->where(function ($query) {
-                    $query->where('responsible_pm', Auth::user()->id);
+                    $query->where('responsible_pm', Auth::user()->id)
+                        ->where('status', '!=', 'completed');
                 })
                 ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
                 ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
@@ -84,7 +85,8 @@ class HomeController extends Controller
         if (Auth::user()->role == "contractor") {
             $data = DB::table('sales_projects')
                 ->where(function ($query) {
-                    $query->where('responsible_contractor', Auth::user()->id);
+                    $query->where('responsible_contractor', Auth::user()->id)
+                        ->where('status', '!=', 'completed');
                 })
                 ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
                 ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
