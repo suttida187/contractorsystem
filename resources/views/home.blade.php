@@ -285,15 +285,4 @@
         });
     </script>
 @endsection
-{{-- "admin_prefix": "นาย"
-      +"admin_first_name": "asdasd"
-      +"admin_last_name": "asd"
-      +"admin_phone": "1232333333"
-      +"pm_prefix": null
-      +"pm_first_name": null
-      +"pm_last_name": null
-      +"pm_phone": null
-      +"contractor_prefix": null
-      +"contractor_first_name": null
-      +"contractor_last_name": null
-      +"contractor_phone": null --}}
+
