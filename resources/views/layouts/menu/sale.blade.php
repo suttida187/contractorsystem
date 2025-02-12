@@ -22,6 +22,12 @@
                     <p>เเบบฟอร์มขอคิวงาน</p>
                 </a>
             </li>
+            <li class="nav-item  {{ $activeRoute === 'create-form' ? 'active' : '' }}">
+                <a href="{{ url('create-form') }}">
+                    <i class="fa-solid fa-square-plus"></i>
+                    <p>เเบบฟอร์มขอคิวงาน</p>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

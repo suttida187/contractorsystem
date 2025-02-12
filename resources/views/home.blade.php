@@ -155,6 +155,50 @@
                                 class="form-control no-edit">
                         </div>
                     </div>
+
+                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดผู้ดูเเล</strong></h5>
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Admin: </label>
+                            <input name="caretaker_admin" type="text" id="caretaker_admin"
+                                class="form-control no-edit">
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">เบอร์ติดต่อ: </label>
+                            <input name="caretaker_admin_phone" type="text" id="caretaker_admin_phone"
+                                class="form-control no-edit">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">ผู้จัดการโครงการ: </label>
+                            <input name="caretaker_pm_phone" type="text" id="caretaker_pm_phone"
+                                class="form-control no-edit">
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">เบอร์ติดต่อ: </label>
+                            <input name="caretaker_pm_phone" type="text" id="caretaker_pm_phone"
+                                class="form-control no-edit">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">ผู้รับเหมา: </label>
+                            <input name="caretaker_contractor" type="text" id="caretaker_contractor"
+                                class="form-control no-edit">
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">เบอร์ติดต่อ: </label>
+                            <input name="caretaker_contractor_phone" type="text" id="caretaker_contractor_phone"
+                                class="form-control no-edit">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -207,10 +251,49 @@
                     document.getElementById("needs_documents").value = userData.needs_documents ||
                         "";
 
+                    let adminName = [userData.admin_prefix, userData.admin_first_name, userData
+                            .admin_last_name
+                        ]
+                        .filter(Boolean) // ลบค่าที่เป็น null หรือ undefined
+                        .join(" "); // รวมเป็น string
 
+                    document.getElementById("caretaker_admin").value = adminName || "";
+                    document.getElementById("caretaker_admin_phone").value = userData.admin_phone ||
+                        "";
+
+                    // ✅ เช็คค่า PM
+                    let pmName = [userData.pm_prefix, userData.pm_first_name, userData.pm_last_name]
+                        .filter(Boolean)
+                        .join(" ");
+
+                    document.getElementById("caretaker_pm").value = pmName || "";
+                    document.getElementById("caretaker_pm_phone").value = userData.pm_phone || "";
+
+                    // ✅ เช็คค่า Contractor
+                    let contractorName = [userData.contractor_prefix, userData
+                            .contractor_first_name, userData.contractor_last_name
+                        ]
+                        .filter(Boolean)
+                        .join(" ");
+
+                    document.getElementById("caretaker_contractor").value = contractorName || "";
+                    document.getElementById("caretaker_contractor_phone").value = userData
+                        .contractor_phone || "";
 
                 });
             });
         });
     </script>
 @endsection
+{{-- "admin_prefix": "นาย"
+      +"admin_first_name": "asdasd"
+      +"admin_last_name": "asd"
+      +"admin_phone": "1232333333"
+      +"pm_prefix": null
+      +"pm_first_name": null
+      +"pm_last_name": null
+      +"pm_phone": null
+      +"contractor_prefix": null
+      +"contractor_first_name": null
+      +"contractor_last_name": null
+      +"contractor_phone": null --}}
