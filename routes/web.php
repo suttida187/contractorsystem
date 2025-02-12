@@ -58,7 +58,7 @@ Route::get('/delete-user/{id}', [adminRegisterController::class, 'destroy'])->na
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // notifications
 Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');
-Route::get('/mark-as-read/{id}', [NotificationController::class, 'UpdateReadAt'])->name('notifications.markAsRead');
+Route::get('/mark-as-read/{notificationId}/{projectId}', [NotificationController::class, 'UpdateReadAt'])->name('notifications.markAsRead');
 // เทส ยิง  notifications
 Route::get('test', function () {
     $notifications = "notifications success";

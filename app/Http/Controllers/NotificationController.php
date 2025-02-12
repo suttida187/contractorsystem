@@ -27,9 +27,14 @@ class NotificationController extends Controller
                 ->map(function ($notification) {
                     return [
                         'id' => $notification->id,
+                        'id_project' => json_decode($notification->data, true)['id_project'],
                         'message' => json_decode($notification->data, true)['message'],
                         'time' => Carbon::parse($notification->created_at)->diffForHumans(),
-                        'url' => route('notifications.markAsRead', $notification->id),
+                        'url' => route('notifications.markAsRead', [
+                            'notificationId' => $notification->id,
+                            'projectId' => json_decode($notification->data, true)['id_project']
+                        ])
+
                     ];
                 });
         }
@@ -41,9 +46,13 @@ class NotificationController extends Controller
                 ->map(function ($notification) {
                     return [
                         'id' => $notification->id,
+                        'id_project' => json_decode($notification->data, true)['id_project'],
                         'message' => json_decode($notification->data, true)['message'],
                         'time' => Carbon::parse($notification->created_at)->diffForHumans(),
-                        'url' => route('notifications.markAsRead', $notification->id),
+                        'url' => route('notifications.markAsRead', [
+                            'notificationId' => $notification->id,
+                            'projectId' => json_decode($notification->data, true)['id_project']
+                        ])
                     ];
                 });
         }
@@ -55,9 +64,13 @@ class NotificationController extends Controller
                 ->map(function ($notification) {
                     return [
                         'id' => $notification->id,
+                        'id_project' => json_decode($notification->data, true)['id_project'],
                         'message' => json_decode($notification->data, true)['message'],
                         'time' => Carbon::parse($notification->created_at)->diffForHumans(),
-                        'url' => route('notifications.markAsRead', $notification->id),
+                        'url' => route('notifications.markAsRead', [
+                            'notificationId' => $notification->id,
+                            'projectId' => json_decode($notification->data, true)['id_project']
+                        ])
                     ];
                 });
         }
@@ -70,9 +83,13 @@ class NotificationController extends Controller
                 ->map(function ($notification) {
                     return [
                         'id' => $notification->id,
+                        'id_project' => json_decode($notification->data, true)['id_project'],
                         'message' => json_decode($notification->data, true)['message'],
                         'time' => Carbon::parse($notification->created_at)->diffForHumans(),
-                        'url' => route('notifications.markAsRead', $notification->id),
+                        'url' => route('notifications.markAsRead', [
+                            'notificationId' => $notification->id,
+                            'projectId' => json_decode($notification->data, true)['id_project']
+                        ])
                     ];
                 });
         }
