@@ -63,9 +63,9 @@
                 </a>
             </li>
 
-            <li class="nav-item {{ $activeRoute === 'all.projects' ? 'active' : '' }}">
-                <a href="{{ url('all.projects') }}">
-                    <i class="fas fa-layer-group"></i>
+            <li class="nav-item  {{ $activeRoute === 'home-all' ? 'active' : '' }}">
+                <a href="{{ url('home-all') }}">
+                    <i class="fa-solid fa-square-plus"></i>
                     <p>โครงการทั้งหมด</p>
                 </a>
             </li>

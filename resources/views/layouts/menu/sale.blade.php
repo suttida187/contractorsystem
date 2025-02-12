@@ -22,10 +22,10 @@
                     <p>เเบบฟอร์มขอคิวงาน</p>
                 </a>
             </li>
-            <li class="nav-item  {{ $activeRoute === 'create-form' ? 'active' : '' }}">
-                <a href="{{ url('create-form') }}">
+            <li class="nav-item  {{ $activeRoute === 'home-all' ? 'active' : '' }}">
+                <a href="{{ url('home-all') }}">
                     <i class="fa-solid fa-square-plus"></i>
-                    <p>เเบบฟอร์มขอคิวงาน</p>
+                    <p>โครงการทั้งหมด</p>
                 </a>
             </li>
         </ul>
