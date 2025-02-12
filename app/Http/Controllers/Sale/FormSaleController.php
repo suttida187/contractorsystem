@@ -59,6 +59,7 @@ class FormSaleController extends Controller
 
         $project = SalesProjects::create($validatedData);
         $updatedAt =  $project->updated_at;
+        $projectId =  $project->id;
 
         $id = Auth::user()->id;
         $role = "admin"; // ส่งเเจ้งเตือนให้กับ Admin
@@ -67,6 +68,7 @@ class FormSaleController extends Controller
 
         // JSON Encode ให้ถูกต้อง
         $data = json_encode([
+            'id_project' =>  $projectId,
             'message' => $projectName,
             'time' => $updatedAt
         ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
