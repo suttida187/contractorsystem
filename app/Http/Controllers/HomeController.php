@@ -30,9 +30,7 @@ class HomeController extends Controller
             $data = DB::table('sales_projects')
                 ->where(function ($query) {
                     $query->where('status', '!=', 'completed')
-                        ->orWhereNull('responsible_admin')
-                        ->orWhereNull('responsible_pm')
-                        ->orWhereNull('responsible_contractor');
+                        ->orWhereNull('status');
                 })
                 ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
                 ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
@@ -108,7 +106,6 @@ class HomeController extends Controller
                 )
                 ->orderBy('sales_projects.created_at', 'DESC') // เรียงลำดับตามวันที่สร้าง
                 ->get();
-        
         }
 
 

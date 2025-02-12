@@ -6,7 +6,7 @@
             'waiting_admin_review' => 3,
             'completed' => 4,
         ];
-        $currentStep = 2; /* $statusSteps[$da->status] ?? 0 */
+        $currentStep = $statusSteps[$da->status] ?? 0;
     @endphp
 
     <!-- เส้น Progress -->

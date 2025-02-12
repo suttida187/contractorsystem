@@ -2,14 +2,21 @@
     @php
         // กำหนดสเต็ปของสถานะ
         $responsibleSteps = [
-            'admin' => !is_null($da->responsible_admin) ? 1 : 0,
-            'pm' => !is_null($da->responsible_admin) && !is_null($da->responsible_pm) ? 2 : 0,
-            'contractor' =>
+            'sale' =>
+                is_null($da->responsible_admin) && is_null($da->responsible_pm) && is_null($da->responsible_contractor)
+                    ? 1
+                    : 0,
+            'admin' =>
+                !is_null($da->responsible_admin) && is_null($da->responsible_pm) && is_null($da->responsible_contractor)
+                    ? 2
+                    : 0,
+            'pm' =>
                 !is_null($da->responsible_admin) &&
                 !is_null($da->responsible_pm) &&
-                !is_null($da->responsible_contractor)
+                is_null($da->responsible_contractor)
                     ? 3
                     : 0,
+            'contractor' => !is_null($da->responsible_contractor) ? 4 : 0,
         ];
 
         // กำหนดสเต็ปปัจจุบัน
