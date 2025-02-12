@@ -801,3 +801,15 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin: 16px 0px 24px 0px;
   text-align: center;
 }
+
+.notif-icon {
+  width: 40px;
+  height: 40px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* ป้องกันไม่ให้ถูกบีบ */
+  background: #f0f0f0;
+  border-radius: 50%;
+}

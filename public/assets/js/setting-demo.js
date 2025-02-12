@@ -153,10 +153,10 @@ function fetchNotifications() {
         data.forEach(notification => {
           let notifItem = `
                       <a href="${notification.url}">
-                          <div class="notif-icon notif-primary" style="width: 50px; height:40px">
-                              <i class="fa fa-project-diagram"></i>
+                          <div class="notif-icon notif-primary" style="width: 40px; height:40px">
+                              <i class="fa fa-project-diagram" style="font-size: 16px;"></i>
                           </div>
-                          <div class="notif-content" style="width: 350px;">
+                          <div class="notif-content">
                               <span class="block">${notification.message}</span>
                               <span class="time">${notification.time}</span>
                           </div>
