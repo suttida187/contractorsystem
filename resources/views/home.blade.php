@@ -33,14 +33,21 @@
         <div class="modal-dialog  modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">รายละเอียดงาน</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{-- รายละเอียดงาน --}}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <!-- ข้อมูลพื้นฐาน -->
-                        @include('layouts.stepStatus')
-                        @include('layouts.stepStatusNull')
+
+                        <div id="stepStatusNull" style="display: none">
+                            @include('layouts.stepStatusNull')
+                        </div>
+                        <div id="stepStatus" style="display: none">
+                            @include('layouts.stepStatus')
+                        </div>
+
+                        <h1 class="text-center-project" id="exampleModalLabel">รายละเอียดงาน</h1>
 
                         <div class="mb-3">
                             <label class="form-label">ชื่อโปรเจกต์: </label>
@@ -148,11 +155,6 @@
                                 class="form-control no-edit">
                         </div>
                     </div>
-
-
-                    <div class="modal-footer mt-3">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -165,9 +167,15 @@
                     // ดึงค่า JSON จาก `data-user`
                     var userData = JSON.parse(this.getAttribute("data-user"));
 
-                    console.log("userData", userData);
+                    console.log("userData", userData.status);
 
-
+                    if (userData.status == null) {
+                        document.getElementById("stepStatusNull").style.display = "block";
+                        document.getElementById("stepStatus").style.display = "none";
+                    } else {
+                        document.getElementById("stepStatusNull").style.display = "none";
+                        document.getElementById("stepStatus").style.display = "block";
+                    }
                     // ใส่ข้อมูลลงใน Modal
 
                     // เติมค่าลงใน Modal

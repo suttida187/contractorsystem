@@ -13,11 +13,13 @@
         ];
 
         // กำหนดสเต็ปปัจจุบัน
-        $currentStep = max($responsibleSteps);
+        $currentStep = 2; /* max($responsibleSteps); */
     @endphp
 
-    <div class="progress-line @if ($currentStep >= 1) active @endif"></div>
-    <div class="progress-line dashed-line @if ($currentStep >= 3) active @endif"></div>
+
+    <div class="progress-line  step-1 @if ($currentStep >= 2) active @else dashed-line @endif"></div>
+    <div class="progress-line step-2 @if ($currentStep >= 3) active @else dashed-line @endif"></div>
+    <div class="progress-line  step-3 @if ($currentStep >= 4) active @else dashed-line @endif"></div>
 
     <!-- สเต็ป 1 -->
     <div class="text-center">

@@ -609,6 +609,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   position: relative;
 }
 
+/* ✅ Step */
 .progress-step {
   width: 40px;
   height: 40px;
@@ -629,36 +630,174 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   color: #007bff;
 }
 
+/* ✅ เส้นเชื่อม */
 .progress-line {
   position: absolute;
   height: 3px;
   background: #ffffff;
-  width: calc(100% - 40px);
   top: 20px;
-  left: 20px;
+  transform: translateY(-50%);
   z-index: 1;
 }
 
+/* ✅ ทำให้เส้นแต่ละช่วงยาวไม่เกิน progress-step */
+.progress-line.step-1 {
+  width: 30%;
+  left: 15px;
+}
+
+.progress-line.step-2 {
+  width: 30%;
+  left: 30%;
+}
+
+.progress-line.step-3 {
+  width: 27%;
+  left: 60%;
+}
+
+/* ✅ เส้น Active */
 .progress-line.active {
   background: #007bff;
-  width: calc(50% - 20px);
 }
 
+/* ✅ เส้นปะเฉพาะระหว่าง Step 2 กับ Step 3 */
 .dashed-line {
-  border-top: 3px dashed #ccc;
   position: absolute;
+  border-top: 3px dashed #ccc;
   height: 3px;
-  width: calc(45% - 20px);
+  width: 40%;
   top: 20px;
-  left: 50%;
+  left: 35%;
+  transform: translateY(-50%);
   z-index: 1;
 }
 
+/* ✅ ข้อความ */
 .progress-text {
-  margin-left: -16px;
+  text-align: center;
   font-size: 14px;
   margin-top: 5px;
   color: #333;
+  margin-left: -24px;
 }
 
 
+
+.progress-container-check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  position: relative;
+}
+
+
+
+/* ✅ Step */
+.progress-step-check {
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border: 3px solid #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+  color: #ccc;
+}
+
+.progress-step-check.active {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+/* ✅ เส้นเชื่อม */
+.progress-line-check {
+  position: absolute;
+  height: 3px;
+  background: #ffffff;
+  top: 20px;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* ✅ ทำให้เส้นแต่ละช่วงยาวไม่เกิน progress-step */
+.progress-line-check.step-1 {
+  width: 40%;
+  left: 15px;
+}
+
+.progress-line-check.step-2 {
+  width: 40%;
+  left: 35%;
+}
+
+.progress-line-check.step-3 {
+  width: 28%;
+  left: 65%;
+}
+
+/* ✅ เส้น Active */
+.progress-line-check.active {
+  background: #007bff;
+}
+
+/* ✅ เส้นปะเฉพาะระหว่าง Step 2 กับ Step 3 */
+.dashed-line-check {
+  position: absolute;
+  border-top: 3px dashed #ccc;
+  height: 3px;
+  width: 40%;
+  top: 20px;
+  left: 35%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.progress-text-check {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 5px;
+  color: #333;
+  white-space: nowrap;
+  /* ป้องกันข้อความตัดบรรทัดในจอปกติ */
+  margin-left: -24px;
+}
+
+/* ✅ ปรับให้ข้อความลงบรรทัดใหม่บนมือถือ */
+@media (max-width: 480px) {
+  .progress-text-check {
+    display: block;
+    /* ทำให้ข้อความลงบรรทัดใหม่ */
+    white-space: normal;
+    /* อนุญาตให้ข้อความขึ้นบรรทัดใหม่ */
+    text-align: center;
+    /* จัดตรงกลาง */
+    margin-top: 10px;
+    margin-right: 24px !important;
+  }
+
+  .progress-text {
+    display: block;
+    /* ทำให้ข้อความลงบรรทัดใหม่ */
+    white-space: normal;
+    /* อนุญาตให้ข้อความขึ้นบรรทัดใหม่ */
+    text-align: center;
+    /* จัดตรงกลาง */
+    margin-top: 10px;
+    margin-right: 24px !important;
+  }
+}
+
+.text-center-project {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 16px 0px 24px 0px;
+  text-align: center;
+}
