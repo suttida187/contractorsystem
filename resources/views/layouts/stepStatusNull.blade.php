@@ -13,7 +13,7 @@
         ];
 
         // กำหนดสเต็ปปัจจุบัน
-        $currentStep = 2; /* max($responsibleSteps); */
+        $currentStep = max($responsibleSteps);
     @endphp
 
 
