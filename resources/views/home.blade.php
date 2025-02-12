@@ -40,12 +40,15 @@
                     <div class="row">
                         <!-- ข้อมูลพื้นฐาน -->
 
-                        <div id="stepStatusNull" style="display: none">
-                            @include('layouts.stepStatusNull')
-                        </div>
-                        <div id="stepStatus" style="display: none">
-                            @include('layouts.stepStatus')
-                        </div>
+                        @if ($data->count() > 0)
+                            <div id="stepStatusNull" style="display: none">
+                                @include('layouts.stepStatusNull')
+                            </div>
+                            <div id="stepStatus" style="display: none">
+                                @include('layouts.stepStatus')
+                            </div>
+                        @endif
+
 
                         <h1 class="text-center-project" id="exampleModalLabel">รายละเอียดงาน</h1>
 
@@ -285,4 +288,3 @@
         });
     </script>
 @endsection
-

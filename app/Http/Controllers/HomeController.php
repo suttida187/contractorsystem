@@ -108,6 +108,7 @@ class HomeController extends Controller
                 )
                 ->orderBy('sales_projects.created_at', 'DESC') // เรียงลำดับตามวันที่สร้าง
                 ->get();
+        
         }
 
 
