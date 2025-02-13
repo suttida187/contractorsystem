@@ -196,6 +196,68 @@ class HomeController extends Controller
 
         return view('home_all', compact('data', 'searchQuery', 'filterStatus'));
     }
+    public function assignWork()
+    {
+
+
+        $userRole = Auth::user()->role;
+        $userId = Auth::user()->id;
+
+        // สร้าง Query หลัก
+        $query = DB::table('sales_projects')
+            ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
+            ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
+            ->leftJoin('users as contractor', 'sales_projects.responsible_contractor', '=', 'contractor.id')
+            ->select(
+                'sales_projects.*',
+                'admin.prefix as admin_prefix',
+                'admin.first_name as admin_first_name',
+                'admin.last_name as admin_last_name',
+                'admin.phone as admin_phone',
+                'pm.prefix as pm_prefix',
+                'pm.first_name as pm_first_name',
+                'pm.last_name as pm_last_name',
+                'pm.phone as pm_phone',
+                'contractor.prefix as contractor_prefix',
+                'contractor.first_name as contractor_first_name',
+                'contractor.last_name as contractor_last_name',
+                'contractor.phone as contractor_phone'
+            );
+
+        // กรองข้อมูลตาม role ของผู้ใช้
+        switch ($userRole) {
+
+            case "admin":
+                $query->where(function ($q) {
+                    $q->where('status', '!=', 'completed')
+                        ->orWhereNull('status');
+                });
+
+                break;
+
+            case "pm":
+                $query->where(function ($q) {
+                    $q->where('status', '!=', 'completed')
+                        ->orWhereNull('status');
+                })
+                    ->where('responsible_pm', $userId);
+
+                break;
+
+            case "contractor":
+                $query->where(function ($q) {
+                    $q->where('status', '!=', 'completed')
+                        ->orWhereNull('status');
+                })
+                    ->where('responsible_contractor', $userId);
+                break;
+        }
+
+        // ดึงข้อมูลเรียงตามวันที่สร้าง และแบ่งหน้า
+        $data = $query->orderBy('sales_projects.created_at', 'DESC')->paginate(100);
+
+        return view('assign_work', compact('data'));
+    }
 }
 
 

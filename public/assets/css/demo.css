@@ -885,3 +885,56 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 .search-box button:hover {
   background-color: gray;
 }
+
+
+.project-card {
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* เอฟเฟกต์เมื่อ Hover */
+.project-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* เอฟเฟกต์เมื่อคลิก */
+.project-card:active {
+  transform: scale(0.98);
+}
+
+/* เอฟเฟกต์สีสถานะ */
+.status-text {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.text-red {
+  color: red;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.text-green {
+  color: green;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* เพิ่ม Animation ให้ข้อความค่อยๆ ปรากฏ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

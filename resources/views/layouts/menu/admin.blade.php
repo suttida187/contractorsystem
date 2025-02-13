@@ -56,8 +56,8 @@
                 </div>
             </li>
 
-            <li class="nav-item {{ $activeRoute === 'assign.work' ? 'active' : '' }}">
-                <a href="{{ url('assign.work') }}">
+            <li class="nav-item {{ $activeRoute === 'assign-work' ? 'active' : '' }}">
+                <a href="{{ url('assign-work') }}">
                     <i class="fas fa-layer-group"></i>
                     <p>ตรวจสอบงาน</p>
                 </a>
