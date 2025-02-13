@@ -170,7 +170,7 @@ class HomeController extends Controller
                     'contractor.phone as contractor_phone'
                 )
                 ->orderBy('sales_projects.created_at', 'DESC') // เรียงลำดับตามวันที่สร้าง
-                ->get();
+                ->paginate(100);
         }
 
         if (Auth::user()->role == "admin") {
@@ -198,7 +198,7 @@ class HomeController extends Controller
                     'contractor.phone as contractor_phone'
                 )
                 ->orderBy('sales_projects.created_at', 'DESC') // เรียงลำดับตามวันที่สร้าง
-                ->get();
+                ->paginate(100);
         }
 
         if (Auth::user()->role == "pm") {
@@ -226,7 +226,7 @@ class HomeController extends Controller
                     'contractor.phone as contractor_phone'
                 )
                 ->orderBy('sales_projects.created_at', 'DESC') // เรียงลำดับตามวันที่สร้าง
-                ->get();
+                ->paginate(100);
         }
 
         if (Auth::user()->role == "contractor") {
@@ -254,7 +254,7 @@ class HomeController extends Controller
                     'contractor.phone as contractor_phone'
                 )
                 ->orderBy('sales_projects.created_at', 'DESC') // เรียงลำดับตามวันที่สร้าง
-                ->get();
+                ->paginate(100);
         }
 
 
