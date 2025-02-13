@@ -57,7 +57,7 @@ class HomeController extends Controller
         if (Auth::user()->role == "admin") {
             $data = DB::table('sales_projects')
                 ->where(function ($query) {
-                    $query->where('notifications_admins', Auth::user()->id)
+                    $query->where('responsible_admin', Auth::user()->id)
                         ->where('status', '!=', 'completed');
                 })
                 ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
