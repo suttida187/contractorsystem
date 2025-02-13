@@ -58,14 +58,20 @@
 
             <li class="nav-item {{ $activeRoute === 'assign-work' ? 'active' : '' }}">
                 <a href="{{ url('assign-work') }}">
-                    <i class="fas fa-layer-group"></i>
+                    <i class="fa-solid fa-briefcase"></i>
+                    <p>มอบหมายงาน</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a data-bs-toggle="collapse">
+                    <i class="fa-solid fa-list-check"></i>
                     <p>ตรวจสอบงาน</p>
                 </a>
             </li>
 
             <li class="nav-item  {{ $activeRoute === 'home-all' ? 'active' : '' }}">
                 <a href="{{ url('home-all') }}">
-                    <i class="fa-solid fa-square-plus"></i>
+                    <i class="fa-solid fa-list"></i>
                     <p>โครงการทั้งหมด</p>
                 </a>
             </li>
