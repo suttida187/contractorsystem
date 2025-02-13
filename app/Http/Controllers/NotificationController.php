@@ -155,7 +155,9 @@ class NotificationController extends Controller
                 ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
         }
 
-        $data = DB::table('sales_projects')
+
+        return redirect('home');
+        /*        $data = DB::table('sales_projects')
             ->where('sales_projects.id', $projectId)
             ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
             ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
@@ -176,6 +178,6 @@ class NotificationController extends Controller
                 'contractor.phone as contractor_phone'
             )->first();
 
-        return response()->json($data);
+        return response()->json($data); */
     }
 }

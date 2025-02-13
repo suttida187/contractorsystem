@@ -152,16 +152,17 @@ function fetchNotifications() {
 
         data.forEach(notification => {
           let notifItem = `
-                      <a href="#" onclick="handleNotificationClick(event, '${notification.url}')">
-                          <div class="notif-icon notif-primary" style="width: 40px; height:40px">
-                              <i class="fa fa-project-diagram" style="font-size: 16px;"></i>
-                          </div>
-                          <div class="notif-content">
-                              <span class="block">${notification.message}</span>
-                              <span class="time">${notification.time}</span>
-                          </div>
-                      </a>
-                  `;
+            <a href="${notification.url}">
+                <div class="notif-icon notif-primary" style="width: 40px; height:40px">
+                    <i class="fa fa-project-diagram" style="font-size: 16px;"></i>
+                </div>
+                <div class="notif-content">
+                    <span class="block">${notification.message}</span>
+                    <span class="time">${notification.time}</span>
+                </div>
+            </a>
+        `;
+
           notificationDropdown.append(notifItem);
         });
       } else {
