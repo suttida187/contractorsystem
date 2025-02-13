@@ -13,7 +13,7 @@
                                 data-user='@json($da)'>
                                 <span class="project-title">{{ $da->project_name }}</span>
                                 <br>
-                                <span>{{ \Carbon\Carbon::parse($da->updated_at)->format('d/m/') . (\Carbon\Carbon::parse($da->updated_at)->year + 543) . ' ' . \Carbon\Carbon::parse($da->updated_at)->format('H:i') }}</span>
+                                <span>{{ \Carbon\Carbon::parse($da->end_date)->format('d/m/') . (\Carbon\Carbon::parse($da->end_date)->year + 543) }}</span>
 
 
                             </div>

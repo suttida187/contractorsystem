@@ -277,6 +277,9 @@ function userDataFuc(userData) {
 
 
 
+
+
+
   let progressContainer = document.getElementById("progress-container");
 
   // HTML Template สำหรับ Progress Bar

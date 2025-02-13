@@ -7,22 +7,68 @@
                     <div class="card-title">อัพเดตสถานะ</div>
                 </div>
                 <div class="card-body">
-                    @foreach ($data as $da)
-                        <div class="row">
-                            <div class="project-box" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                data-user='@json($da)'>
-                                <span class="project-title">{{ $da->project_name }}</span>
-                                <br>
-                                <span>{{ \Carbon\Carbon::parse($da->updated_at)->format('d/m/') . (\Carbon\Carbon::parse($da->updated_at)->year + 543) . ' ' . \Carbon\Carbon::parse($da->updated_at)->format('H:i') }}</span>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">ชื่อโครงการ</th>
+                                    <th scope="col">สถานะ</th>
+                                    <th scope="col">ผู้จัดการโครงการ</th>
+                                    <th scope="col">ผู้รับเหมา</th>
+                                    <th scope="col">เวลา</th>
+                                    <th scope="col">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userTable">
+                                @php $i = 1; @endphp
+                                @foreach ($data as $da)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $da->project_name }}</td>
+                                        <td>
+                                            @if ($da->status == null)
+                                                @if (is_null($da->responsible_admin) && is_null($da->responsible_pm) && is_null($da->responsible_contractor))
+                                                    Sale กำลังดำเนินงาน
+                                                @elseif (!is_null($da->responsible_admin) && is_null($da->responsible_pm) && is_null($da->responsible_contractor))
+                                                    รอ Admin ดำเนินการ
+                                                @elseif (!is_null($da->responsible_admin) && !is_null($da->responsible_pm) && is_null($da->responsible_contractor))
+                                                    รอ PM ดำเนินการ
+                                                @elseif (!is_null($da->responsible_admin) && !is_null($da->responsible_pm) && !is_null($da->responsible_contractor))
+                                                    รอผู้รับเหมาดำเนินงาน
+                                                @endif
+                                            @else
+                                                @if ($da->status == 'waiting_contractor')
+                                                    ผู้รับเหมาส่งมอบงาน
+                                                @elseif ($da->status == 'waiting_pm_review')
+                                                    PM ตรวจสอบ
+                                                @elseif ($da->status == 'waiting_admin_review')
+                                                    แอดมินตรวจสอบ
+                                                @elseif ($da->status == 'completed')
+                                                    เสร็จสมบูรณ์
+                                                @endif
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $da->pm_prefix }} {{ $da->pm_first_name }} {{ $da->pm_last_name }}
+                                        </td>
+                                        <td> {{ $da->contractor_prefix }} {{ $da->contractor_first_name }}
+                                            {{ $da->contractor_last_name }}</td>
 
+                                        <td> {{ \Carbon\Carbon::parse($da->end_date)->format('d/m/') . (\Carbon\Carbon::parse($da->end_date)->year + 543) }}
+                                        </td>
+                                        <td>
+                                            <a class="icon-action view" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal" data-user='@json($da)'>
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
-                            </div>
-
-                            <div class="project-status">
-                                @include('layouts.status')
-                            </div>
-                        </div>
-                    @endforeach
                 </div>
             </div>
         </div>
@@ -180,7 +226,7 @@
                     <div class="row">
                         <div class="col-md-8 mb-3">
                             <label class="form-label">ผู้จัดการโครงการ: </label>
-                            <input name="caretaker_pm_phone" type="text" id="caretaker_pm_phone"
+                            <input name="caretaker_pm_phone" type="text" id="caretaker_pm"
                                 class="form-control no-edit">
 
                         </div>
@@ -212,12 +258,23 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll(".project-box").forEach(function(btn) {
+            document.querySelectorAll(".icon-action.view").forEach(function(btn) { // ✅ แก้ selector
                 btn.addEventListener("click", function() {
-                    // ดึงค่า JSON จาก `data-user`
-                    var userData = JSON.parse(this.getAttribute("data-user"));
-                    userDataFuc(userData);
+                    let userDataAttr = this.getAttribute("data-user"); // ✅ ตรวจสอบก่อน parse
 
+                    if (userDataAttr) {
+                        try {
+                            let userData = JSON.parse(userDataAttr);
+                            console.log("userData", userData);
+
+                            // เรียกฟังก์ชัน (ถ้าต้องการ)
+                            userDataFuc(userData);
+                        } catch (error) {
+                            console.error("JSON parse error:", error);
+                        }
+                    } else {
+                        console.warn("Attribute data-user is missing");
+                    }
                 });
             });
         });
