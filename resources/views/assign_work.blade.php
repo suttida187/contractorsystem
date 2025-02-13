@@ -222,6 +222,25 @@
                                 class="form-control no-edit">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">เลือกผู้จัดการโครงการ: </label>
+                            <select name="solution" id="solutionSelect"
+                                class="form-select @error('solution') is-invalid @enderror">
+                                <option disabled selected>เลือก Solution</option>
+                                {{--   @foreach ($solutions as $sol)
+                                <option value="{{ $sol->name }}" {{ old('solution') == $sol->name ? 'selected' : '' }}>
+                                    {{ $sol->name }}
+                                </option>
+                            @endforeach --}}
+                            </select>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
