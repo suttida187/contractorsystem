@@ -18,6 +18,7 @@
 
                             </div>
 
+
                             <div class="project-status">
                                 @include('layouts.status')
                             </div>
@@ -27,7 +28,9 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="exampleModalAutoClick" data-bs-target="#exampleModal">
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="exampleModalAutoClick"
+        data-bs-target="#exampleModal" style="display: none">
         Launch demo modal
     </button>
 
@@ -179,7 +182,7 @@
                     <div class="row">
                         <div class="col-md-8 mb-3">
                             <label class="form-label">ผู้จัดการโครงการ: </label>
-                            <input name="caretaker_pm_phone" type="text" id="caretaker_pm_phone"
+                            <input name="caretaker_pm_phone" type="text" id="caretaker_pm"
                                 class="form-control no-edit">
 
                         </div>

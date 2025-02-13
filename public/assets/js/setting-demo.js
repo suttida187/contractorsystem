@@ -187,6 +187,10 @@ function userDataFuc(userData) {
   }
   // ใส่ข้อมูลลงใน Modal
 
+
+  console.log("userData", userData);
+
+
   // เติมค่าลงใน Modal
   document.getElementById("project_name").value = userData.project_name || "";
   document.getElementById("work_type").value = userData.work_type || "";
@@ -216,34 +220,141 @@ function userDataFuc(userData) {
   document.getElementById("needs_documents").value = userData.needs_documents ||
     "";
 
-  let adminName = [userData.admin_prefix, userData.admin_first_name, userData
-    .admin_last_name
-  ]
-    .filter(Boolean) // ลบค่าที่เป็น null หรือ undefined
-    .join(" "); // รวมเป็น string
 
-  document.getElementById("caretaker_admin").value = adminName || "";
+  document.getElementById("caretaker_admin").value = (userData.admin_prefix ? userData.admin_prefix : '') + ' ' +
+    (userData.admin_first_name ? userData.admin_first_name : '') + ' ' +
+    (userData.admin_last_name ? userData.admin_last_name : '')
   document.getElementById("caretaker_admin_phone").value = userData.admin_phone ||
     "";
 
-  // ✅ เช็คค่า PM
-  let pmName = [userData.pm_prefix, userData.pm_first_name, userData.pm_last_name]
-    .filter(Boolean)
-    .join(" ");
 
-  document.getElementById("caretaker_pm").value = pmName || "";
+
+  document.getElementById("caretaker_pm").value = (userData.pm_prefix ? userData.pm_prefix : '') + ' ' +
+    (userData.pm_first_name ? userData.pm_first_name : '') + ' ' +
+    (userData.pm_last_name ? userData.pm_last_name : '');;
   document.getElementById("caretaker_pm_phone").value = userData.pm_phone || "";
 
-  // ✅ เช็คค่า Contractor
-  let contractorName = [userData.contractor_prefix, userData
-    .contractor_first_name, userData.contractor_last_name
-  ]
-    .filter(Boolean)
-    .join(" ");
 
-  document.getElementById("caretaker_contractor").value = contractorName || "";
+
+  document.getElementById("caretaker_contractor").value = (userData.contractor_prefix ? userData.contractor_prefix : '') + ' ' +
+    (userData.contractor_first_name ? userData.contractor_first_name : '') + ' ' +
+    (userData.contractor_last_name ? userData.contractor_last_name : '');;
   document.getElementById("caretaker_contractor_phone").value = userData
     .contractor_phone || "";
+
+
+  let currentStep = 0;
+
+  // ตรวจสอบว่า userData มีค่าหรือไม่
+  if (userData.responsible_admin === null && userData.responsible_pm === null && userData.responsible_contractor === null) {
+    currentStep = 1;
+  } else if (
+    userData.responsible_admin !== null &&
+    userData.responsible_pm === null &&
+    userData.responsible_contractor === null
+  ) {
+    currentStep = 2;
+  } else if (
+    userData.responsible_admin !== null &&
+    userData.responsible_pm !== null &&
+    userData.responsible_contractor === null
+  ) {
+    currentStep = 3;
+  } else if (userData.responsible_contractor !== null) {
+    currentStep = 4;
+  }
+
+
+
+  let progressContainer = document.getElementById("progress-container");
+
+  // HTML Template สำหรับ Progress Bar
+  let progressHTML = `
+      <div class="progress-line step-1 ${currentStep >= 2 ? 'active' : 'dashed-line'}"></div>
+      <div class="progress-line step-2 ${currentStep >= 3 ? 'active' : 'dashed-line'}"></div>
+      <div class="progress-line step-3 ${currentStep >= 4 ? 'active' : 'dashed-line'}"></div>
+
+      <!-- สเต็ป 1 -->
+      <div class="text-center">
+          <div class="progress-step ${currentStep >= 1 ? 'active' : ''}">1</div>
+          <div class="progress-text">Sale กำลังดำเนินงาน</div>
+      </div>
+
+      <!-- สเต็ป 2 -->
+      <div class="text-center">
+          <div class="progress-step ${currentStep >= 2 ? 'active' : ''}">2</div>
+          <div class="progress-text">รอ Admin ดำเนินการ</div>
+      </div>
+
+      <!-- สเต็ป 3 -->
+      <div class="text-center">
+          <div class="progress-step ${currentStep >= 3 ? 'active' : ''}">3</div>
+          <div class="progress-text">รอ PM ดำเนินการ</div>
+      </div>
+
+      <!-- สเต็ป 4 -->
+      <div class="text-center">
+          <div class="progress-step ${currentStep >= 4 ? 'active' : ''}">4</div>
+          <div class="progress-text">รอผู้รับเหมาดำเนินงาน</div>
+      </div>
+  `;
+
+  // แทรก HTML ที่สร้างเข้าไปใน `progress-container`
+  progressContainer.innerHTML = progressHTML;
+
+
+  let progressContainerCheck = document.getElementById("progress-container-check");
+  let currentStepCheck = 0;
+
+  // ตรวจสอบว่า userData มีค่าหรือไม่
+  if (userData.status == 'waiting_contractor') {
+    currentStepCheck = 1;
+  } else if (
+    userData.status == 'waiting_pm_review'
+  ) {
+    currentStepCheck = 2;
+  } else if (
+    userData.status == 'waiting_admin_review'
+  ) {
+    currentStepCheck = 3;
+  } else if (userData.status == 'completed') {
+    currentStepCheck = 4;
+  }
+
+  let progress2HTML = `
+  <!-- เส้น Progress -->
+  <div class="progress-line-check step-1 ${currentStepCheck >= 2 ? 'active' : 'dashed-line-check'}"></div>
+  <div class="progress-line-check step-2 ${currentStepCheck >= 3 ? 'active' : 'dashed-line-check'}"></div>
+  <div class="progress-line-check step-3 ${currentStepCheck >= 4 ? 'active' : 'dashed-line-check'}"></div>
+
+  <!-- สเต็ป 1 -->
+  <div class="text-center">
+      <div class="progress-step-check ${currentStepCheck >= 1 ? 'active' : ''}">1</div>
+      <div class="progress-text-check">ผู้รับเหมาส่งมอบงาน</div>
+  </div>
+
+  <!-- สเต็ป 2 -->
+  <div class="text-center">
+      <div class="progress-step-check ${currentStepCheck >= 2 ? 'active' : ''}">2</div>
+      <div class="progress-text-check">PM ตรวจสอบ</div>
+  </div>
+
+  <!-- สเต็ป 3 -->
+  <div class="text-center">
+      <div class="progress-step-check ${currentStepCheck >= 3 ? 'active' : ''}">3</div>
+      <div class="progress-text-check">แอดมินตรวจสอบ</div>
+  </div>
+
+  <!-- สเต็ป 4 -->
+  <div class="text-center">
+      <div class="progress-step-check ${currentStepCheck >= 4 ? 'active' : ''}">4</div>
+      <div class="progress-text-check">เสร็จสมบูรณ์</div>
+  </div>
+`;
+
+  progressContainerCheck.innerHTML = progress2HTML;
+
+
 }
 function handleNotificationClick(event, url_path) {
   event.preventDefault(); // ป้องกันการโหลดหน้าใหม่

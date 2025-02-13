@@ -609,6 +609,8 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   position: relative;
 }
 
+
+
 /* ✅ Step */
 .progress-step {
   width: 40px;
@@ -683,6 +685,16 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 }
 
 
+
+.progress-container-check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  position: relative;
+}
 
 .progress-container-check {
   display: flex;
