@@ -14,9 +14,11 @@
                                     <th scope="col">#</th>
                                     <th scope="col">ชื่อโครงการ</th>
                                     <th scope="col">สถานะ</th>
+                                    <th scope="col">แอดมิน</th>
                                     <th scope="col">ผู้จัดการโครงการ</th>
                                     <th scope="col">ผู้รับเหมา</th>
-                                    <th scope="col">เวลา</th>
+                                    <th scope="col">วันที่เริ่มโครงการ</th>
+                                    <th scope="col">วันที่สิ้นสุดโครงการ</th>
                                     <th scope="col">จัดการ</th>
                                 </tr>
                             </thead>
@@ -50,10 +52,16 @@
                                             @endif
                                         </td>
                                         <td>
+                                            {{ $da->admin_prefix }} {{ $da->admin_first_name }} {{ $da->admin_last_name }}
+                                        </td>
+                                        <td>
                                             {{ $da->pm_prefix }} {{ $da->pm_first_name }} {{ $da->pm_last_name }}
                                         </td>
                                         <td> {{ $da->contractor_prefix }} {{ $da->contractor_first_name }}
                                             {{ $da->contractor_last_name }}</td>
+
+                                        <td> {{ \Carbon\Carbon::parse($da->meeting_date)->format('d/m/') . (\Carbon\Carbon::parse($da->meeting_date)->year + 543) }}
+                                        </td>
 
                                         <td> {{ \Carbon\Carbon::parse($da->end_date)->format('d/m/') . (\Carbon\Carbon::parse($da->end_date)->year + 543) }}
                                         </td>
