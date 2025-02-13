@@ -364,6 +364,8 @@ function handleNotificationClick(event, url_path) {
     type: "GET",
     success: function (data) {
       fetchNotifications();
+
+
       document.getElementById("exampleModalAutoClick").click();
 
       userDataFuc(data);

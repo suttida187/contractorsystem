@@ -28,7 +28,7 @@
         </div>
     </div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="exampleModalAutoClick"
-        data-bs-target="#exampleModal">
+        data-bs-target="#exampleModal" style="display: none">
         Launch demo modal
     </button>
 
