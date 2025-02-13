@@ -149,7 +149,7 @@ class adminRegisterController extends Controller
                 'nullable',
                 'digits:13',
                 'numeric',
-                Rule::unique('users_contractor', 'tax_id')->ignore($user->id), // อนุญาตให้ Tax ID ซ้ำเดิมได้
+                Rule::unique('users', 'tax_id')->ignore($user->id), // อนุญาตให้ Tax ID ซ้ำเดิมได้
             ],
         ]);
 
