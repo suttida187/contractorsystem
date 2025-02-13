@@ -208,10 +208,14 @@ function userDataFuc(userData) {
   if (userData.solution == 'Other') {
     document.getElementById("otherSolutionDiv").classList.remove("d-none");
     document.getElementById("other_solution").value = userData.other_solution || "";
+  } else {
+    document.getElementById("otherSolutionDiv").classList.add("d-none");
   }
   if (userData.solution == 'Other') {
     document.getElementById("otherWork_typeDiv").classList.remove("d-none");
     document.getElementById("other_work_type").value = userData.other_work_type || "";
+  } else {
+    document.getElementById("otherWork_typeDiv").classList.add("d-none");
   }
 
   var locationLink = document.getElementById("location_link");
