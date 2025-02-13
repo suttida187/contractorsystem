@@ -4,7 +4,47 @@
         <div class="page-inner">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">อัพเดตสถานะ</div>
+                    <h2 class="text-center">โครงการทั้งหมด</h2>
+                    <div class="filter-container justify-content-center mt-3">
+                        <!-- ฟอร์มค้นหา + ตัวกรอง -->
+
+                        <form method="POST" action="{{ route('search_query-project') }}" style="padding:16px;">
+                            @csrf
+                            <!-- ช่องค้นหา -->
+                            <div class="d-flex justify-content-center mb-3">
+                                <div class="search-box">
+                                    <input type="text" id="search-input" name="search_query" value="{{ $searchQuery }}"
+                                        placeholder="ค้นหา...">
+                                    <button type="submit"><i class="fas fa-search"></i> ค้นหา</button>
+                                </div>
+                                <input type="hidden" id="filter-input" name="filter_status" value="projectAll">
+                                <!-- ค่าที่จะถูกส่ง -->
+                                <div class="d-flex justify-content-center gap-2 ml-3">
+                                    <button type="submit"
+                                        class="filter-btn {{ $filterStatus == 'projectAll' ? 'active' : '' }}"
+                                        data-value="projectAll">โครงการทั้งหมด</button>
+                                    <button type="submit"
+                                        class="filter-btn {{ $filterStatus == 'waiting_contractor' ? 'active' : '' }}"
+                                        data-value="waiting_contractor">รอผู้รับเหมาส่งงาน</button>
+                                    <button type="submit"
+                                        class="filter-btn {{ $filterStatus == 'waiting_pm_review' ? 'active' : '' }}"
+                                        data-value="waiting_pm_review">รอ PM ตรวจสอบ</button>
+                                    <button type="submit"
+                                        class="filter-btn {{ $filterStatus == 'waiting_admin_review' ? 'active' : '' }}"
+                                        data-value="waiting_admin_review">รอแอดมินตรวจสอบ</button>
+                                    <button type="submit"
+                                        class="filter-btn {{ $filterStatus == 'completed' ? 'active' : '' }}"
+                                        data-value="completed">เสร็จสมบูรณ์</button>
+                                </div>
+                            </div>
+
+                            <!-- ปุ่มตัวกรอง -->
+
+                        </form>
+                    </div>
+
+
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -286,6 +326,20 @@
                     } else {
                         console.warn("Attribute data-user is missing");
                     }
+                });
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let filterButtons = document.querySelectorAll(".filter-btn");
+            let filterInput = document.getElementById("filter-input");
+
+            filterButtons.forEach(button => {
+                button.addEventListener("click", function(event) {
+                    event.preventDefault(); // ป้องกันการโหลดหน้าใหม่ก่อนส่งค่า
+                    filterInput.value = this.getAttribute("data-value"); // เปลี่ยนค่าที่ส่ง
+                    this.closest("form").submit(); // ส่งฟอร์ม
                 });
             });
         });

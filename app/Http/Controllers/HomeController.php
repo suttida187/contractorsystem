@@ -145,6 +145,7 @@ class HomeController extends Controller
     public function indexAll()
     {
 
+
         if (Auth::user()->role == "sale") {
             $data = DB::table('sales_projects')
                 ->where(function ($query) {
@@ -258,7 +259,72 @@ class HomeController extends Controller
         }
 
 
-        return view('home_all', compact('data'));
+        $searchQuery = null; // ค่าจากช่องค้นหา
+        $filterStatus = 'projectAll';
+
+        return view('home_all', compact('data', 'searchQuery', 'filterStatus'));
+    }
+    public function search(Request $request)
+    {
+
+        $searchQuery = $request->input('search_query', null);
+        $filterStatus = $request->input('filter_status', 'projectAll');
+
+        // เริ่มสร้าง Query หลัก
+        $query = DB::table('sales_projects')
+            ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
+            ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
+            ->leftJoin('users as contractor', 'sales_projects.responsible_contractor', '=', 'contractor.id')
+            ->select(
+                'sales_projects.*',
+                'admin.prefix as admin_prefix',
+                'admin.first_name as admin_first_name',
+                'admin.last_name as admin_last_name',
+                'admin.phone as admin_phone',
+                'pm.prefix as pm_prefix',
+                'pm.first_name as pm_first_name',
+                'pm.last_name as pm_last_name',
+                'pm.phone as pm_phone',
+                'contractor.prefix as contractor_prefix',
+                'contractor.first_name as contractor_first_name',
+                'contractor.last_name as contractor_last_name',
+                'contractor.phone as contractor_phone'
+            );
+
+        // เงื่อนไขค้นหาชื่อโครงการ (ถ้ามีค่า)
+        $query->when(!empty($searchQuery), function ($query) use ($searchQuery) {
+            $query->where('sales_projects.project_name', 'LIKE', "%$searchQuery%");
+        });
+
+        // เงื่อนไขตัวกรองสถานะ (แสดงทั้งหมดถ้า `$filterStatus == 'projectAll'`)
+        if ($filterStatus !== 'projectAll') {
+            $query->where('sales_projects.status', $filterStatus);
+        }
+
+        // เงื่อนไข Role ของผู้ใช้
+        switch (Auth::user()->role) {
+            case "admin":
+                $query->where('responsible_admin', Auth::user()->id);
+                break;
+
+            case "pm":
+                $query->where('responsible_pm', Auth::user()->id);
+                break;
+
+            case "contractor":
+                $query->where('responsible_contractor', Auth::user()->id);
+                break;
+
+            case "sale":
+                // ไม่มีเงื่อนไขเพิ่มเติม (แสดงทั้งหมด)
+
+                break;
+        }
+
+        // ดึงข้อมูลเรียงตามวันที่สร้าง และแบ่งหน้า
+        $data = $query->orderBy('sales_projects.created_at', 'DESC')->paginate(100);
+
+        return view('home_all', compact('data', 'searchQuery', 'filterStatus'));
     }
 }
 

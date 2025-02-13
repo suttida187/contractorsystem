@@ -829,3 +829,59 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 .pagination li {
   margin-right: 4px;
 }
+
+.filter-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  border: 1px solid #000;
+  background-color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background-color: black;
+  color: white;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin-right: 8px;
+}
+
+
+
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  flex: 1;
+}
+
+.search-box button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 15px;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.search-box button:hover {
+  background-color: gray;
+}

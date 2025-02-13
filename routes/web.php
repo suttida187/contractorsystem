@@ -57,6 +57,7 @@ Route::get('/delete-user/{id}', [adminRegisterController::class, 'destroy'])->na
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home-all', [App\Http\Controllers\HomeController::class, 'indexAll'])->name('home-all');
+Route::post('/search_query-project', [App\Http\Controllers\HomeController::class, 'search'])->name('search_query-project');
 // notifications
 Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');
 Route::get('/mark-as-read/{notificationId}/{projectId}', [NotificationController::class, 'UpdateReadAt'])->name('notifications.markAsRead');
