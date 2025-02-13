@@ -188,8 +188,6 @@ function userDataFuc(userData) {
   // ใส่ข้อมูลลงใน Modal
 
 
-  console.log("userData", userData);
-
 
   // เติมค่าลงใน Modal
   document.getElementById("project_name").value = userData.project_name || "";
@@ -206,6 +204,15 @@ function userDataFuc(userData) {
   document.getElementById("contact_position").value = userData.contact_position ||
     "";
   document.getElementById("location").value = userData.location || "";
+
+  if (userData.solution == 'Other') {
+    document.getElementById("otherSolutionDiv").classList.remove("d-none");
+    document.getElementById("other_solution").value = userData.other_solution || "";
+  }
+  if (userData.solution == 'Other') {
+    document.getElementById("otherWork_typeDiv").classList.remove("d-none");
+    document.getElementById("other_work_type").value = userData.other_work_type || "";
+  }
 
   var locationLink = document.getElementById("location_link");
   if (userData.location) {
