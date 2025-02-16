@@ -1,9 +1,9 @@
 @if (is_null($da->status))
-    @if (is_null($da->responsible_admin) && is_null($da->responsible_pm) && is_null($da->responsible_contractor))
+    @if (is_null($da->responsible_admin))
         รอ Admin ดำเนินการ
-    @elseif (!is_null($da->responsible_admin) && !is_null($da->responsible_pm) && is_null($da->responsible_contractor))
+    @elseif (is_null($da->responsible_pm))
         รอ PM ดำเนินการ
-    @elseif (!is_null($da->responsible_admin) && !is_null($da->responsible_pm) && !is_null($da->responsible_contractor))
+    @else
         รอผู้รับเหมาดำเนินงาน
     @endif
 @else
