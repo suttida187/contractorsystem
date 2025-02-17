@@ -11,6 +11,7 @@ class Calendar extends Model
 
     protected $fillable = [
         'user_id',
+        'role',
         'start_date',
         'end_date',
     ];

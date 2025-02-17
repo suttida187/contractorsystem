@@ -259,11 +259,41 @@ class HomeController extends Controller
         return view('assign_work', compact('data'));
     }
 
-    public function calendarUser()
+    public function calendarUser($id)
     {
 
+        // ดึงข้อมูลจาก sales_projects
+        $salesProject = DB::table('sales_projects')->where('id', $id)->first();
 
-        dd("aa");
+        if ($salesProject) {
+            $meetingDate = $salesProject->meeting_date;
+            $endDate = $salesProject->end_date;
+
+            // ค้นหา user_id ที่มี start_date และ end_date ใน calendars
+            $userIdsInCalendars = DB::table('calendars')
+                ->where('role', 'sale')
+                ->where(function ($query) use ($meetingDate, $endDate) {
+                    $query->where(function ($subQuery) use ($meetingDate, $endDate) {
+                        $subQuery->where('start_date', '<=', $endDate)
+                            ->where('end_date', '>=', $meetingDate);
+                    });
+                })
+                ->pluck('user_id')
+                ->toArray(); // เอาเฉพาะ user_id เป็น array
+
+            // ดึง users ที่ไม่มี user_id อยู่ใน calendars
+            $usersNotInCalendar = DB::table('users')
+                ->where('role', 'sale')
+                ->whereNotIn('id', $userIdsInCalendars)
+                ->get();
+            return response()->json($usersNotInCalendar);
+        }
+    }
+    public function createCalendar($idUser, $projectId)
+    {
+
+        // ดึงข้อมูลจาก sales_projects
+        dd($idUser, $projectId);
     }
 }
 

@@ -369,7 +369,7 @@ function userDataFuc(userData) {
 `;
 
   progressContainerCheck.innerHTML = progress2HTML;
-
+  getCalendar(userData.id);
 
 }
 function handleNotificationClick(event, url_path) {
@@ -399,38 +399,30 @@ function handleNotificationClick(event, url_path) {
 }
 
 
-function getCalendar() {
+function getCalendar(id) {
   $.ajax({
-    url: "calendar-user", // ดึงข้อมูลจาก Route
+    url: `calendar-user/${id}`, // ดึงข้อมูลจาก Route
     type: "GET",
     success: function (data) {
       /*    let notificationDropdown = $("#notif-center"); */
 
 
-      notificationDropdown.empty(); // ล้างรายการเดิม
+      let calendarSelect = $("#calendarSelect");
+      calendarSelect.empty(); // ล้างรายการเดิม
+      console.log("data", data);
 
       if (data.length > 0) {
+        console.log("555");
 
+        // เพิ่ม option แรกเป็น placeholder
+        calendarSelect.append('<option selected disabled>เลือกผู้จัดการ</option>');
 
-        /* data.forEach(notification => {
-          let notifItem = `
-            <a href="${notification.url}">
-                <div class="notif-icon notif-primary" style="width: 40px; height:40px">
-                    <i class="fa fa-project-diagram" style="font-size: 16px;"></i>
-                </div>
-                <div class="notif-content">
-                    <span class="block">${notification.message}</span>
-                    <span class="time">${notification.time}</span>
-                </div>
-            </a>
-        `;
-
-          notificationDropdown.append(notifItem);
-        }); */
+        data.forEach(item => {
+          let option = `<option value="${item.id}">${item.prefix}  ${item.first_name}   ${item.last_name}</option>`;
+          calendarSelect.append(option);
+        });
       } else {
-        notificationCount.hide();
-        notifCountText.text(0);
-        notificationDropdown.append(`<p class="text-center p-2">ไม่มีการแจ้งเตือนใหม่</p>`);
+        calendarSelect.append('<option value="">ไม่มีข้อมูล</option>');
       }
     },
     error: function (xhr, status, error) {
@@ -439,5 +431,29 @@ function getCalendar() {
   });
 }
 
-getCalendar();
+
+
+function handleSelectChange() {
+  let idUser = $("#calendarSelect").val();
+
+  let projectId = $("#project_id").val();
+  console.log("เลือก:", idUser, projectId);
+  $.ajax({
+    url: `create-calendar-user/${idUser}/${projectId}`, // แก้ไข URL ให้ถูกต้อง
+    type: "GET",
+    success: function (data) {
+      /*    let notificationDropdown = $("#notif-center"); */
+
+      console.log("data", data);
+
+
+    },
+    error: function (xhr, status, error) {
+      console.error("Error fetching notifications:", error);
+    }
+  });
+
+}
+
+
 fetchNotifications(); // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้า
