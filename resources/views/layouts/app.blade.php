@@ -10,6 +10,10 @@
     <!-- Fonts and icons -->
     <script src="{{ URL::asset('/assets/js/plugin/webfont/webfont.min.js') }}"></script>
 
+    <!-- Date dd/mm/yyyy -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" />
@@ -47,7 +51,7 @@
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
 
-        var pusher = new Pusher('f7edf5db973803f7c850', {
+        var pusher = new Pusher('7a1e4f0cc7694c327222', {
             cluster: 'ap1'
         });
 
