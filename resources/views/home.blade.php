@@ -14,9 +14,9 @@
                                 <span class="project-title">{{ $da->project_name }}</span>
                                 <br>
                                 <span>
-                                    {{ \Carbon\Carbon::parse($da->created_at)->format('d/m/Y') }} 
+                                    {{ \Carbon\Carbon::parse($da->created_at)->format('d/m/Y') }}
                                     {{ ' ' . \Carbon\Carbon::parse($da->created_at)->format('H:i:s') }}
-                                </span>                                
+                                </span>
 
                             </div>
 
@@ -230,16 +230,15 @@
             });
         });
 
-        // ใช้ Flatpickr เพื่อเลือกวันที่ในรูปแบบวัน/เดือน/ปี
-        flatpickr("#meeting_date", {
-            dateFormat: "d/m/Y", // กำหนดรูปแบบวัน/เดือน/ปี
-            allowInput: true, // อนุญาตให้กรอกวันที่ได้ด้วยมือ
-        });
+        /*        // ใช้ Flatpickr เพื่อเลือกวันที่ในรูปแบบวัน/เดือน/ปี
+               flatpickr("#meeting_date", {
+                   dateFormat: "d/m/Y", // กำหนดรูปแบบวัน/เดือน/ปี
+                   allowInput: true, // อนุญาตให้กรอกวันที่ได้ด้วยมือ
+               });
 
-        flatpickr("#end_date", {
-            dateFormat: "d/m/Y", // กำหนดรูปแบบวัน/เดือน/ปี
-            allowInput: true, // อนุญาตให้กรอกวันที่ได้ด้วยมือ
-        });
-
+               flatpickr("#end_date", {
+                   dateFormat: "d/m/Y", // กำหนดรูปแบบวัน/เดือน/ปี
+                   allowInput: true, // อนุญาตให้กรอกวันที่ได้ด้วยมือ
+               }); */
     </script>
 @endsection

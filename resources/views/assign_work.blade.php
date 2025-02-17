@@ -226,7 +226,7 @@
                                 class="form-control no-edit">
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="manager-solution">
                         <div class="col-md-12 mb-3">
                             <label class="form-label">เลือกผู้จัดการโครงการ: </label>
                             <select name="solution" id="calendarSelect"
@@ -238,7 +238,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" id="manager-button">
                     <button type="button" class="btn btn-primary" onclick="handleSelectChange()">ยืนยัน</button>
                 </div>
             </div>

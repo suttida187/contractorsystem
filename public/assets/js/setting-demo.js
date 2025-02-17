@@ -211,13 +211,13 @@ function userDataFuc(userData) {
     document.getElementById("otherSolutionDiv").classList.remove("d-none");
     document.getElementById("other_solution").value = userData.other_solution || "";
   } else {
-    document.getElementById("otherSolutionDiv").classList.add("d-none");
+    document.getElementById("otherSolutionDiv") && document.getElementById("otherSolutionDiv").classList.add("d-none");
   }
   if (userData.work_type == 'Other') {
     document.getElementById("otherWork_typeDiv").classList.remove("d-none");
     document.getElementById("other_work_type").value = userData.other_work_type || "";
   } else {
-    document.getElementById("otherWork_typeDiv").classList.add("d-none");
+    document.getElementById("otherWork_typeDiv") && document.getElementById("otherWork_typeDiv").classList.add("d-none");
   }
 
   var locationLink = document.getElementById("location_link");
@@ -227,6 +227,8 @@ function userDataFuc(userData) {
   } else {
     locationLink.classList.add("d-none"); // ซ่อนลิงก์ถ้าไม่มีค่า
   }
+
+
   document.getElementById("warranty").value = userData.warranty || "";
   document.getElementById("additional_notes").value = userData.additional_notes ||
     "";
