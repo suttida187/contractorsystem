@@ -191,6 +191,7 @@ function userDataFuc(userData) {
 
 
   // เติมค่าลงใน Modal
+  document.getElementById("project_id").value = userData.id || "";
   document.getElementById("project_name").value = userData.project_name || "";
   document.getElementById("work_type").value = userData.work_type || "";
   document.getElementById("solution").value = userData.solution || "";
@@ -398,4 +399,45 @@ function handleNotificationClick(event, url_path) {
 }
 
 
+function getCalendar() {
+  $.ajax({
+    url: "calendar-user", // ดึงข้อมูลจาก Route
+    type: "GET",
+    success: function (data) {
+      /*    let notificationDropdown = $("#notif-center"); */
+
+
+      notificationDropdown.empty(); // ล้างรายการเดิม
+
+      if (data.length > 0) {
+
+
+        /* data.forEach(notification => {
+          let notifItem = `
+            <a href="${notification.url}">
+                <div class="notif-icon notif-primary" style="width: 40px; height:40px">
+                    <i class="fa fa-project-diagram" style="font-size: 16px;"></i>
+                </div>
+                <div class="notif-content">
+                    <span class="block">${notification.message}</span>
+                    <span class="time">${notification.time}</span>
+                </div>
+            </a>
+        `;
+
+          notificationDropdown.append(notifItem);
+        }); */
+      } else {
+        notificationCount.hide();
+        notifCountText.text(0);
+        notificationDropdown.append(`<p class="text-center p-2">ไม่มีการแจ้งเตือนใหม่</p>`);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Error fetching notifications:", error);
+    }
+  });
+}
+
+getCalendar();
 fetchNotifications(); // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้า

@@ -151,7 +151,10 @@
 
 
                         <h1 class="text-center-project" id="exampleModalLabel">รายละเอียดงาน</h1>
-
+                        <div class="mb-3" hidden>
+                            <label class="form-label">โปรเจกต์ id: </label>
+                            <input name="project_id" type="text" id="project_id" class="form-control no-edit">
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">ชื่อโปรเจกต์: </label>
                             <input name="project_name" type="text" id="project_name" class="form-control no-edit">

@@ -72,6 +72,10 @@
 
                         <h1 class="text-center-project" id="exampleModalLabel">รายละเอียดงาน</h1>
 
+                        <div class="mb-3" hidden>
+                            <label class="form-label">โปรเจกต์ id: </label>
+                            <input name="project_id" type="text" id="project_id" class="form-control no-edit">
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">ชื่อโปรเจกต์: </label>
                             <input name="project_name" type="text" id="project_name" class="form-control no-edit">
@@ -225,14 +229,9 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label class="form-label">เลือกผู้จัดการโครงการ: </label>
-                            <select name="solution" id="solutionSelect"
+                            <select name="solution" id="calendarSelect" onchange=""
                                 class="form-select @error('solution') is-invalid @enderror">
-                                <option disabled selected>เลือก Solution</option>
-                                {{--   @foreach ($solutions as $sol)
-                                <option value="{{ $sol->name }}" {{ old('solution') == $sol->name ? 'selected' : '' }}>
-                                    {{ $sol->name }}
-                                </option>
-                            @endforeach --}}
+
                             </select>
 
 
