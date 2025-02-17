@@ -242,6 +242,30 @@ function userDataFuc(userData) {
   document.getElementById("caretaker_admin_phone").value = userData.admin_phone ||
     "";
 
+  let fullName = '';
+
+  if (userData.admin_prefix && userData.admin_prefix.trim() !== '') {
+    fullName += userData.admin_prefix + ' ';
+  }
+
+  if (userData.admin_first_name && userData.admin_first_name.trim() !== '') {
+    fullName += userData.admin_first_name;
+  }
+
+  fullName = fullName.trim(); // ตัดช่องว่างซ้าย-ขวาออก
+
+  if (fullName !== '') { // ตรวจสอบว่ามีค่าจริงๆ
+    let managerSolution = document.getElementById("manager-solution");
+    let managerButton = document.getElementById("manager-button");
+    if (managerSolution) managerSolution.style.display = "none";
+    if (managerButton) managerButton.style.display = "none";
+  } else {
+    let managerSolution = document.getElementById("manager-solution");
+    let managerButton = document.getElementById("manager-button");
+    if (managerSolution) managerSolution.style.display = "block";
+    if (managerButton) managerButton.style.display = "block";
+  }
+
 
 
   document.getElementById("caretaker_pm").value = (userData.pm_prefix ? userData.pm_prefix : '') + ' ' +

@@ -238,8 +238,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" id="manager-button">
-                    <button type="button" class="btn btn-primary" onclick="handleSelectChange()">ยืนยัน</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="manager-button"
+                        onclick="handleSelectChange()">ยืนยัน</button>
                 </div>
             </div>
         </div>
