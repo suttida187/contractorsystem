@@ -229,7 +229,7 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label class="form-label">เลือกผู้จัดการโครงการ: </label>
-                            <select name="solution" id="calendarSelect" onchange="handleSelectChange()"
+                            <select name="solution" id="calendarSelect"
                                 class="form-select @error('solution') is-invalid @enderror">
                                 <option selected disabled>เลือกผู้จัดการ</option>
                             </select>
@@ -239,7 +239,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="handleSelectChange()">ยืนยัน</button>
                 </div>
             </div>
         </div>

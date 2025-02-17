@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\SalesProjects;
+use Carbon\Carbon; // ใช้ Carbon เพื่อความสะดวก
+use App\Models\Calendar;
 
 class HomeController extends Controller
 {
@@ -286,14 +289,43 @@ class HomeController extends Controller
                 ->where('role', 'sale')
                 ->whereNotIn('id', $userIdsInCalendars)
                 ->get();
+
             return response()->json($usersNotInCalendar);
         }
     }
-    public function createCalendar($idUser, $projectId)
+    public function createCalendarPm($idUser, $projectId)
     {
+        SalesProjects::where('id', $projectId)
+            ->update(['responsible_admin' => Auth::user()->id, 'responsible_pm' => $idUser]);
 
-        // ดึงข้อมูลจาก sales_projects
-        dd($idUser, $projectId);
+        $project = SalesProjects::where('id', $projectId)->first();
+
+        Calendar::create([
+            'user_id' => $idUser,
+            'role' => 'sale',
+            'start_date' => $project->meeting_date,
+            'end_date' => $project->end_date,
+        ]);
+
+
+        // Admin
+        $id = $idUser;
+        $role = "pm"; // ส่งเเจ้งเตือนให้กับ Admin
+        $projectName = "มี: $project->project_name มาใหม่";
+        $updatedAt = Carbon::now()->toDateTimeString(); // เวลาปัจจุบันในรูปแบบ YYYY-MM-DD HH:MM:SS
+
+        // JSON Encode ให้ถูกต้อง
+        $data = json_encode([
+            'id_project' =>  $projectId,
+            'message' => $projectName,
+            'time' => $updatedAt
+        ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
+
+        app(NotificationController::class)->CreateNotifications($id, $data, $role);
+
+
+
+        return response()->json("หมอบหมายให้ PM  เรียบร้อย");
     }
 }
 

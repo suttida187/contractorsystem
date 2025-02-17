@@ -437,21 +437,39 @@ function handleSelectChange() {
   let idUser = $("#calendarSelect").val();
 
   let projectId = $("#project_id").val();
-  console.log("เลือก:", idUser, projectId);
-  $.ajax({
-    url: `create-calendar-user/${idUser}/${projectId}`, // แก้ไข URL ให้ถูกต้อง
-    type: "GET",
-    success: function (data) {
-      /*    let notificationDropdown = $("#notif-center"); */
-
-      console.log("data", data);
 
 
-    },
-    error: function (xhr, status, error) {
-      console.error("Error fetching notifications:", error);
-    }
-  });
+  if (projectId && idUser) {
+
+
+
+    $.ajax({
+      url: `create-calendar-pm/${idUser}/${projectId}`, // แก้ไข URL ให้ถูกต้อง
+      type: "GET",
+      success: function (data) {
+        /*    let notificationDropdown = $("#notif-center"); */
+
+        console.log("data", data);
+
+
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching notifications:", error);
+      }
+    });
+  } else {
+    Swal.fire({
+      title: "ผู้จัดการโครงการ:",
+      text: `กรุณาเลือกผู้จัดการโครงการ:`,
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton: false, // ซ่อนปุ่ม "ตกลง"
+      cancelButtonColor: "#3085d6",
+      cancelButtonText: "ยกเลิก"
+    });
+
+  }
+
 
 }
 
