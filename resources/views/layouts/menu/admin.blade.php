@@ -78,7 +78,7 @@
 
             <li class="nav-item {{ $activeRoute === 'schedule' ? 'active' : '' }}">
                 <a href="{{ url('schedule') }}">
-                    <i class="fas fa-layer-group"></i>
+                    <i class="fa-solid fa-calendar"></i>
                     <p>ตารางงาน</p>
                 </a>
             </li>

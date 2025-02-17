@@ -99,7 +99,7 @@
                             <label class="form-label">Solution: </label>
                             <input name="solution" type="text" id="solution" class="form-control no-edit">
                             <!-- แสดงช่องกรอกข้อมูลเมื่อเลือก "Other" -->
-                            <div class="mt-2 d-none" id="otherSolutionDiv">
+                            <div class="mt-2 d-none">
                                 <label class="form-label">โปรดระบุ Solution:</label>
                                 <input name="other_solution" type="text" id="other_solution"
                                     class="form-control no-edit">

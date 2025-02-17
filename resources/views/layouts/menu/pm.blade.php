@@ -7,8 +7,8 @@
 <div class="sidebar-wrapper scrollbar scrollbar-inner">
     <div class="sidebar-content">
         <ul class="nav nav-secondary">
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#base">
+            <li class="nav-item {{ $activeRoute === 'home' ? 'active' : '' }}">
+                <a data-bs-toggle="collapse">
                     <i class="fas fa-home"></i>
                     <p>หน้าแรก</p>
 
@@ -36,7 +36,7 @@
             </li>
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
-                    <i class="fas fa-layer-group"></i>
+                    <i class="fa-solid fa-calendar"></i>
                     <p>ตารางาน</p>
 
                 </a>

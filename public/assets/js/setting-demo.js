@@ -213,7 +213,7 @@ function userDataFuc(userData) {
   } else {
     document.getElementById("otherSolutionDiv").classList.add("d-none");
   }
-  if (userData.solution == 'Other') {
+  if (userData.work_type == 'Other') {
     document.getElementById("otherWork_typeDiv").classList.remove("d-none");
     document.getElementById("other_work_type").value = userData.other_work_type || "";
   } else {

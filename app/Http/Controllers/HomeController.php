@@ -61,15 +61,26 @@ class HomeController extends Controller
                 break;
 
             case "admin":
-                $query->where('responsible_admin', $userId)->where('status', '!=', 'completed');
+                $query->where('responsible_admin', $userId)
+                    ->where(function ($q) {
+                        $q->where('status', '!=', 'completed')
+                            ->orWhereNull('status');
+                    });
+
                 break;
 
             case "pm":
-                $query->where('responsible_pm', $userId)->where('status', '!=', 'completed');
+                $query->where('responsible_pm', $userId)->where(function ($q) {
+                    $q->where('status', '!=', 'completed')
+                        ->orWhereNull('status');
+                });;
                 break;
 
             case "contractor":
-                $query->where('responsible_contractor', $userId)->where('status', '!=', 'completed');
+                $query->where('responsible_contractor', $userId)->where(function ($q) {
+                    $q->where('status', '!=', 'completed')
+                        ->orWhereNull('status');
+                });;
                 break;
         }
 
@@ -294,7 +305,7 @@ class HomeController extends Controller
         }
     }
 
-    
+
     public function createCalendarPm($idUser, $projectId)
     {
         SalesProjects::where('id', $projectId)
