@@ -52,12 +52,12 @@
         Pusher.logToConsole = true;
 
         var pusher = new Pusher('fcf3b678d6f5503b4975', {
-            cluster: 'ap1'
+            cluster: 'ap2'
         });
 
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
-          
+
             if (data.message.length > 0) {
 
                 fetchNotifications();

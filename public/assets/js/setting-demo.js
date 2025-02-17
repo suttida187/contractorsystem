@@ -449,7 +449,7 @@ function handleSelectChange() {
       success: function (data) {
         /*    let notificationDropdown = $("#notif-center"); */
 
-        console.log("data", data);
+        window.location.href = window.location.href; // โหลดหน้าใหม่ที่ URL เดิม
 
 
       },

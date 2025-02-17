@@ -274,7 +274,7 @@ class HomeController extends Controller
 
             // ค้นหา user_id ที่มี start_date และ end_date ใน calendars
             $userIdsInCalendars = DB::table('calendars')
-                ->where('role', 'sale')
+                ->where('role', 'pm')
                 ->where(function ($query) use ($meetingDate, $endDate) {
                     $query->where(function ($subQuery) use ($meetingDate, $endDate) {
                         $subQuery->where('start_date', '<=', $endDate)
@@ -286,13 +286,15 @@ class HomeController extends Controller
 
             // ดึง users ที่ไม่มี user_id อยู่ใน calendars
             $usersNotInCalendar = DB::table('users')
-                ->where('role', 'sale')
+                ->where('role', 'pm')
                 ->whereNotIn('id', $userIdsInCalendars)
                 ->get();
 
             return response()->json($usersNotInCalendar);
         }
     }
+
+    
     public function createCalendarPm($idUser, $projectId)
     {
         SalesProjects::where('id', $projectId)
@@ -302,7 +304,7 @@ class HomeController extends Controller
 
         Calendar::create([
             'user_id' => $idUser,
-            'role' => 'sale',
+            'role' => 'pm',
             'start_date' => $project->meeting_date,
             'end_date' => $project->end_date,
         ]);
