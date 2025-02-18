@@ -54,6 +54,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">ชื่อโครงการ</th>
                                     <th scope="col">สถานะ</th>
+                                    <th scope="col">เซลล์</th>
                                     <th scope="col">แอดมิน</th>
                                     <th scope="col">ผู้จัดการโครงการ</th>
                                     <th scope="col">ผู้รับเหมา</th>
@@ -90,6 +91,9 @@
                                                     เสร็จสมบูรณ์
                                                 @endif
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $da->sale_prefix }} {{ $da->sale_first_name }} {{ $da->sale_last_name }}
                                         </td>
                                         <td>
                                             {{ $da->admin_prefix }} {{ $da->admin_first_name }} {{ $da->admin_last_name }}
