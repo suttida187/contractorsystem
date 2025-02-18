@@ -316,6 +316,7 @@ class HomeController extends Controller
         Calendar::create([
             'user_id' => $idUser,
             'role' => 'pm',
+            'projectId' => 'projectId',
             'start_date' => $project->meeting_date,
             'end_date' => $project->end_date,
         ]);
@@ -348,11 +349,18 @@ class HomeController extends Controller
         return view('schedule');
     }
 
-    public function getSchedule()
+    public function getSchedule($name)
     {
 
-        $events = DB::table('calendars')->get();
+        $events = DB::table('calendars')->where('user_id', $name)->get();
 
+        return response()->json($events);
+    }
+    public function userEndpoint($name)
+    {
+
+
+        $events = DB::table('users')->where('role', $name)->get();
         return response()->json($events);
     }
 }
