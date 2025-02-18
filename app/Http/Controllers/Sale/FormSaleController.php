@@ -67,7 +67,7 @@ class FormSaleController extends Controller
 
         $id = Auth::user()->id;
         $role = "admin"; // ส่งเเจ้งเตือนให้กับ Admin
-        $projectName = "มีอัปเดต: $request->project_name มาใหม่";
+        $projectName = "มีอัปเดต: sssss มาใหม่";
 
 
         // JSON Encode ให้ถูกต้อง
