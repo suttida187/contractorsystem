@@ -401,7 +401,7 @@ class HomeController extends Controller
             ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
             ->leftJoin('users as contractor', 'sales_projects.responsible_contractor', '=', 'contractor.id')
             ->select(
-                'sale_projects.*',
+                'sales_projects.*',
                 'sale.prefix as sale_prefix',
                 'sale.first_name as sale_first_name',
                 'sale.last_name as sale_last_name',
@@ -419,6 +419,7 @@ class HomeController extends Controller
                 'contractor.last_name as contractor_last_name',
                 'contractor.phone as contractor_phone'
             )->first();
+
 
         return response()->json($query);
     }

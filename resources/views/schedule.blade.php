@@ -372,6 +372,9 @@
                         cell.appendChild(projectLabel);
 
                         // คลิกเพื่อส่ง idProject
+
+                        console.log("eventData", eventData);
+
                         cell.addEventListener("click", function() {
                             handleEventClick(eventData.projectId);
                         });
