@@ -14,8 +14,8 @@
                                 <span class="project-title">{{ $da->project_name }}</span>
                                 <br>
                                 <span>
-                                    {{ \Carbon\Carbon::parse($da->created_at)->format('d/m/Y') }}
-                                    {{ ' ' . \Carbon\Carbon::parse($da->created_at)->format('H:i:s') }}
+                                    {{ \Carbon\Carbon::parse($da->updated_at)->format('d/m/Y') }}
+                                    {{ ' ' . \Carbon\Carbon::parse($da->updated_at)->format('H:i:s') }}
                                 </span>
 
                             </div>
