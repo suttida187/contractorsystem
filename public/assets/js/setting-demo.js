@@ -238,6 +238,13 @@ function userDataFuc(userData) {
     "";
 
 
+  document.getElementById("caretaker_sale").value = (userData.sale_prefix ? userData.sale_prefix : '') + ' ' +
+    (userData.sale_first_name ? userData.sale_first_name : '') + ' ' +
+    (userData.sale_last_name ? userData.sale_last_name : '')
+  document.getElementById("caretaker_sale_phone").value = userData.sale_phone ||
+    "";
+
+
   document.getElementById("caretaker_admin").value = (userData.admin_prefix ? userData.admin_prefix : '') + ' ' +
     (userData.admin_first_name ? userData.admin_first_name : '') + ' ' +
     (userData.admin_last_name ? userData.admin_last_name : '')

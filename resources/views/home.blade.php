@@ -173,6 +173,20 @@
                     <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดผู้ดูเเล</strong></h5>
                     <div class="row">
                         <div class="col-md-8 mb-3">
+                            <label class="form-label">Sale: </label>
+                            <input name="caretaker_sale" type="text" id="caretaker_sale"
+                                class="form-control no-edit">
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">เบอร์ติดต่อ: </label>
+                            <input name="caretaker_sale_phone" type="text" id="caretaker_sale_phone"
+                                class="form-control no-edit">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
                             <label class="form-label">Admin: </label>
                             <input name="caretaker_admin" type="text" id="caretaker_admin"
                                 class="form-control no-edit">
