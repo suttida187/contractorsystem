@@ -63,7 +63,7 @@ class FormSaleController extends Controller
 
         $project = SalesProjects::create($validatedData);
         $updatedAt =  $project->updated_at;
-        $projectId =  $project->id;
+        $projectId =  $project->id; //
 
         $id = Auth::user()->id;
         $role = "admin"; // ส่งเเจ้งเตือนให้กับ Admin
