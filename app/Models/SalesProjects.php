@@ -27,6 +27,7 @@ class SalesProjects extends Model
         'additional_notes',      // หมายเหตุเพิ่มเติม
         'needs_documents',       // ต้องการเอกสารหรือไม่
         'status',                // สถานะของโปรเจค
+        'responsible_sale',     // sale ที่รับผิดชอบ
         'responsible_admin',     // admin ที่รับผิดชอบ
         'responsible_pm',        // pm ที่รับงาน
         'responsible_contractor', // ผู้รับเหมาที่รับผิดชอบ

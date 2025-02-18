@@ -57,6 +57,10 @@ class FormSaleController extends Controller
             'needs_documents' => 'required|string',
         ]);
 
+        $validatedData = array_merge($validatedData, [
+            'responsible_sale' => Auth::user()->id
+        ]);
+
         $project = SalesProjects::create($validatedData);
         $updatedAt =  $project->updated_at;
         $projectId =  $project->id;

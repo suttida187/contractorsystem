@@ -31,6 +31,7 @@ return new class extends Migration
             $table->text('additional_notes')->nullable()->comment('หมายเหตุเพิ่มเติมจากแอดมิน');
             $table->string('needs_documents')->nullable()->comment('เอกสารที่ต้องใช้');
             $table->string('status')->nullable()->comment('สถานะของโปรเจค');
+            $table->string('responsible_sale')->nullable()->comment('saleที่รับผิดชอบ');
             $table->string('responsible_admin')->nullable()->comment('แอดมินที่รับผิดชอบ');
             $table->string('responsible_pm')->nullable()->comment('ผู้จัดการโครงการที่รับผิดชอบ');
             $table->string('responsible_contractor')->nullable()->comment('ผู้รับเหมาที่รับผิดชอบ');
