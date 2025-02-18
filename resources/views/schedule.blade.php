@@ -1,55 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
-        td,
-        th {
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        .calendar-container {
-            text-align: center;
-            margin: 20px;
-        }
-
-        .event-day {
-            background-color: red;
-            color: white;
-        }
-
-        .nav-buttons {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .nav-buttons button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .nav-buttons button:hover {
-            background-color: #0056b3;
-        }
-
-        #monthYear {
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
     <div class="container">
         <div class="page-inner">
             <div class="card">
@@ -58,28 +8,7 @@
                 </div>
                 <div class="card-body">
 
-                    <style>
-                        .input-group {
-                            display: flex;
-                            align-items: center;
-                            gap: 10px;
-                            /* ระยะห่างระหว่าง label และ select */
-                        }
 
-                        .input-group label {
-                            flex: 0 0 150px;
-                            /* กำหนดความกว้าง label ให้คงที่ */
-                            text-align: right;
-                            /* จัดข้อความ label ไปทางขวา */
-                        }
-
-                        .form-select {
-                            flex: 1;
-                            /* ให้ select ขยายขนาดตามพื้นที่ที่เหลือ */
-                            max-width: 300px;
-                            /* จำกัดความกว้างไม่ให้ยืดเกินไป */
-                        }
-                    </style>
 
                     <div class="input-group mb-3">
                         <label for="roleSelect">เลือกประเภท:</label>
@@ -106,7 +35,7 @@
                             <span id="monthYear"></span>
                             <button id="nextMonth">▶</button>
                         </div>
-                        <table>
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>อา</th>
@@ -216,16 +145,33 @@
                 for (let day = 1; day <= daysInMonth; day++) {
                     let cell = document.createElement("td");
                     cell.textContent = day;
+                    cell.style.position = "relative";
 
                     const eventDate =
                         `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-                    if (events.some(event => event.start_date <= eventDate && event.end_date >= eventDate)) {
+                    const eventData = events.find(event => event.start_date <= eventDate && event.end_date >=
+                        eventDate);
+
+                    if (eventData) {
                         cell.classList.add("event-day");
+                        cell.style.backgroundColor = "red"; // สีแดงแสดงว่ามี event
+
+                        // ตัดข้อความหากยาวเกินไป
+                        let truncatedText = eventData.project_name.length > 10 ? eventData.project_name
+                            .substring(0, 10) + "..." : eventData.project_name;
+
+                        // เพิ่ม project_name ในกล่อง
+                        const projectLabel = document.createElement("div");
+                        projectLabel.textContent = `- ${truncatedText}`;
+                        projectLabel.classList.add("project-label");
+                        cell.appendChild(projectLabel);
+
+                        // คลิกเพื่อส่ง idProject
+                        cell.addEventListener("click", function() {
+                            handleEventClick(eventData.id);
+                        });
                     }
 
-                    cell.addEventListener("click", function() {
-                        alert(`คุณเลือกวันที่ ${day}/${month + 1}/${year}`);
-                    });
                     row.appendChild(cell);
 
                     if ((firstDay + day) % 7 === 0) {
@@ -235,6 +181,14 @@
                 }
 
                 calendar.appendChild(row);
+            }
+
+
+            function handleEventClick(idProject) {
+                console.log(`Event Clicked: Project ID ${idProject}`);
+                // เพิ่มโค้ดเรียกใช้ฟังก์ชันอื่นที่ต้องการใช้
+                alert(`คุณคลิกที่โปรเจค ID: ${idProject}`);
+                // สามารถเปลี่ยนเป็นเรียก AJAX หรือฟังก์ชันอื่นได้
             }
 
             prevBtn.addEventListener("click", function() {

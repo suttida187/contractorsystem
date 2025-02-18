@@ -352,7 +352,13 @@ class HomeController extends Controller
     public function getSchedule($name)
     {
 
-        $events = DB::table('calendars')->where('user_id', $name)->get();
+        $events = DB::table('calendars')->leftJoin('sales_projects', 'calendars.projectId', 'sales_projects.id')->where('user_id', $name)
+            ->select(
+                'calendars.*',
+                'sales_projects.id  as projectId',
+                'sales_projects.project_name',
+            )
+            ->get();
 
         return response()->json($events);
     }
