@@ -340,6 +340,21 @@ class HomeController extends Controller
 
         return response()->json("หมอบหมายให้ PM  เรียบร้อย");
     }
+
+
+    public function schedule()
+    {
+
+        return view('schedule');
+    }
+
+    public function getSchedule()
+    {
+
+        $events = DB::table('calendars')->get();
+
+        return response()->json($events);
+    }
 }
 
 

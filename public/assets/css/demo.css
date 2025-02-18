@@ -938,3 +938,8 @@ body[data-background-color="dark"] .demo-icon .icon-class {
     transform: translateY(0);
   }
 }
+
+.red-day {
+  background-color: red !important;
+  color: white;
+}
