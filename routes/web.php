@@ -64,6 +64,7 @@ Route::get('/create-calendar-pm/{idUser}/{project}', [App\Http\Controllers\HomeC
 Route::get('/schedule', [App\Http\Controllers\HomeController::class, 'schedule'])->name('schedule');
 Route::get('/getSchedule/{name}', [App\Http\Controllers\HomeController::class, 'getSchedule'])->name('getSchedule');
 Route::get('/user-endpoint/{name}', [App\Http\Controllers\HomeController::class, 'userEndpoint'])->name('user-endpoint');
+Route::get('/getProject/{id}', [App\Http\Controllers\HomeController::class, 'getProject'])->name('getProject');
 // notifications
 Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');
 Route::get('/mark-as-read/{notificationId}/{projectId}', [NotificationController::class, 'UpdateReadAt'])->name('notifications.markAsRead');

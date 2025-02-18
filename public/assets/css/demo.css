@@ -942,6 +942,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 .red-day {
   background-color: red !important;
   color: white;
+
 }
 
 .calendar-container {
@@ -952,6 +953,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 .event-day {
   background-color: red;
   color: white;
+  cursor: pointer;
 }
 
 .nav-buttons {

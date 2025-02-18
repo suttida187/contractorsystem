@@ -179,6 +179,8 @@ function fetchNotifications() {
 
 
 function userDataFuc(userData) {
+
+
   if (userData.status == null) {
     document.getElementById("stepStatusNull").style.display = "block";
     document.getElementById("stepStatus").style.display = "none";
