@@ -170,7 +170,13 @@
                         cell.addEventListener("click", function() {
                             handleEventClick(eventData.id);
                         });
+                    } else {
+                        cell.addEventListener("click", function() {
+                            alert(`คุณเลือกวันที่ ${day}/${month + 1}/${year}`);
+                        });
                     }
+
+
 
                     row.appendChild(cell);
 
