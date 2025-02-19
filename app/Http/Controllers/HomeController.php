@@ -67,6 +67,7 @@ class HomeController extends Controller
                 break;
 
             case "admin":
+
                 $query->where('responsible_admin', $userId)
                     ->where(function ($q) {
                         $q->where('status', '!=', 'completed')
@@ -299,6 +300,7 @@ class HomeController extends Controller
 
         // ดึงข้อมูลจาก sales_projects
         $salesProject = DB::table('sales_projects')->where('id', $id)->first();
+        $role = Auth::check() && Auth::user()->role === 'admin' ? 'pm' : 'contractor';
 
         if ($salesProject) {
             $meetingDate = $salesProject->meeting_date;
@@ -306,7 +308,7 @@ class HomeController extends Controller
 
             // ค้นหา user_id ที่มี start_date และ end_date ใน calendars
             $userIdsInCalendars = DB::table('calendars')
-                ->where('role', 'pm')
+                ->where('role',  $role)
                 ->where(function ($query) use ($meetingDate, $endDate) {
                     $query->where(function ($subQuery) use ($meetingDate, $endDate) {
                         $subQuery->where('start_date', '<=', $endDate)
@@ -318,7 +320,8 @@ class HomeController extends Controller
 
             // ดึง users ที่ไม่มี user_id อยู่ใน calendars
             $usersNotInCalendar = DB::table('users')
-                ->where('role', 'pm')
+
+                ->where('role',   $role)
                 ->whereNotIn('id', $userIdsInCalendars)
                 ->get();
 
@@ -327,16 +330,26 @@ class HomeController extends Controller
     }
 
 
-    public function createCalendarPm($idUser, $projectId)
+    public function createCalendar($idUser, $projectId)
     {
-        SalesProjects::where('id', $projectId)
-            ->update(['responsible_admin' => Auth::user()->id, 'responsible_pm' => $idUser]);
+
+        $role = Auth::check() && Auth::user()->role === 'admin' ? 'pm' : 'contractor';
+
+        if (Auth::user()->role === 'admin') {
+            SalesProjects::where('id', $projectId)
+                ->update(['responsible_admin' => Auth::user()->id, 'responsible_pm' => $idUser]);
+        } else {
+            SalesProjects::where('id', $projectId)
+                ->update(['responsible_contractor' => $idUser]);
+        }
+
+
 
         $project = SalesProjects::where('id', $projectId)->first();
 
         Calendar::create([
             'user_id' => $idUser,
-            'role' => 'pm',
+            'role' => $role,
             'projectId' => $projectId,
             'start_date' => $project->meeting_date,
             'end_date' => $project->end_date,
@@ -345,7 +358,7 @@ class HomeController extends Controller
 
         // Admin
         $id = $idUser;
-        $role = "pm"; // ส่งเเจ้งเตือนให้กับ Admin
+        $role = $role; // ส่งเเจ้งเตือนให้กับ Admin
         $projectName = "มี: $project->project_name มาใหม่";
         $updatedAt = Carbon::now()->toDateTimeString(); // เวลาปัจจุบันในรูปแบบ YYYY-MM-DD HH:MM:SS
 
@@ -360,7 +373,7 @@ class HomeController extends Controller
 
 
 
-        return response()->json("หมอบหมายให้ PM  เรียบร้อย");
+        return response()->json("หมอบหมายให้ $role  เรียบร้อย");
     }
 
 

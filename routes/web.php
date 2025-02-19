@@ -60,7 +60,7 @@ Route::get('/home-all', [App\Http\Controllers\HomeController::class, 'indexAll']
 Route::post('/search_query-project', [App\Http\Controllers\HomeController::class, 'search'])->name('search_query-project');
 Route::get('/assign-work', [App\Http\Controllers\HomeController::class, 'assignWork'])->name('assign-work');
 Route::get('/calendar-user/{id}', [App\Http\Controllers\HomeController::class, 'calendarUser'])->name('calendar-user');
-Route::get('/create-calendar-pm/{idUser}/{project}', [App\Http\Controllers\HomeController::class, 'createCalendarPm'])->name('create-calendar-user');
+Route::get('/create-calendar/{idUser}/{project}', [App\Http\Controllers\HomeController::class, 'createCalendar'])->name('create-calendar');
 Route::get('/schedule', [App\Http\Controllers\HomeController::class, 'schedule'])->name('schedule');
 Route::get('/getSchedule/{name}', [App\Http\Controllers\HomeController::class, 'getSchedule'])->name('getSchedule');
 Route::get('/user-endpoint/{name}', [App\Http\Controllers\HomeController::class, 'userEndpoint'])->name('user-endpoint');

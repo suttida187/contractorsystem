@@ -14,15 +14,31 @@
                         <label for="roleSelect">เลือกประเภท:</label>
                         <select id="roleSelect" class="form-select">
                             <option selected disabled>เลือกประเภท</option>
-                            <option value="pm">PM</option>
+                            @if (Auth::user()->role == 'admin')
+                                <option value="pm">PM</option>
+                            @endif
+
                             <option value="contractor">ผู้รับเหมา</option>
                         </select>
                     </div>
 
                     <div class="input-group mb-3">
-                        <label for="userSelect" id="userSelectName">เลือกผู้จัดการโครงการ:</label>
+                        <label for="userSelect" id="userSelectName">
+                            @if (Auth::user()->role == 'admin')
+                                เลือกผู้จัดการโครงการ:
+                            @else
+                                เลือกผู้รับเหมา:
+                            @endif
+                        </label>
                         <select id="userSelect" class="form-select">
-                            <option disabled selected>เลือกผู้จัดการ</option>
+                            <option disabled selected>
+                                @if (Auth::user()->role == 'admin')
+                                    เลือกผู้จัดการ
+                                @else
+                                    เลือกผู้รับเหมา
+                                @endif
+
+                            </option>
                         </select>
                     </div>
 

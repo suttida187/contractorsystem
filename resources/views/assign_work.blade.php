@@ -242,10 +242,23 @@
                     </div>
                     <div class="row" id="manager-solution">
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">เลือกผู้จัดการโครงการ: </label>
+                            <label class="form-label">
+                                @if (Auth::user()->role == 'admin')
+                                    เลือกผู้จัดการโครงการ:
+                                @else
+                                    เลือกผู้รับเหมา:
+                                @endif
+
+                            </label>
                             <select name="solution" id="calendarSelect"
                                 class="form-select @error('solution') is-invalid @enderror">
-                                <option selected disabled>เลือกผู้จัดการ</option>
+                                <option selected disabled>
+                                    @if (Auth::user()->role == 'admin')
+                                        เลือกผู้จัดการ
+                                    @else
+                                        เลือกผู้รับเหมา
+                                    @endif
+                                </option>
                             </select>
 
 
@@ -261,6 +274,11 @@
     </div>
 
     <script>
+        window.Laravel = {!! json_encode([
+            'isLoggedIn' => Auth::check(),
+            'role' => Auth::user() ? Auth::user()->role : null,
+        ]) !!};
+
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll(".project-card").forEach(function(btn) {
                 btn.addEventListener("click", function() {

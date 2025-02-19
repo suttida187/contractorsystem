@@ -263,17 +263,24 @@ function userDataFuc(userData) {
 
   fullName = fullName.trim(); // ตัดช่องว่างซ้าย-ขวาออก
 
-  if (fullName !== '') { // ตรวจสอบว่ามีค่าจริงๆ
-    let managerSolution = document.getElementById("manager-solution");
-    let managerButton = document.getElementById("manager-button");
-    if (managerSolution) managerSolution.style.display = "none";
-    if (managerButton) managerButton.style.display = "none";
-  } else {
-    let managerSolution = document.getElementById("manager-solution");
-    let managerButton = document.getElementById("manager-button");
-    if (managerSolution) managerSolution.style.display = "block";
-    if (managerButton) managerButton.style.display = "block";
+
+  if (window.Laravel && window.Laravel.role && window.Laravel.role === 'admin') {
+    if (fullName !== '') { // ตรวจสอบว่ามีค่าจริงๆ
+      let managerSolution = document.getElementById("manager-solution");
+      let managerButton = document.getElementById("manager-button");
+      if (managerSolution) managerSolution.style.display = "none";
+      if (managerButton) managerButton.style.display = "none";
+    } else {
+      let managerSolution = document.getElementById("manager-solution");
+      let managerButton = document.getElementById("manager-button");
+      if (managerSolution) managerSolution.style.display = "block";
+      if (managerButton) managerButton.style.display = "block";
+    }
   }
+
+
+
+
 
 
 
@@ -444,13 +451,18 @@ function getCalendar(id) {
 
       let calendarSelect = $("#calendarSelect");
       calendarSelect.empty(); // ล้างรายการเดิม
-      console.log("data", data);
+
 
       if (data.length > 0) {
-        console.log("555");
+
 
         // เพิ่ม option แรกเป็น placeholder
-        calendarSelect.append('<option selected disabled>เลือกผู้จัดการ</option>');
+        if (window.Laravel && window.Laravel.role && window.Laravel.role === 'admin') {
+          calendarSelect.append('<option selected disabled>เลือกผู้จัดการ</option>');
+        } else {
+          calendarSelect.append('<option selected disabled>เลือกผู้รับเหมา</option>');
+        }
+
 
         data.forEach(item => {
           let option = `<option value="${item.id}">${item.prefix}  ${item.first_name}   ${item.last_name}</option>`;
@@ -479,7 +491,7 @@ function handleSelectChange() {
 
 
     $.ajax({
-      url: `create-calendar-pm/${idUser}/${projectId}`, // แก้ไข URL ให้ถูกต้อง
+      url: `create-calendar/${idUser}/${projectId}`, // แก้ไข URL ให้ถูกต้อง
       type: "GET",
       success: function (data) {
         /*    let notificationDropdown = $("#notif-center"); */

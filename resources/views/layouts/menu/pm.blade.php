@@ -8,10 +8,9 @@
     <div class="sidebar-content">
         <ul class="nav nav-secondary">
             <li class="nav-item {{ $activeRoute === 'home' ? 'active' : '' }}">
-                <a data-bs-toggle="collapse">
+                <a href="{{ url('home') }}">
                     <i class="fas fa-home"></i>
                     <p>หน้าแรก</p>
-
                 </a>
             </li>
 
@@ -34,11 +33,10 @@
                     <p>โครงการทั้งหมด</p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#base">
+            <li class="nav-item {{ $activeRoute === 'schedule' ? 'active' : '' }}">
+                <a href="{{ url('schedule') }}">
                     <i class="fa-solid fa-calendar"></i>
-                    <p>ตารางาน</p>
-
+                    <p>ตารางงาน</p>
                 </a>
             </li>
         </ul>
