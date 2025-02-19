@@ -531,7 +531,7 @@ async function handleEventSaveClick(projectId, idUser) {
 
     if (window.Laravel?.role === 'pm' && date.responsible_contractor != null) {
       return Swal.fire({
-        title: "โครงการนี้ถูกเพิ่มเเล้ว  5555:",
+        title: "โครงการนี้ถูกเพิ่มเเล้ว:",
         text: `กรุณาเลือกโครงการใหม่:`,
         icon: "warning",
         showCancelButton: true,

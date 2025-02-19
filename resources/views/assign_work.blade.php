@@ -286,9 +286,6 @@
                 btn.addEventListener("click", function() {
                     // ดึงค่า JSON จาก `data-user`
                     var userData = JSON.parse(this.getAttribute("data-user"));
-                    console.log("userData", userData.id);
-
-
 
 
                     handleEventClickPm(userData.id);
@@ -326,7 +323,7 @@
                         if (date.responsible_contractor != null) {
                             managerSolution.style.display = "none";
                             managerButton.style.display = "none";
-                            refreshProject.style.display = 'block';
+
                         } else {
                             managerSolution.style.display = "block";
                             managerButton.style.display = "block";
@@ -336,9 +333,8 @@
                     }
                 }
 
-                console.log("date", date.responsible_pm);
 
-                document.getElementById("exampleModalAutoClick").click();
+
                 userDataFuc(date);
                 // ตรวจสอบว่าการตอบกลับสำเร็จหรือไม่
                 if (!response.ok) {
