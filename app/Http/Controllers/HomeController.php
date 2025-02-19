@@ -366,7 +366,8 @@ class HomeController extends Controller
         $data = json_encode([
             'id_project' =>  $projectId,
             'message' => $projectName,
-            'time' => $updatedAt
+            'time' => $updatedAt,
+            'status' => 'status',
         ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
 
         app(NotificationController::class)->CreateNotifications($id, $data, $role);
@@ -397,15 +398,15 @@ class HomeController extends Controller
         return response()->json($events);
     }
 
-    
+
     public function userEndpoint($name)
     {
-       
+
         $events = DB::table('users')->where('role', $name)->get();
         return response()->json($events);
     }
 
-    
+
     public function getProject($id)
     {
 

@@ -74,7 +74,8 @@ class FormSaleController extends Controller
         $data = json_encode([
             'id_project' =>  $projectId,
             'message' => $projectName,
-            'time' => $updatedAt
+            'time' => $updatedAt,
+            'status' => 'newProject',
         ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
 
 
