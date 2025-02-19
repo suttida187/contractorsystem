@@ -269,7 +269,7 @@
                         onclick="handleSelectChange()">ยืนยัน</button>
                 </div>
 
-                <p class="refresh-project" id="refresh-project">โครงการนี้ถูกเพิ่มไปเเล้ว กรุณา Refresh</p>
+
             </div>
         </div>
     </div>
@@ -310,17 +310,17 @@
                 if (window.Laravel?.role === 'admin' || window.Laravel?.role === 'pm') {
                     let managerSolution = document.getElementById("manager-solution");
                     let managerButton = document.getElementById("manager-button");
-                    let refreshProject = document.getElementById("refresh-project");
+
 
                     if (managerSolution && managerButton) {
                         if (date.responsible_pm != null) {
                             managerSolution.style.display = "none";
                             managerButton.style.display = "none";
-                            managerSolution.style.display = "block";
+
                         } else {
                             managerSolution.style.display = "block";
                             managerButton.style.display = "block";
-                            refreshProject.style.display = 'none';
+
                         }
                         if (date.responsible_contractor != null) {
                             managerSolution.style.display = "none";
@@ -329,7 +329,7 @@
                         } else {
                             managerSolution.style.display = "block";
                             managerButton.style.display = "block";
-                            refreshProject.style.display = 'none';
+
                         }
 
                     }
