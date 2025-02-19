@@ -15,5 +15,7 @@ class Calendar extends Model
         'role',
         'start_date',
         'end_date',
+        'message',
+
     ];
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('projectId');
             $table->string('start_date');
             $table->string('end_date');
+            $table->string('message')->nullable();
             $table->timestamps();
         });
     }
