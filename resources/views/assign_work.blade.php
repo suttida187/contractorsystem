@@ -8,7 +8,8 @@
                 </div>
                 <div class="card-body">
                     @foreach ($data as $da)
-                        <div class="project-card" data-user='@json($da)'>
+                        <div class="project-card" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            data-user='@json($da)'>
                             <div><strong>{{ $da->project_name }}</strong></div>
                             <div class="text-end">
 
