@@ -599,9 +599,6 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   }
 }
 
-.progress-left {
-  padding-left: 32px;
-}
 
 .progress-container {
   display: flex;
@@ -612,6 +609,8 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin: 20px auto;
   position: relative;
 }
+
+
 
 
 
@@ -629,6 +628,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   position: relative;
   z-index: 2;
   color: #ccc;
+  margin-left: 32px;
 }
 
 .progress-step.active {
@@ -649,7 +649,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 /* ✅ ทำให้เส้นแต่ละช่วงยาวไม่เกิน progress-step */
 .progress-line.step-1 {
   width: 30%;
-  left: 15px;
+  left: 35px;
 }
 
 .progress-line.step-2 {
@@ -658,7 +658,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 }
 
 .progress-line.step-3 {
-  width: 27%;
+  width: 30%;
   left: 60%;
 }
 
@@ -685,7 +685,9 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   font-size: 14px;
   margin-top: 5px;
   color: #333;
-  margin-left: -24px;
+  margin-left: -8px;
+  word-wrap: break-word;
+  /* หรือ word-break: break-word; */
 }
 
 
