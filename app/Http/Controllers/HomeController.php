@@ -387,13 +387,17 @@ class HomeController extends Controller
     public function getSchedule($name)
     {
 
-        $events = DB::table('calendars')->leftJoin('sales_projects', 'calendars.projectId', 'sales_projects.id')->where('user_id', $name)
+        $events = DB::table('calendars')
+            ->leftJoin('sales_projects', 'calendars.projectId', 'sales_projects.id')
+            ->where('user_id', $name)
             ->select(
                 'calendars.*',
                 'sales_projects.id  as projectId',
                 'sales_projects.project_name',
             )
             ->get();
+
+
 
         return response()->json($events);
     }
@@ -439,6 +443,30 @@ class HomeController extends Controller
 
 
         return response()->json($query);
+    }
+
+
+    public function createCalendars(Request $request)
+    {
+
+
+
+        if ($request->idCalendars == null) {
+            Calendar::create([
+                'user_id' => Auth::user()->id,
+                'role' => Auth::user()->role,
+                'start_date' => $request->date,
+                'end_date' => $request->date,
+                'message' => $request->message,
+            ]);
+
+            return redirect('schedule')->with('message', "ลง Calendar เรียบร้อย");
+        } else {
+
+            $flight =  Calendar::find($request->idCalendars);
+            $flight->delete();
+            return redirect('schedule')->with('message', "ลบ Calendar เรียบร้อย");
+        }
     }
 }
 

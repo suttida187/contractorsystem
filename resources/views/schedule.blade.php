@@ -7,11 +7,6 @@
                     <div class="card-title text-center">ตารางงาน</div>
                 </div>
                 <div class="card-body">
-
-
-
-
-
                     <div class="input-group mb-3" {{ Auth::user()->role == 'contractor' ? 'hidden' : '' }}>
                         <label for="roleSelect">เลือกประเภท:</label>
                         <select id="roleSelect" class="form-select">
@@ -44,11 +39,6 @@
                         </select>
                     </div>
 
-
-
-
-
-                    </select>
                     <div class="calendar-container">
                         <div class="nav-buttons">
                             <button id="prevMonth">◀</button>
@@ -274,6 +264,45 @@
         </div>
     </div>
 
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="exampleModalAutoDate"
+        data-bs-target="#exampleModalDate" {{-- style="display: none" --}}>
+        Launch demo modal
+    </button>
+
+    <div class="modal fade" id="exampleModalDate" tabindex="-1" aria-labelledby="exampleModalLabelCalendars"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabelCalendars">{{-- รายละเอียดงาน --}}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('create-calendars') }}" style="padding:16px;">
+                        @csrf
+                        <div class="row">
+                            <h1 class="text-center-project" id="exampleModalLabelCalendarsName">ลง Calendars </h1>
+                            <div class="mb-3">
+                                <label class="form-label">วันที่ลง: </label>
+                                <input name="date" type="text" id="id-date" class="form-control no-edit">
+                                <input name="idCalendars" type="text" id="id-calendars" class="form-control" hidden>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">รายละเอียด: </label>
+                                <textarea class="form-control" name="message" id="message-id" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="submit-calendars">ยืนยัน</button>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
 
     <script>
         window.Laravel = {!! json_encode([
@@ -353,8 +382,12 @@
 
             async function fetchEvents(role) {
                 try {
+
                     const response = await fetch(`getSchedule/${role}`);
                     events = await response.json();
+
+
+
                     renderCalendar(currentMonth, currentYear);
                 } catch (error) {
                     console.error("Error fetching events:", error);
@@ -383,20 +416,36 @@
 
                     const eventDate =
                         `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-                    const eventData = events.find(event => event.start_date <= eventDate && event
-                        .end_date >=
-                        eventDate);
+                    const eventData = events.find(event => {
+
+
+
+                        if (event.projectId === null) {
+                            return event.start_date === eventDate && event.end_date === eventDate;
+                        }
+                        return event.start_date <= eventDate && event.end_date >= eventDate;
+                    });
 
 
 
 
                     if (eventData) {
+
+
+
                         cell.classList.add("event-day");
                         cell.style.backgroundColor = "red"; // สีแดงแสดงว่ามี event
 
+                        let truncatedText;
+                        if (eventData.projectId != null) {
+                            truncatedText = eventData.project_name.length > 10 ? eventData.project_name
+                                .substring(0, 10) + "..." : eventData.project_name;
+                        } else {
+                            truncatedText = eventData.message.length > 10 ? eventData.message
+                                .substring(0, 10) + "..." : eventData.message;
+                        }
                         // ตัดข้อความหากยาวเกินไป
-                        let truncatedText = eventData.project_name.length > 10 ? eventData.project_name
-                            .substring(0, 10) + "..." : eventData.project_name;
+
 
                         // เพิ่ม project_name ในกล่อง
                         const projectLabel = document.createElement("div");
@@ -406,10 +455,30 @@
 
                         // คลิกเพื่อส่ง idProject
 
-                        console.log("eventData", eventData);
 
                         cell.addEventListener("click", function() {
-                            handleEventClick(eventData.projectId);
+                            if (eventData.projectId != null) {
+                                handleEventClick(eventData.projectId);
+                            } else {
+                                month = String(month + 1).padStart(2, '0'); // ทำให้เดือนเป็น 2 หลัก
+                                day = String(day).padStart(2, '0');
+                                document.getElementById("id-date").value = `${year}-${month}-${day}`;
+                                document.getElementById("message-id").value = eventData.message;
+                                let submitCalendars = document.getElementById("submit-calendars");
+                                // เปลี่ยนข้อความปุ่มเป็น "ยืนยัน"
+                                submitCalendars.textContent = 'ลบ';
+                                // เพิ่มคลาส btn-primary
+                                submitCalendars.classList.add("btn-danger");
+
+                                let calendarsName = document.getElementById(
+                                    "exampleModalLabelCalendarsName");
+                                // เปลี่ยนข้อความปุ่มเป็น "ยืนยัน"
+                                calendarsName.textContent = 'Calendars';
+                                // เพิ่มคลาส btn-primary
+                                document.getElementById("id-calendars").value = eventData.id;
+                                document.getElementById("exampleModalAutoDate").click();
+                            }
+
                         });
                     } else {
 
@@ -417,7 +486,28 @@
                         if (window.Laravel.role == 'contractor') {
                             cell.style.cursor = "pointer";
                             cell.addEventListener("click", function() {
-                                alert(`คุณเลือกวันที่ ${day}/${month + 1}/${year}`);
+
+                                month = String(month + 1).padStart(2, '0'); // ทำให้เดือนเป็น 2 หลัก
+                                day = String(day).padStart(2, '0'); // ทำให้วันเป็น 2 หลัก
+
+                                document.getElementById("id-date").value =
+                                    `${year}-${month}-${day}`;
+                                document.getElementById("id-calendars").value = null;
+
+                                let submitCalendars = document.getElementById("submit-calendars");
+                                // เปลี่ยนข้อความปุ่มเป็น "ยืนยัน"
+                                submitCalendars.textContent = 'ยืนยัน';
+                                // เพิ่มคลาส btn-primary
+                                submitCalendars.classList.add("btn-primary");
+
+                                let calendarsName = document.getElementById(
+                                    "exampleModalLabelCalendarsName");
+                                // เปลี่ยนข้อความปุ่มเป็น "ยืนยัน"
+                                calendarsName.textContent = 'ลง Calendars';
+
+                                document.getElementById("exampleModalAutoDate").click();
+
+
                             });
                         }
 
@@ -479,6 +569,9 @@
             roleSelect.addEventListener("change", function() {
                 fetchEvents(roleSelect.value);
             });
+
+
+
             if (window.Laravel.role == 'contractor') {
 
                 await fetchEvents(window.Laravel.idUser);
