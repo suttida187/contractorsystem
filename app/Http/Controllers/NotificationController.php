@@ -161,27 +161,6 @@ class NotificationController extends Controller
 
 
         return redirect('home');
-        /*        $data = DB::table('sales_projects')
-            ->where('sales_projects.id', $projectId)
-            ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
-            ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
-            ->leftJoin('users as contractor', 'sales_projects.responsible_contractor', '=', 'contractor.id')
-            ->select(
-                'sales_projects.*',
-                'admin.prefix as admin_prefix',
-                'admin.first_name as admin_first_name',
-                'admin.last_name as admin_last_name',
-                'admin.phone as admin_phone',
-                'pm.prefix as pm_prefix',
-                'pm.first_name as pm_first_name',
-                'pm.last_name as pm_last_name',
-                'pm.phone as pm_phone',
-                'contractor.prefix as contractor_prefix',
-                'contractor.first_name as contractor_first_name',
-                'contractor.last_name as contractor_last_name',
-                'contractor.phone as contractor_phone'
-            )->first();
-
-        return response()->json($data); */
+       
     }
 }

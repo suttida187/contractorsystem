@@ -8,8 +8,7 @@
                 </div>
                 <div class="card-body">
                     @foreach ($data as $da)
-                        <div class="project-card" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                            data-user='@json($da)'>
+                        <div class="project-card" data-user='@json($da)'>
                             <div><strong>{{ $da->project_name }}</strong></div>
                             <div class="text-end">
 
@@ -269,6 +268,8 @@
                     <button type="button" class="btn btn-primary" id="manager-button"
                         onclick="handleSelectChange()">ยืนยัน</button>
                 </div>
+
+                <p class="refresh-project" id="refresh-project">โครงการนี้ถูกเพิ่มไปเเล้ว กรุณา Refresh</p>
             </div>
         </div>
     </div>
@@ -284,10 +285,68 @@
                 btn.addEventListener("click", function() {
                     // ดึงค่า JSON จาก `data-user`
                     var userData = JSON.parse(this.getAttribute("data-user"));
-                    userDataFuc(userData);
+                    console.log("userData", userData.id);
+
+
+
+
+                    handleEventClickPm(userData.id);
+
+                    //userDataFuc(date);
 
                 });
             });
         });
+
+        async function handleEventClickPm(idProject) {
+            try {
+                /*  console.log(`Event Clicked: Project ID ${idProject}`); */
+
+                // เรียก API ไปที่ `getProject/{idProject}`
+                const response = await fetch(`getProject/${idProject}`);
+                let date = await response.json();
+
+
+                if (window.Laravel?.role === 'admin' || window.Laravel?.role === 'pm') {
+                    let managerSolution = document.getElementById("manager-solution");
+                    let managerButton = document.getElementById("manager-button");
+                    let refreshProject = document.getElementById("refresh-project");
+
+                    if (managerSolution && managerButton) {
+                        if (date.responsible_pm != null) {
+                            managerSolution.style.display = "none";
+                            managerButton.style.display = "none";
+                            managerSolution.style.display = "block";
+                        } else {
+                            managerSolution.style.display = "block";
+                            managerButton.style.display = "block";
+                            refreshProject.style.display = 'none';
+                        }
+                        if (date.responsible_contractor != null) {
+                            managerSolution.style.display = "none";
+                            managerButton.style.display = "none";
+                            refreshProject.style.display = 'block';
+                        } else {
+                            managerSolution.style.display = "block";
+                            managerButton.style.display = "block";
+                            refreshProject.style.display = 'none';
+                        }
+
+                    }
+                }
+
+                console.log("date", date.responsible_pm);
+
+                document.getElementById("exampleModalAutoClick").click();
+                userDataFuc(date);
+                // ตรวจสอบว่าการตอบกลับสำเร็จหรือไม่
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+            } catch (error) {
+                console.error("Error fetching project data:", error);
+            }
+        }
     </script>
 @endsection

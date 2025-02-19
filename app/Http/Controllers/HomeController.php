@@ -396,12 +396,16 @@ class HomeController extends Controller
 
         return response()->json($events);
     }
+
+    
     public function userEndpoint($name)
     {
        
         $events = DB::table('users')->where('role', $name)->get();
         return response()->json($events);
     }
+
+    
     public function getProject($id)
     {
 

@@ -1027,3 +1027,10 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   max-width: 100%;
   /* จำกัดความกว้างไม่ให้ยืดเกินไป */
 }
+
+.refresh-project {
+  text-align: center;
+  color: red;
+  font-size: 18px;
+  margin-bottom: 24px;
+}
