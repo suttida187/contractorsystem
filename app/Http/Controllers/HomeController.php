@@ -337,7 +337,7 @@ class HomeController extends Controller
         Calendar::create([
             'user_id' => $idUser,
             'role' => 'pm',
-            'projectId' => 'projectId',
+            'projectId' => $projectId,
             'start_date' => $project->meeting_date,
             'end_date' => $project->end_date,
         ]);
