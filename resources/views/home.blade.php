@@ -1,5 +1,22 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .remove-btn {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .form-container {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
     <div class="container">
         <div class="page-inner">
             <div class="card">
@@ -227,9 +244,33 @@
                                 class="form-control no-edit">
                         </div>
                     </div>
+
+                    <h2>รายละเอียดงานที่ส่งมอบ</h2>
+
+                    <div id="form-container">
+                        <!-- ฟอร์มแรก -->
+                        <div class="form-container">
+                            <div class="form-group">
+                                <label>รายละเอียด</label>
+                                <input type="text" name="details[]" class="detail-input form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>อัปโหลดรูปภาพ</label>
+                                <input type="file" name="images[]" class="image-upload form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ปุ่มเพิ่มรายละเอียด -->
+                    <button id="add-form" type="button">+ เพิ่มรายละเอียด</button>
+
+                    <button type="submit">ส่งมอบงาน</button>
                 </div>
             </div>
         </div>
+
+
+
     </div>
 
     <script>
@@ -244,15 +285,28 @@
             });
         });
 
-        /*        // ใช้ Flatpickr เพื่อเลือกวันที่ในรูปแบบวัน/เดือน/ปี
-               flatpickr("#meeting_date", {
-                   dateFormat: "d/m/Y", // กำหนดรูปแบบวัน/เดือน/ปี
-                   allowInput: true, // อนุญาตให้กรอกวันที่ได้ด้วยมือ
-               });
+        $(document).ready(function() {
+            $("#add-form").click(function() {
+                let newForm = `
+                <div class="form-container">
+                    <div class="form-group">
+                        <label>รายละเอียด</label>
+                        <input type="text" name="details[]" class="detail-input form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>อัปโหลดรูปภาพ</label>
+                        <input type="file" name="images[]" class="image-upload form-control">
+                    </div>
+                    <span class="remove-btn">ลบ</span>
+                </div>
+                `;
+                $("#form-container").append(newForm);
+            });
 
-               flatpickr("#end_date", {
-                   dateFormat: "d/m/Y", // กำหนดรูปแบบวัน/เดือน/ปี
-                   allowInput: true, // อนุญาตให้กรอกวันที่ได้ด้วยมือ
-               }); */
+            // ฟังก์ชันลบฟอร์มที่เพิ่มขึ้นมา
+            $(document).on("click", ".remove-btn", function() {
+                $(this).closest(".form-container").remove();
+            });
+        });
     </script>
 @endsection
