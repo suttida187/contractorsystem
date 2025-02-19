@@ -19,6 +19,25 @@ class NotificationController extends Controller
     public function fetch()
     {
 
+
+        if (Auth::user()->role == 'sale') {
+            $notifications = DB::table('notifications_sales')
+                ->whereNull('read_at')
+                ->latest()
+                ->get()
+                ->map(function ($notification) {
+                    return [
+                        'id' => $notification->id,
+                        'id_project' => json_decode($notification->data, true)['id_project'],
+                        'message' => json_decode($notification->data, true)['message'],
+                        'time' => Carbon::parse($notification->created_at)->diffForHumans(),
+                        'url' => route('notifications.markAsRead', [
+                            'notificationId' => $notification->id,
+                            'projectId' => json_decode($notification->data, true)['id_project']
+                        ])
+                    ];
+                });
+        }
         if (Auth::user()->role == 'admin') {
             $notifications = DB::table('notifications_admins')
                 ->whereNull('read_at')
@@ -38,26 +57,10 @@ class NotificationController extends Controller
                     ];
                 });
         }
-        if (Auth::user()->role == 'sale') {
-            $notifications = DB::table('notifications_sales')
-                ->whereNull('read_at')
-                ->latest()
-                ->get()
-                ->map(function ($notification) {
-                    return [
-                        'id' => $notification->id,
-                        'id_project' => json_decode($notification->data, true)['id_project'],
-                        'message' => json_decode($notification->data, true)['message'],
-                        'time' => Carbon::parse($notification->created_at)->diffForHumans(),
-                        'url' => route('notifications.markAsRead', [
-                            'notificationId' => $notification->id,
-                            'projectId' => json_decode($notification->data, true)['id_project']
-                        ])
-                    ];
-                });
-        }
+
         if (Auth::user()->role == 'pm') {
             $notifications = DB::table('notifications_pms')
+                ->where('notifiable_id', Auth::user()->id)
                 ->whereNull('read_at')
                 ->latest()
                 ->get()
@@ -77,6 +80,7 @@ class NotificationController extends Controller
 
         if (Auth::user()->role == 'contractor') {
             $notifications = DB::table('notifications_contractors')
+                ->where('notifiable_id', Auth::user()->id)
                 ->whereNull('read_at')
                 ->latest()
                 ->get()
