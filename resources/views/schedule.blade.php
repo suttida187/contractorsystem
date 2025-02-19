@@ -10,7 +10,9 @@
 
 
 
-                    <div class="input-group mb-3">
+
+
+                    <div class="input-group mb-3" {{ Auth::user()->role == 'contractor' ? 'hidden' : '' }}>
                         <label for="roleSelect">เลือกประเภท:</label>
                         <select id="roleSelect" class="form-select">
                             <option selected disabled>เลือกประเภท</option>
@@ -22,7 +24,7 @@
                         </select>
                     </div>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" {{ Auth::user()->role == 'contractor' ? 'hidden' : '' }}>
                         <label for="userSelect" id="userSelectName">
                             @if (Auth::user()->role == 'admin')
                                 เลือกผู้จัดการโครงการ:
@@ -41,6 +43,8 @@
                             </option>
                         </select>
                     </div>
+
+
 
 
 
@@ -275,53 +279,64 @@
         window.Laravel = {!! json_encode([
             'isLoggedIn' => Auth::check(),
             'role' => Auth::check() ? Auth::user()->role : null,
+            'idUser' => Auth::check() ? Auth::user()->id : null,
         ]) !!}
+
+
+
+
+
         $(document).ready(function() {
             $('#roleSelect').change(function() {
                 var selectedValue = $(this).val(); // รับค่าที่เลือก
-
-                $.ajax({
-                    url: `user-endpoint/${selectedValue}`, // เปลี่ยนเป็น URL ที่ต้องการส่งค่าไป
-                    type: 'GET', // เปลี่ยนจาก 'POST' เป็น 'GET'
-                    success: function(response) {
-                        $('#userSelect').empty(); // ล้างค่าตัวเลือกเก่า
-                        $('#userSelectName').html(''); // เคลียร์ Label
-
-                        // ตรวจสอบค่าที่เลือก และอัปเดต Label
-                        if (selectedValue == 'pm') {
-                            $('#userSelectName').html(
-                                '<label for="userSelect">เลือกผู้จัดการโครงการ:</label>');
-                            $('#userSelect').append(
-                                '<option disabled selected>เลือกผู้จัดการ</option>');
-                        } else {
-                            $('#userSelectName').html(
-                                '<label for="userSelect">เลือกผู้รับเหมา:</label>');
-                            $('#userSelect').append(
-                                '<option disabled selected>เลือกผู้รับเหมา</option>');
-                        }
-
-                        // เพิ่มตัวเลือกเริ่มต้น
-
-
-                        // ตรวจสอบว่ามีข้อมูลใน response หรือไม่
-                        if (response.length > 0) {
-                            // วนลูปเพิ่ม option ตามข้อมูลที่ได้รับ
-                            response.forEach(function(user) {
-                                $('#userSelect').append(
-                                    `<option value="${user.id}">${user.prefix}  ${user.first_name} ${user.last_name} </option>`
-                                );
-                            });
-                        } else {
-                            // กรณีไม่มีข้อมูล
-                            $('#userSelect').append('<option disabled>ไม่มีข้อมูล</option>');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
+                userEndpoint(selectedValue);
             });
         });
+
+
+
+        function userEndpoint(selectedValue) {
+            $.ajax({
+                url: `user-endpoint/${selectedValue}`, // เปลี่ยนเป็น URL ที่ต้องการส่งค่าไป
+                type: 'GET', // เปลี่ยนจาก 'POST' เป็น 'GET'
+                success: function(response) {
+                    $('#userSelect').empty(); // ล้างค่าตัวเลือกเก่า
+                    $('#userSelectName').html(''); // เคลียร์ Label
+
+                    // ตรวจสอบค่าที่เลือก และอัปเดต Label
+                    if (selectedValue == 'pm') {
+                        $('#userSelectName').html(
+                            '<label for="userSelect">เลือกผู้จัดการโครงการ:</label>');
+                        $('#userSelect').append(
+                            '<option disabled selected>เลือกผู้จัดการ</option>');
+                    } else {
+                        $('#userSelectName').html(
+                            '<label for="userSelect">เลือกผู้รับเหมา:</label>');
+                        $('#userSelect').append(
+                            '<option disabled selected>เลือกผู้รับเหมา</option>');
+                    }
+
+                    // เพิ่มตัวเลือกเริ่มต้น
+
+
+                    // ตรวจสอบว่ามีข้อมูลใน response หรือไม่
+                    if (response.length > 0) {
+                        // วนลูปเพิ่ม option ตามข้อมูลที่ได้รับ
+                        response.forEach(function(user) {
+                            $('#userSelect').append(
+                                `<option value="${user.id}">${user.prefix}  ${user.first_name} ${user.last_name} </option>`
+                            );
+                        });
+                    } else {
+                        // กรณีไม่มีข้อมูล
+                        $('#userSelect').append('<option disabled>ไม่มีข้อมูล</option>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
 
         document.addEventListener("DOMContentLoaded", async function() {
             const calendar = document.getElementById("calendar");
@@ -329,6 +344,7 @@
             const prevBtn = document.getElementById("prevMonth");
             const nextBtn = document.getElementById("nextMonth");
             const roleSelect = document.getElementById("userSelect");
+
 
             let date = new Date();
             let currentMonth = date.getMonth();
@@ -367,7 +383,8 @@
 
                     const eventDate =
                         `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-                    const eventData = events.find(event => event.start_date <= eventDate && event.end_date >=
+                    const eventData = events.find(event => event.start_date <= eventDate && event
+                        .end_date >=
                         eventDate);
 
 
@@ -458,11 +475,19 @@
                 renderCalendar(currentMonth, currentYear);
             });
 
+
             roleSelect.addEventListener("change", function() {
                 fetchEvents(roleSelect.value);
             });
+            if (window.Laravel.role == 'contractor') {
 
-            await fetchEvents(roleSelect.value);
+                await fetchEvents(window.Laravel.idUser);
+            } else {
+                await fetchEvents(roleSelect.value);
+            }
+
+
+
             renderCalendar(currentMonth, currentYear);
         });
     </script>

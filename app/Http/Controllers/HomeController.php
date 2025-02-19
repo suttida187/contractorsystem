@@ -398,8 +398,7 @@ class HomeController extends Controller
     }
     public function userEndpoint($name)
     {
-
-
+       
         $events = DB::table('users')->where('role', $name)->get();
         return response()->json($events);
     }
