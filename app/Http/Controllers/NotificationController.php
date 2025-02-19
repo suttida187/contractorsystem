@@ -112,11 +112,14 @@ class NotificationController extends Controller
             ]);
         }
         if ($role == 'admin') {
+
             NotificationsAdmin::create([
                 'notifiable_id' => $id,
                 'data' => $data,
             ]);
         }
+
+
 
         if ($role == 'pm') {
             NotificationsPm::create([
@@ -146,8 +149,17 @@ class NotificationController extends Controller
                 ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
         }
         if ($role == 'admin') {
+
+            $not_data = DB::table('notifications_admins')
+                ->where('id', $notificationId)
+                ->first();
+
             NotificationsAdmin::where('id', $notificationId)
                 ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+
+            if (json_decode($not_data->data)->status  == 'newProject') {
+                return redirect('assign-work');
+            }
         }
 
         if ($role == 'pm') {
@@ -161,6 +173,5 @@ class NotificationController extends Controller
 
 
         return redirect('home');
-       
     }
 }
