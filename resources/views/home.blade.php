@@ -256,7 +256,7 @@
                             </div>
                             <div class="form-group">
                                 <label>อัปโหลดรูปภาพ</label>
-                                <input type="file" name="images[]" class="image-upload form-control">
+                                <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
                             </div>
                         </div>
                     </div>
@@ -295,7 +295,7 @@
                     </div>
                     <div class="form-group">
                         <label>อัปโหลดรูปภาพ</label>
-                        <input type="file" name="images[]" class="image-upload form-control">
+                        <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
                     </div>
                     <span class="remove-btn">ลบ</span>
                 </div>
