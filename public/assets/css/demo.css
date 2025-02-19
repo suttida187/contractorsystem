@@ -599,6 +599,10 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   }
 }
 
+.progress-left {
+  padding-left: 32px;
+}
+
 .progress-container {
   display: flex;
   align-items: center;
@@ -689,7 +693,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 .progress-container-check {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   max-width: 600px;
   margin: 20px auto;
