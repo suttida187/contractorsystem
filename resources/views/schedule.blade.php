@@ -265,7 +265,7 @@
     </div>
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="exampleModalAutoDate"
-        data-bs-target="#exampleModalDate" {{-- style="display: none" --}}>
+        data-bs-target="#exampleModalDate" style="display: none">
         Launch demo modal
     </button>
 
