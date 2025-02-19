@@ -269,7 +269,8 @@
                         onclick="handleSelectChange()">ยืนยัน</button>
                 </div>
 
-
+                <p class="refresh-project" id="refresh-project" style="display: none">โครงการนี้ถูกเพิ่มไปเเล้ว กรุณา
+                    Refresh</p>
             </div>
         </div>
     </div>

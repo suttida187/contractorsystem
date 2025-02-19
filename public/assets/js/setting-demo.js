@@ -488,22 +488,8 @@ function handleSelectChange() {
 
   if (projectId && idUser) {
 
+    handleEventSaveClick(projectId, idUser)
 
-
-    $.ajax({
-      url: `create-calendar/${idUser}/${projectId}`, // แก้ไข URL ให้ถูกต้อง
-      type: "GET",
-      success: function (data) {
-        /*    let notificationDropdown = $("#notif-center"); */
-
-        window.location.href = window.location.href; // โหลดหน้าใหม่ที่ URL เดิม
-
-
-      },
-      error: function (xhr, status, error) {
-        console.error("Error fetching notifications:", error);
-      }
-    });
   } else {
     Swal.fire({
       title: "ผู้จัดการโครงการ:",
@@ -518,6 +504,71 @@ function handleSelectChange() {
   }
 
 
+}
+
+async function handleEventSaveClick(projectId, idUser) {
+  try {
+    /*  console.log(`Event Clicked: Project ID ${idProject}`); */
+
+    // เรียก API ไปที่ `getProject/{idProject}`
+    const response = await fetch(`getProject/${projectId}`);
+    let date = await response.json();
+
+    if (window.Laravel?.role === 'admin' || window.Laravel?.role === 'pm') {
+
+      if (date.responsible_pm != null) {
+        return Swal.fire({
+          title: "โครงการนี้ถูกเพิ่มเเล้ว:",
+          text: `กรุณาเลือกผู้จัดการโครงการใหม่:`,
+          icon: "warning",
+          showCancelButton: true,
+          showConfirmButton: false, // ซ่อนปุ่ม "ตกลง"
+          cancelButtonColor: "#3085d6",
+          cancelButtonText: "ยกเลิก"
+        });
+      } else {
+
+      }
+      if (date.responsible_contractor != null) {
+        return Swal.fire({
+          title: "โครงการนี้ถูกเพิ่มเเล้ว:",
+          text: `กรุณาเลือกโครงการใหม่:`,
+          icon: "warning",
+          showCancelButton: true,
+          showConfirmButton: false, // ซ่อนปุ่ม "ตกลง"
+          cancelButtonColor: "#3085d6",
+          cancelButtonText: "ยกเลิก"
+        });
+      }
+      $.ajax({
+        url: `create-calendar/${idUser}/${projectId}`, // แก้ไข URL ให้ถูกต้อง
+        type: "GET",
+        success: function (data) {
+          /*    let notificationDropdown = $("#notif-center"); */
+
+          window.location.href = window.location.href; // โหลดหน้าใหม่ที่ URL เดิม
+
+
+        },
+        error: function (xhr, status, error) {
+          console.error("Error fetching notifications:", error);
+        }
+      });
+
+    }
+
+    console.log("date", date.responsible_pm);
+
+    document.getElementById("exampleModalAutoClick").click();
+    userDataFuc(date);
+    // ตรวจสอบว่าการตอบกลับสำเร็จหรือไม่
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+  } catch (error) {
+    console.error("Error fetching project data:", error);
+  }
 }
 
 
