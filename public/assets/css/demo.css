@@ -1021,11 +1021,92 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   overflow: hidden;
   white-space: nowrap;
   width: 100px;
-  /* จำกัดความกว้าง */
   display: block;
   margin: 2px auto;
   text-align: center;
+  max-width: 90%;
+  /* ป้องกันไม่ให้ใหญ่เกินหน้าจอบนมือถือ */
 }
+
+/* ปรับสำหรับจอขนาดเล็ก (มือถือ) */
+@media screen and (max-width: 480px) {
+  .project-label {
+    font-size: 10px;
+    /* ลดขนาดตัวอักษร */
+    width: auto;
+    /* ปรับให้กว้างตามเนื้อหา */
+    max-width: 80%;
+    /* จำกัดไม่ให้เกินหน้าจอ */
+    padding: 2px 5px;
+    /* ลด padding เพื่อให้ดูดีขึ้น */
+  }
+}
+
+
+.calendar-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  /* เปิดให้เลื่อนแนวนอนได้หากตารางใหญ่เกินไป */
+  white-space: nowrap;
+  /* ป้องกันการหักบรรทัด */
+}
+
+.calendar-table {
+  width: 100%;
+  min-width: 350px;
+  /* กำหนดความกว้างขั้นต่ำของตาราง */
+  table-layout: fixed;
+  /* ทำให้แต่ละคอลัมน์มีขนาดเท่ากัน */
+  border-collapse: collapse;
+}
+
+.calendar-table th,
+.calendar-table td {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* ปรับขนาดปุ่มบนมือถือ */
+.nav-buttons button {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+/* ปรับให้รองรับจอเล็ก */
+@media screen and (max-width: 480px) {
+  .calendar-table {
+    font-size: 12px;
+    /* ลดขนาดตัวอักษร */
+  }
+
+  .calendar-table th,
+  .calendar-table td {
+    padding: 6px;
+  }
+
+  .nav-buttons span {
+    font-size: 14px;
+    /* ปรับขนาดตัวหนังสือของชื่อเดือน */
+  }
+
+  .calendar-container .table>tbody>tr>td,
+  .table>tbody>tr>th {
+    padding: 8px 0px 8px 0px !important;
+  }
+}
+
+
+
 
 .input-group {
   display: flex;
