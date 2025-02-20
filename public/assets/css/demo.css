@@ -807,7 +807,8 @@ body[data-background-color="dark"] .demo-icon .icon-class {
     text-align: center;
     /* จัดตรงกลาง */
     margin-top: 10px;
-    margin-right: 24px !important;
+    margin-right: 4px !important;
+    margin-left: 4px !important;
   }
 
   .progress-text {
