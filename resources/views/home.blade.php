@@ -241,12 +241,12 @@
                                     <div class="form-group-home">
                                         <label>รายละเอียด (ลำดับที่ <span class="form-index">1</span>)</label>
                                         <input type="hidden" name="indexes[]" value="1">
-                                        <textarea class="form-control" name="details[]" rows="3" required></textarea>
+                                        <textarea class="form-control" name="details[]" rows="3"></textarea>
                                     </div>
                                     <div class="form-group-home">
                                         <label>อัปโหลดรูปภาพ</label>
                                         <input type="file" name="images[1][]" class="image-upload form-control"
-                                            multiple accept=".jpg,.jpeg,.png,.gif,.pdf" required>
+                                            multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
                                     </div>
                                 </div>
                             </div>

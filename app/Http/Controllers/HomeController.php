@@ -475,7 +475,7 @@ class HomeController extends Controller
 
         $data = [];
 
-        if (!empty($indexes) && !empty($details)) {
+        /*   if (!empty($indexes) && !empty($details)) {
             foreach ($indexes as $key => $index) {
                 $detailText = $details[$key] ?? '';
 
@@ -502,10 +502,10 @@ class HomeController extends Controller
                     'statusImage' => "deliver_work"
                 ];
             }
-        }
+        } */
 
 
-        // บันทึกข้อมูลลงฐานข้อมูล
+        /* // บันทึกข้อมูลลงฐานข้อมูล
         ImageDeliverWork::create([
             'id_project' => $idProject,
             'image' => json_encode($data, JSON_UNESCAPED_UNICODE), // ✅ ใช้ json_encode() แทน json_decode()
@@ -514,6 +514,28 @@ class HomeController extends Controller
             'message' => $request->message ?? '', // ป้องกันค่าที่เป็น null
             'status' => "success",
         ]);
+ */
+
+        $project = SalesProjects::where('id', $idProject)->first();
+        // Admin
+        $id = $project->responsible_pm;
+        $role = "pm"; // ส่งเเจ้งเตือนให้กับ Admin
+        $projectName = "contractor  ส่งงาน: $project->project_name เเล้ว";
+        $updatedAt = Carbon::now()->toDateTimeString(); // เวลาปัจจุบันในรูปแบบ YYYY-MM-DD HH:MM:SS
+
+        // JSON Encode ให้ถูกต้อง
+        $data = json_encode([
+            'id_project' =>  $idProject,
+            'message' => $projectName,
+            'time' => $updatedAt,
+            'status' => 'deliver_work',
+        ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
+
+        app(NotificationController::class)->CreateNotifications($id, $data, $role);
+
+
+
+
         return redirect('home')->with('message', "ส่งงานเรียบร้อย");
     }
 }
