@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\SalesProjects;
 use Carbon\Carbon; // ใช้ Carbon เพื่อความสะดวก
 use App\Models\Calendar;
+use App\Models\ImageDeliverWork;
 
 class HomeController extends Controller
 {
@@ -448,9 +449,6 @@ class HomeController extends Controller
 
     public function createCalendars(Request $request)
     {
-
-
-
         if ($request->idCalendars == null) {
             Calendar::create([
                 'user_id' => Auth::user()->id,
@@ -467,6 +465,56 @@ class HomeController extends Controller
             $flight->delete();
             return redirect('schedule')->with('message', "ลบ Calendar เรียบร้อย");
         }
+    }
+    public function uploadImage(Request $request)
+    {
+        $indexes = $request->input('indexes');  // ลำดับที่
+        $details = $request->input('details');  // รายละเอียด
+        $idProject = $request->input('idProjectImage');  // รายละเอียด
+        $images = $request->file('images');     // ไฟล์ภาพที่อัปโหลด (เป็น array ตาม index)
+
+        $data = [];
+
+        if (!empty($indexes) && !empty($details)) {
+            foreach ($indexes as $key => $index) {
+                $detailText = $details[$key] ?? '';
+
+                // ตรวจสอบว่ามีรูปภาพที่เกี่ยวข้องกับ index หรือไม่
+                $uploadedImages = [];
+                if (!empty($images) && isset($images[$index])) {
+                    foreach ($images[$index] as $image) {
+                        if ($image->isValid()) {
+                            // ตั้งชื่อไฟล์ใหม่และบันทึก
+                            $fileName = time() . '-' . $image->getClientOriginalName();
+                            $image->storeAs('uploads', $fileName, 'public');
+
+                            // เก็บชื่อไฟล์
+                            $uploadedImages[] = $fileName;
+                        }
+                    }
+                }
+
+                // จัดกลุ่มข้อมูลให้แต่ละ index มีรายละเอียดและไฟล์ภาพของตัวเอง
+                $data[] = [
+                    'index' => $index,
+                    'details' => $detailText,
+                    'images' => $uploadedImages,
+                    'statusImage' => "deliver_work"
+                ];
+            }
+        }
+
+
+        // บันทึกข้อมูลลงฐานข้อมูล
+        ImageDeliverWork::create([
+            'id_project' => $idProject,
+            'image' => json_encode($data, JSON_UNESCAPED_UNICODE), // ✅ ใช้ json_encode() แทน json_decode()
+            'start_date' => $request->date ?? now(), // ถ้าไม่มีข้อมูลให้ใช้วันที่ปัจจุบัน
+            'end_date' => $request->date ?? now(), // ถ้าไม่มีข้อมูลให้ใช้วันที่ปัจจุบัน
+            'message' => $request->message ?? '', // ป้องกันค่าที่เป็น null
+            'status' => "success",
+        ]);
+        return redirect('home')->with('message', "ส่งงานเรียบร้อย");
     }
 }
 

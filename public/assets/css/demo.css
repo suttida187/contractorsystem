@@ -1034,3 +1034,24 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   font-size: 18px;
   margin-bottom: 24px;
 }
+
+.form-group-home {
+  margin-bottom: 8px;
+}
+
+.remove-btn {
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.form-container {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.button-top {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}

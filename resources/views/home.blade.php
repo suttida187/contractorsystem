@@ -1,22 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <style>
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .remove-btn {
-            color: red;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .form-container {
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-        }
-    </style>
     <div class="container">
         <div class="page-inner">
             <div class="card">
@@ -245,26 +228,36 @@
                         </div>
                     </div>
 
-                    <h2>รายละเอียดงานที่ส่งมอบ</h2>
 
-                    <div id="form-container">
-                        <!-- ฟอร์มแรก -->
-                        <div class="form-container">
-                            <div class="form-group">
-                                <label>รายละเอียด</label>
-                                <input type="text" name="details[]" class="detail-input form-control">
+                    @if (Auth::user()->role == 'contractor')
+                        <h2>รายละเอียดงานที่ส่งมอบ</h2>
+                        <form method="POST" action="{{ route('upload-image') }}" enctype="multipart/form-data"
+                            style="padding:16px;">
+                            @csrf
+                            <div id="form-container">
+                                <input name="idProjectImage" type="text" id="project-id-image" class="form-control">
+                                <!-- ฟอร์มแรก -->
+                                <div class="form-container">
+                                    <div class="form-group-home">
+                                        <label>รายละเอียด (ลำดับที่ <span class="form-index">1</span>)</label>
+                                        <input type="hidden" name="indexes[]" value="1">
+                                        <textarea class="form-control" name="details[]" rows="3" required></textarea>
+                                    </div>
+                                    <div class="form-group-home">
+                                        <label>อัปโหลดรูปภาพ</label>
+                                        <input type="file" name="images[1][]" class="image-upload form-control"
+                                            multiple accept=".jpg,.jpeg,.png,.gif,.pdf" required>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>อัปโหลดรูปภาพ</label>
-                                <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+
+                            <!-- ปุ่มเพิ่มรายละเอียด -->
+                            <div class="d-flex justify-content-between button-top">
+                                <button id="add-form" type="button" class="btn btn-warning">+ เพิ่มรายละเอียด</button>
+                                <button type="submit" class="btn btn-primary">ส่งมอบงาน</button>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- ปุ่มเพิ่มรายละเอียด -->
-                    <button id="add-form" type="button">+ เพิ่มรายละเอียด</button>
-
-                    <button type="submit">ส่งมอบงาน</button>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
@@ -279,6 +272,9 @@
                 btn.addEventListener("click", function() {
                     // ดึงค่า JSON จาก `data-user`
                     var userData = JSON.parse(this.getAttribute("data-user"));
+                    document.getElementById("project-id-image").value = userData.id
+
+
                     userDataFuc(userData);
 
                 });
@@ -286,27 +282,43 @@
         });
 
         $(document).ready(function() {
+            let index = 1; // เริ่มต้นที่ 1
+
             $("#add-form").click(function() {
+                index++; // เพิ่มลำดับ
+
                 let newForm = `
-                <div class="form-container">
-                    <div class="form-group">
-                        <label>รายละเอียด</label>
-                        <input type="text" name="details[]" class="detail-input form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>อัปโหลดรูปภาพ</label>
-                        <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
-                    </div>
-                    <span class="remove-btn">ลบ</span>
+            <div class="form-container">
+                <div class="form-group">
+                    <label>รายละเอียด (ลำดับที่ <span class="form-index">${index}</span>)</label>
+                    <input type="hidden" name="indexes[]" value="${index}">
+                    <textarea class="form-control" name="details[]" rows="3" required></textarea>
                 </div>
-                `;
+                <div class="form-group">
+                    <label>อัปโหลดรูปภาพ</label>
+                    <input type="file" name="images[${index}][]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf" required>
+                </div>
+                <button type="button" class="remove-btn btn btn-danger btn-sm">ลบ</button>
+            </div>
+            `;
                 $("#form-container").append(newForm);
             });
 
             // ฟังก์ชันลบฟอร์มที่เพิ่มขึ้นมา
             $(document).on("click", ".remove-btn", function() {
                 $(this).closest(".form-container").remove();
+                updateIndexes(); // อัปเดตหมายเลขลำดับใหม่
             });
+
+            // ฟังก์ชันอัปเดตหมายเลขลำดับ
+            function updateIndexes() {
+                $(".form-container").each(function(i) {
+                    let newIndex = i + 1;
+                    $(this).find(".form-index").text(newIndex);
+                    $(this).find("input[name='indexes[]']").val(newIndex);
+                    $(this).find("input[type='file']").attr("name", `images[${newIndex}][]`);
+                });
+            }
         });
     </script>
 @endsection
