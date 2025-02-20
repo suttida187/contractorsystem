@@ -4,7 +4,7 @@
         <div class="page-inner">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">โครงการทั้งหมด</h2>
+                    <h2 class="text-center mt-4"><strong>โครงการทั้งหมด</strong></h2>
                     <div class="filter-container justify-content-center mt-3">
                         <!-- ฟอร์มค้นหา + ตัวกรอง -->
 
@@ -152,9 +152,13 @@
                                 @include('layouts.stepStatus')
                             </div>
                         @endif
+                    </div>
 
+                        <h1 class="text-center-project" id="exampleModalLabel">รายละเอียดโครงการ</h1>
+        
+                        <h5 class="col-12 mt-3 mb-3 text-primary ms-3"><strong>ข้อมูลรายละเอียดงาน</strong></h5>
 
-                        <h1 class="text-center-project" id="exampleModalLabel">รายละเอียดงาน</h1>
+                        <div class="row">
                         <div class="mb-3" hidden>
                             <label class="form-label">โปรเจกต์ id: </label>
                             <input name="project_id" type="text" id="project_id" class="form-control no-edit">
@@ -212,7 +216,7 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
+                    <h5 class="col-12 mt-3 mb-3 text-primary ms-3"><strong>ข้อมูลลูกค้า</strong></h5>
                     <div class="row">
                         <div class="mb-3">
                             <label class="form-label">ชื่อบริษัท/นิติบุคคล: </label>
@@ -245,7 +249,7 @@
 
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
+                    <h5 class="col-12 mt-3 mb-3 text-primary ms-3"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                     <div class="row">
                         <div class="mb-3">
                             <label class="form-label">การรับประกัน: </label>
@@ -266,7 +270,7 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดผู้ดูเเล</strong></h5>
+                    <h5 class="col-12 mt-3 mb-3 text-primary ms-3"><strong>รายละเอียดผู้ดูเเล</strong></h5>
                     <div class="row">
                         <div class="col-md-8 mb-3">
                             <label class="form-label">Sale: </label>

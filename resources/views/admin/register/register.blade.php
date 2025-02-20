@@ -2,21 +2,26 @@
 @section('content')
     <div class="container">
         <div class="page-inner">
+
             <div class="card">
+                <div class="card-header">
+                    <div class="card-title text-center">
+                        @if ($status_name == 0)
+                            ลงทะเบียน Sale / PM / Admin
+                        @else
+                            ลงทะเบียนผู้รับเหมา
+                        @endif
+                    </div>
+                </div>
+
                 <form method="POST" action="{{ route('register-store') }}" style="padding:16px;">
                     @csrf
 
-                    <div class="row">
+                    
                         <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
-                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>
-                                @if ($status_name == 0)
-                                    ลงทะเบียน Sale / PM / Admin
-                                @else
-                                    ลงทะเบียนผู้รับเหมา
-                                @endif
-                            </strong></h5>
-
-
+                        
+                <div class="card-body">
+                    <div class="row">
                         @if ($status_name == 0)
                             <div class="mb-3">
                                 <label class="form-label">เลือกประเภท: </label>
@@ -204,8 +209,8 @@
                         <button type="submit" class="btn btn-primary">บันทึก</button>
                     </div>
                 </form>
-
             </div>
+        </div>
         </div>
     </div>
 @endsection

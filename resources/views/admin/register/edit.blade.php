@@ -6,17 +6,20 @@
                 <form method="POST" action="{{ route('register-update', $user->id) }}" style="padding:16px;">
                     @csrf
                     @method('PUT')
-                    <div class="row">
+
                         <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
-                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>
+                        <div class="card-header">
+                            <div class="card-title text-center">
                                 @if ($status_name == 0)
                                     เเก้ไขลงทะเบียน Sale / PM / Admin
                                 @else
                                     เเก้ไขลงทะเบียนผู้รับเหมา
                                 @endif
-                            </strong></h5>
+                            </div>
+                        </div>
 
-
+                <div class="card-body">
+                    <div class="row">
                         @if ($status_name == 0)
                             <div class="mb-3">
                                 <label class="form-label">เลือกประเภท: </label>
@@ -106,7 +109,7 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลเกี่ยวกับบริษัท</strong></h5>
+                    <h5 class="col-12 mt-3 mb-3 text-primary ms-3"><strong>ข้อมูลเกี่ยวกับบริษัท</strong></h5>
 
 
                     <div class="row">
@@ -204,7 +207,8 @@
                         <button type="submit" class="btn btn-primary">บันทึก</button>
                     </div>
                 </form>
-
+            
+                </div>
             </div>
         </div>
     </div>

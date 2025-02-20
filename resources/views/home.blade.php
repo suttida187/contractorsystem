@@ -64,7 +64,7 @@
                 <div class="modal-body">
 
                         <!-- ข้อมูลพื้นฐาน -->
-
+                        <div class="row">
                         @if ($data->count() > 0)
                             <div id="stepStatusNull" style="display: none">
                                 @include('layouts.stepStatusNull')
@@ -73,7 +73,7 @@
                                 @include('layouts.stepStatus')
                             </div>
                         @endif
-
+                        </div>
 
                         <h1 class="text-center-project" id="exampleModalLabel">รายละเอียดโครงการ</h1>
                         <div class="mb-3" hidden>

@@ -5,10 +5,16 @@
             <div class="card">
                 <form method="POST" action="{{ route('create-project-store') }}" style="padding:16px;">
                     @csrf
-                    <div class="row">
-                        <!-- ข้อมูลพื้นฐาน -->
-                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลรายละเอียดงาน</strong></h5>
 
+                    <div class="card-header">
+                        <div class="card-title text-center">แบบฟอร์มขอคิวงาน</div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- ข้อมูลพื้นฐาน -->
+                        <h5 class="col-12 mt-3 mb-3 text-primary ms-3"><strong>ข้อมูลรายละเอียดงาน</strong></h5>
+                        
+                        <div class="row">
                         <div class="mb-3">
                             <label class="form-label">ชื่อโปรเจกต์: </label>
                             <input name="project_name" type="text" value="{{ old('project_name') }}"
@@ -112,7 +118,7 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
+                    <h5 class="col-12 mt-3 mb-3 text-primary ms-3"><strong>ข้อมูลลูกค้า</strong></h5>
                     <div class="row">
                         <div class="mb-3">
                             <label class="form-label">ชื่อบริษัท/นิติบุคคล: </label>
@@ -161,7 +167,7 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
+                    <h5 class="col-12 mt-3 mb-3 text-primary ms-3"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                     <div class="row">
                         <div class="mb-3">
                             <label class="form-label">การรับประกัน: </label>
@@ -208,7 +214,7 @@
                         <button type="submit" class="btn btn-primary">บันทึก</button>
                     </div>
                 </form>
-
+            </div>
             </div>
         </div>
     </div>
