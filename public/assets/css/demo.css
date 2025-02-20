@@ -600,7 +600,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 }
 
 
-.progress-container {
+.progress-container-status {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -611,11 +611,21 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 }
 
 
-
+@media (max-width: 576px) {
+  .progress-container-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px 20px !important;
+    position: relative;
+  }
+}
 
 
 /* ✅ Step */
-.progress-step {
+.progress-step-status {
   width: 40px;
   height: 40px;
   background: #fff;
@@ -628,16 +638,16 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   position: relative;
   z-index: 2;
   color: #ccc;
-  margin-left: 32px;
+
 }
 
-.progress-step.active {
+.progress-step-status.active {
   border-color: #007bff;
   color: #007bff;
 }
 
 /* ✅ เส้นเชื่อม */
-.progress-line {
+.progress-line-status {
   position: absolute;
   height: 3px;
   background: #ffffff;
@@ -647,28 +657,28 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 }
 
 /* ✅ ทำให้เส้นแต่ละช่วงยาวไม่เกิน progress-step */
-.progress-line.step-1 {
+.progress-line-status.step-1 {
   width: 30%;
   left: 35px;
 }
 
-.progress-line.step-2 {
+.progress-line-status.step-2 {
   width: 30%;
   left: 30%;
 }
 
-.progress-line.step-3 {
+.progress-line-status.step-3 {
   width: 30%;
   left: 60%;
 }
 
 /* ✅ เส้น Active */
-.progress-line.active {
+.progress-line-status.active {
   background: #007bff;
 }
 
 /* ✅ เส้นปะเฉพาะระหว่าง Step 2 กับ Step 3 */
-.dashed-line {
+.dashed-line-status {
   position: absolute;
   border-top: 3px dashed #ccc;
   height: 3px;
@@ -680,13 +690,20 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 }
 
 /* ✅ ข้อความ */
-.progress-text {
+.progress-text-status {
   text-align: center;
   font-size: 14px;
   margin-top: 5px;
   color: #333;
-  margin-left: -8px;
   word-wrap: break-word;
+  margin-left: -16px;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 5px;
+  color: #333;
+  word-wrap: break-word;
+  margin-left: -16px;
+  margin-right: 16px;
   /* หรือ word-break: break-word; */
 }
 
@@ -702,15 +719,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   position: relative;
 }
 
-.progress-container-check {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
-  position: relative;
-}
+
 
 
 
@@ -839,7 +848,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 
 .card .card-header,
 .card-light .card-header .filter-container {
-  padding: 4px !important;
+  padding: 8px !important;
 }
 
 .filter-button-group {

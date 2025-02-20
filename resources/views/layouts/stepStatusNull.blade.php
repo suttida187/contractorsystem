@@ -1,1 +1,1 @@
-<div class="progress-container" id="progress-container"></div>
+<div class="progress-container-status" id="progress-container"></div>

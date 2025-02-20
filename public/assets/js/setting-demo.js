@@ -182,11 +182,11 @@ function userDataFuc(userData) {
 
 
   if (userData.status == null) {
-    document.getElementById("stepStatusNull").style.display = "block";
+    document.getElementById("stepStatusNull").style.display = "contents";
     document.getElementById("stepStatus").style.display = "none";
   } else {
     document.getElementById("stepStatusNull").style.display = "none";
-    document.getElementById("stepStatus").style.display = "block";
+    document.getElementById("stepStatus").style.display = "contents";
   }
   // ใส่ข้อมูลลงใน Modal
 
@@ -328,32 +328,32 @@ function userDataFuc(userData) {
 
   // HTML Template สำหรับ Progress Bar
   let progressHTML = `
-      <div class="progress-line step-1 ${currentStep >= 2 ? 'active' : 'dashed-line'}"></div>
-      <div class="progress-line step-2 ${currentStep >= 3 ? 'active' : 'dashed-line'}"></div>
-      <div class="progress-line step-3 ${currentStep >= 4 ? 'active' : 'dashed-line'}"></div>
+      <div class="progress-line-status step-1 ${currentStep >= 2 ? 'active' : 'dashed-line'}"></div>
+      <div class="progress-line-status step-2 ${currentStep >= 3 ? 'active' : 'dashed-line'}"></div>
+      <div class="progress-line-status step-3 ${currentStep >= 4 ? 'active' : 'dashed-line'}"></div>
 
       <!-- สเต็ป 1 -->
       <div class="text-center">
-          <div class="progress-step ${currentStep >= 1 ? 'active' : ''}">1</div>
-          <div class="progress-text">Sale กำลังดำเนินงาน</div>
+          <div class="progress-step-status ${currentStep >= 1 ? 'active' : ''}">1</div>
+          <div class="progress-text-status">Sale กำลังดำเนินงาน</div>
       </div>
 
       <!-- สเต็ป 2 -->
       <div class="text-center">
-          <div class="progress-step ${currentStep >= 2 ? 'active' : ''}">2</div>
-          <div class="progress-text">รอ Admin ดำเนินการ</div>
+          <div class="progress-step-status ${currentStep >= 2 ? 'active' : ''}">2</div>
+          <div class="progress-text-status">รอ Admin ดำเนินการ</div>
       </div>
 
       <!-- สเต็ป 3 -->
       <div class="text-center">
-          <div class="progress-step ${currentStep >= 3 ? 'active' : ''}">3</div>
-          <div class="progress-text">รอ PM ดำเนินการ</div>
+          <div class="progress-step-status ${currentStep >= 3 ? 'active' : ''}">3</div>
+          <div class="progress-text-status">รอ PM ดำเนินการ</div>
       </div>
 
       <!-- สเต็ป 4 -->
       <div class="text-center">
-          <div class="progress-step ${currentStep >= 4 ? 'active' : ''}">4</div>
-          <div class="progress-text">รอผู้รับเหมาดำเนินงาน</div>
+          <div class="progress-step-status ${currentStep >= 4 ? 'active' : ''}">4</div>
+          <div class="progress-text-status">รอผู้รับเหมาดำเนินงาน</div>
       </div>
   `;
 
