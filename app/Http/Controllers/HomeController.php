@@ -493,6 +493,83 @@ class HomeController extends Controller
 
         return redirect('home')->with('message', "ส่งงานเรียบร้อย");
     }
+    public function editUploadImage(Request $request)
+    {
+        $indexes = $request->input('indexes');  // ลำดับที่
+        $details = $request->input('details');  // รายละเอียด
+        $idProject = $request->input('projectId');  // รายละเอียด
+        $images = $request->file('images');     // ไฟล์ภาพที่อัปโหลด (เป็น array ตาม index)
+        dd($request->all());
+        /*  $data = [];
+
+        if (!empty($indexes) && !empty($details)) {
+            foreach ($indexes as $key => $index) {
+                $detailText = $details[$key] ?? '';
+
+                // ตรวจสอบว่ามีรูปภาพที่เกี่ยวข้องกับ index หรือไม่
+                $uploadedImages = [];
+                if (!empty($images) && isset($images[$index])) {
+                    foreach ($images[$index] as $image) {
+                        if ($image->isValid()) {
+                            // ตั้งชื่อไฟล์ใหม่และบันทึก
+                            $fileName = time() . '-' . $image->getClientOriginalName();
+                            $image->storeAs('uploads', $fileName, 'public');
+
+                            // เก็บชื่อไฟล์
+                            $uploadedImages[] = $fileName;
+                        }
+                    }
+                }
+
+                // จัดกลุ่มข้อมูลให้แต่ละ index มีรายละเอียดและไฟล์ภาพของตัวเอง
+                $data[] = [
+                    'index' => $index,
+                    'details' => $detailText,
+                    'images' => $uploadedImages,
+                    'statusImage' => "deliver_work"
+                ];
+            }
+        }
+
+
+        // บันทึกข้อมูลลงฐานข้อมูล
+        ImageDeliverWork::create([
+            'id_project' => $idProject,
+            'image' => json_encode($data, JSON_UNESCAPED_UNICODE), // ✅ ใช้ json_encode() แทน json_decode()
+            'start_date' => $request->date ?? now(), // ถ้าไม่มีข้อมูลให้ใช้วันที่ปัจจุบัน
+            'end_date' => $request->date ?? now(), // ถ้าไม่มีข้อมูลให้ใช้วันที่ปัจจุบัน
+            'message' => $request->message ?? '', // ป้องกันค่าที่เป็น null
+            'status' => "success",
+        ]);
+
+
+        $project = SalesProjects::where('id', $idProject)->first();
+        // Admin
+        $id = $project->responsible_pm;
+        $idSale = $project->responsible_sale;
+        $role = "pm"; // ส่งเเจ้งเตือนให้กับ Admin
+        $roleSale = "sale"; // ส่งเเจ้งเตือนให้กับ Admin
+        $projectName = "contractor  ส่งงาน: $project->project_name เเล้ว";
+        $updatedAt = Carbon::now()->toDateTimeString(); // เวลาปัจจุบันในรูปแบบ YYYY-MM-DD HH:MM:SS
+
+        SalesProjects::where('id', $idProject)
+            ->update(['status' => 'waiting_contractor']);
+        // JSON Encode ให้ถูกต้อง
+        $data = json_encode([
+            'id_project' =>  $idProject,
+            'message' => $projectName,
+            'time' => $updatedAt,
+            'status' => 'deliver_work',
+        ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
+
+        app(NotificationController::class)->CreateNotifications($id, $data, $role);
+        app(NotificationController::class)->CreateNotifications($idSale, $data, $roleSale);
+
+
+
+
+        return redirect('home')->with('message', "ส่งงานเรียบร้อย"); */
+    }
 }
 
 

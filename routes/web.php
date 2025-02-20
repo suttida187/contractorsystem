@@ -67,6 +67,7 @@ Route::get('/user-endpoint/{name}', [App\Http\Controllers\HomeController::class,
 Route::get('/getProject/{id}', [App\Http\Controllers\HomeController::class, 'getProject'])->name('getProject');
 Route::post('/create-calendars', [App\Http\Controllers\HomeController::class, 'createCalendars'])->name('create-calendars');
 Route::post('/upload-image', [App\Http\Controllers\HomeController::class, 'uploadImage'])->name('upload-image');
+Route::post('/edit-upload-image', [App\Http\Controllers\HomeController::class, 'editUploadImage'])->name('edit-upload-image');
 // notifications
 Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');
 Route::get('/mark-as-read/{notificationId}/{projectId}', [NotificationController::class, 'UpdateReadAt'])->name('notifications.markAsRead');
