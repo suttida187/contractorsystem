@@ -836,6 +836,17 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin-right: 4px;
 }
 
+
+.card .card-header,
+.card-light .card-header .filter-container {
+  padding: 4px !important;
+}
+
+.filter-button-group {
+  display: contents;
+
+}
+
 .filter-container {
   display: flex;
   gap: 10px;

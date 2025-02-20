@@ -11,29 +11,30 @@
                         <form method="POST" action="{{ route('search_query-project') }}" style="padding:16px;">
                             @csrf
                             <!-- ช่องค้นหา -->
-                            <div class="d-flex justify-content-center mb-3">
+                            <div class="d-flex justify-content-center mb-3 flex-wrap filter-container">
                                 <div class="search-box">
                                     <input type="text" id="search-input" name="search_query" value="{{ $searchQuery }}"
                                         placeholder="ค้นหา...">
                                     <button type="submit"><i class="fas fa-search"></i> ค้นหา</button>
                                 </div>
                                 <input type="hidden" id="filter-input" name="filter_status" value="projectAll">
-                                <!-- ค่าที่จะถูกส่ง -->
-                                <div class="d-flex justify-content-center gap-2 ml-3">
+
+                                <!-- ปุ่มกรองโครงการ -->
+                                <div class="filter-button-group">
                                     <button type="submit"
-                                        class="filter-btn {{ $filterStatus == 'projectAll' ? 'active' : '' }}"
+                                        class="filter-btn  {{ $filterStatus == 'projectAll' ? 'active' : '' }}"
                                         data-value="projectAll">โครงการทั้งหมด</button>
                                     <button type="submit"
-                                        class="filter-btn {{ $filterStatus == 'waiting_contractor' ? 'active' : '' }}"
+                                        class="filter-btn    {{ $filterStatus == 'waiting_contractor' ? 'active' : '' }}"
                                         data-value="waiting_contractor">รอผู้รับเหมาส่งงาน</button>
                                     <button type="submit"
-                                        class="filter-btn {{ $filterStatus == 'waiting_pm_review' ? 'active' : '' }}"
+                                        class="filter-btn    {{ $filterStatus == 'waiting_pm_review' ? 'active' : '' }}"
                                         data-value="waiting_pm_review">รอ PM ตรวจสอบ</button>
                                     <button type="submit"
-                                        class="filter-btn {{ $filterStatus == 'waiting_admin_review' ? 'active' : '' }}"
+                                        class="filter-btn  {{ $filterStatus == 'waiting_admin_review' ? 'active' : '' }}"
                                         data-value="waiting_admin_review">รอแอดมินตรวจสอบ</button>
                                     <button type="submit"
-                                        class="filter-btn {{ $filterStatus == 'completed' ? 'active' : '' }}"
+                                        class="filter-btn   {{ $filterStatus == 'completed' ? 'active' : '' }}"
                                         data-value="completed">เสร็จสมบูรณ์</button>
                                 </div>
                             </div>
@@ -96,7 +97,8 @@
                                             {{ $da->sale_prefix }} {{ $da->sale_first_name }} {{ $da->sale_last_name }}
                                         </td>
                                         <td>
-                                            {{ $da->admin_prefix }} {{ $da->admin_first_name }} {{ $da->admin_last_name }}
+                                            {{ $da->admin_prefix }} {{ $da->admin_first_name }}
+                                            {{ $da->admin_last_name }}
                                         </td>
                                         <td>
                                             {{ $da->pm_prefix }} {{ $da->pm_first_name }} {{ $da->pm_last_name }}

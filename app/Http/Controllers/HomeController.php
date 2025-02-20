@@ -27,17 +27,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        $userRole = Auth::user()->role;
-        $userId = Auth::user()->id;
 
-        // สร้าง Query หลัก
+    public function dataHome()
+    {
+
         $query = DB::table('sales_projects')
             ->leftJoin('users as sale', 'sales_projects.responsible_sale', '=', 'sale.id') // ✅ ต้องเพิ่ม Join นี้
             ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
             ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
             ->leftJoin('users as contractor', 'sales_projects.responsible_contractor', '=', 'contractor.id')
+            ->leftJoin('image_deliver_works', 'sales_projects.id', '=', 'image_deliver_works.id_project')
             ->select(
                 'sales_projects.*',
                 'sale.prefix as sale_prefix',
@@ -55,15 +54,35 @@ class HomeController extends Controller
                 'contractor.prefix as contractor_prefix',
                 'contractor.first_name as contractor_first_name',
                 'contractor.last_name as contractor_last_name',
-                'contractor.phone as contractor_phone'
-            );
+                'contractor.phone as contractor_phone',
+                DB::raw('GROUP_CONCAT(image_deliver_works.image SEPARATOR ", ") as images'), // ✅ ใช้ GROUP_CONCAT
+                DB::raw('GROUP_CONCAT(image_deliver_works.message_admin SEPARATOR ", ") as message_admin'),
+                DB::raw('GROUP_CONCAT(image_deliver_works.message_pm SEPARATOR ", ") as message_pm'),
+                DB::raw('MAX(image_deliver_works.status) as statusImage') // ✅ ถ้าต้องการสถานะเดียวใช้ MAX
+            )
+            ->groupBy('sales_projects.id')
+            ->distinct(); // ✅ ใช้ DISTINCT เพื่อลดข้อมูลซ้ำ;
+
+        return $query;
+    }
+
+
+
+    public function index()
+    {
+        $userRole = Auth::user()->role;
+        $userId = Auth::user()->id;
+
+        // สร้าง Query หลัก
+
+        $query = $this->dataHome();
 
 
         // เงื่อนไข Role ของผู้ใช้
         switch ($userRole) {
             case "sale":
                 $query->where(function ($q) {
-                    $q->where('status', '!=', 'completed')->orWhereNull('status');
+                    $q->where('sales_projects.status', '!=', 'completed')->orWhereNull('sales_projects.status');
                 });
                 break;
 
@@ -71,23 +90,23 @@ class HomeController extends Controller
 
                 $query->where('responsible_admin', $userId)
                     ->where(function ($q) {
-                        $q->where('status', '!=', 'completed')
-                            ->orWhereNull('status');
+                        $q->where('sales_projects.status', '!=', 'completed')
+                            ->orWhereNull('sales_projects.status');
                     });
 
                 break;
 
             case "pm":
                 $query->where('responsible_pm', $userId)->where(function ($q) {
-                    $q->where('status', '!=', 'completed')
-                        ->orWhereNull('status');
+                    $q->where('sales_projects.status', '!=', 'completed')
+                        ->orWhereNull('sales_projects.status');
                 });;
                 break;
 
             case "contractor":
                 $query->where('responsible_contractor', $userId)->where(function ($q) {
-                    $q->where('status', '!=', 'completed')
-                        ->orWhereNull('status');
+                    $q->where('sales_projects.status', '!=', 'completed')
+                        ->orWhereNull('sales_projects.status');
                 });;
                 break;
         }
@@ -107,30 +126,7 @@ class HomeController extends Controller
         $userId = Auth::user()->id;
 
         // สร้าง Query หลัก
-        $query = DB::table('sales_projects')
-            ->leftJoin('users as sale', 'sales_projects.responsible_sale', '=', 'sale.id') // ✅ ต้องเพิ่ม Join นี้
-            ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
-            ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
-            ->leftJoin('users as contractor', 'sales_projects.responsible_contractor', '=', 'contractor.id')
-            ->select(
-                'sales_projects.*',
-                'sale.prefix as sale_prefix',
-                'sale.first_name as sale_first_name',
-                'sale.last_name as sale_last_name',
-                'sale.phone as sale_phone',
-                'admin.prefix as admin_prefix',
-                'admin.first_name as admin_first_name',
-                'admin.last_name as admin_last_name',
-                'admin.phone as admin_phone',
-                'pm.prefix as pm_prefix',
-                'pm.first_name as pm_first_name',
-                'pm.last_name as pm_last_name',
-                'pm.phone as pm_phone',
-                'contractor.prefix as contractor_prefix',
-                'contractor.first_name as contractor_first_name',
-                'contractor.last_name as contractor_last_name',
-                'contractor.phone as contractor_phone'
-            );
+        $query = $this->dataHome();
 
         // กรองข้อมูลตาม role ของผู้ใช้
         switch ($userRole) {
@@ -168,30 +164,7 @@ class HomeController extends Controller
         $filterStatus = $request->input('filter_status', 'projectAll');
 
         // เริ่มสร้าง Query หลัก
-        $query = DB::table('sales_projects')
-            ->leftJoin('users as sale', 'sales_projects.responsible_sale', '=', 'sale.id') // ✅ ต้องเพิ่ม Join นี้
-            ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
-            ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
-            ->leftJoin('users as contractor', 'sales_projects.responsible_contractor', '=', 'contractor.id')
-            ->select(
-                'sales_projects.*',
-                'sale.prefix as sale_prefix',
-                'sale.first_name as sale_first_name',
-                'sale.last_name as sale_last_name',
-                'sale.phone as sale_phone',
-                'admin.prefix as admin_prefix',
-                'admin.first_name as admin_first_name',
-                'admin.last_name as admin_last_name',
-                'admin.phone as admin_phone',
-                'pm.prefix as pm_prefix',
-                'pm.first_name as pm_first_name',
-                'pm.last_name as pm_last_name',
-                'pm.phone as pm_phone',
-                'contractor.prefix as contractor_prefix',
-                'contractor.first_name as contractor_first_name',
-                'contractor.last_name as contractor_last_name',
-                'contractor.phone as contractor_phone'
-            );
+        $query = $this->dataHome();
 
         // เงื่อนไขค้นหาชื่อโครงการ (ถ้ามีค่า)
         $query->when(!empty($searchQuery), function ($query) use ($searchQuery) {
@@ -236,46 +209,23 @@ class HomeController extends Controller
         $userId = Auth::user()->id;
 
         // สร้าง Query หลัก
-        $query = DB::table('sales_projects')
-            ->leftJoin('users as sale', 'sales_projects.responsible_sale', '=', 'sale.id') // ✅ ต้องเพิ่ม Join นี้
-            ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
-            ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
-            ->leftJoin('users as contractor', 'sales_projects.responsible_contractor', '=', 'contractor.id')
-            ->select(
-                'sales_projects.*',
-                'sale.prefix as sale_prefix',
-                'sale.first_name as sale_first_name',
-                'sale.last_name as sale_last_name',
-                'sale.phone as sale_phone',
-                'admin.prefix as admin_prefix',
-                'admin.first_name as admin_first_name',
-                'admin.last_name as admin_last_name',
-                'admin.phone as admin_phone',
-                'pm.prefix as pm_prefix',
-                'pm.first_name as pm_first_name',
-                'pm.last_name as pm_last_name',
-                'pm.phone as pm_phone',
-                'contractor.prefix as contractor_prefix',
-                'contractor.first_name as contractor_first_name',
-                'contractor.last_name as contractor_last_name',
-                'contractor.phone as contractor_phone'
-            );
+        $query = $this->dataHome();
 
         // กรองข้อมูลตาม role ของผู้ใช้
         switch ($userRole) {
 
             case "admin":
                 $query->where(function ($q) {
-                    $q->where('status', '!=', 'completed')
-                        ->orWhereNull('status');
+                    $q->where('sales_projects.status', '!=', 'completed')
+                        ->orWhereNull('sales_projects.status');
                 });
 
                 break;
 
             case "pm":
                 $query->where(function ($q) {
-                    $q->where('status', '!=', 'completed')
-                        ->orWhereNull('status');
+                    $q->where('sales_projects.status', '!=', 'completed')
+                        ->orWhereNull('sales_projects.status');
                 })
                     ->where('responsible_pm', $userId);
 
@@ -283,8 +233,8 @@ class HomeController extends Controller
 
             case "contractor":
                 $query->where(function ($q) {
-                    $q->where('status', '!=', 'completed')
-                        ->orWhereNull('status');
+                    $q->where('sales_projects.status', '!=', 'completed')
+                        ->orWhereNull('sales_projects.status');
                 })
                     ->where('responsible_contractor', $userId);
                 break;
@@ -475,7 +425,7 @@ class HomeController extends Controller
 
         $data = [];
 
-        /*   if (!empty($indexes) && !empty($details)) {
+        if (!empty($indexes) && !empty($details)) {
             foreach ($indexes as $key => $index) {
                 $detailText = $details[$key] ?? '';
 
@@ -502,10 +452,10 @@ class HomeController extends Controller
                     'statusImage' => "deliver_work"
                 ];
             }
-        } */
+        }
 
 
-        /* // บันทึกข้อมูลลงฐานข้อมูล
+        // บันทึกข้อมูลลงฐานข้อมูล
         ImageDeliverWork::create([
             'id_project' => $idProject,
             'image' => json_encode($data, JSON_UNESCAPED_UNICODE), // ✅ ใช้ json_encode() แทน json_decode()
@@ -514,15 +464,19 @@ class HomeController extends Controller
             'message' => $request->message ?? '', // ป้องกันค่าที่เป็น null
             'status' => "success",
         ]);
- */
+
 
         $project = SalesProjects::where('id', $idProject)->first();
         // Admin
         $id = $project->responsible_pm;
+        $idSale = $project->responsible_sale;
         $role = "pm"; // ส่งเเจ้งเตือนให้กับ Admin
+        $roleSale = "sale"; // ส่งเเจ้งเตือนให้กับ Admin
         $projectName = "contractor  ส่งงาน: $project->project_name เเล้ว";
         $updatedAt = Carbon::now()->toDateTimeString(); // เวลาปัจจุบันในรูปแบบ YYYY-MM-DD HH:MM:SS
 
+        SalesProjects::where('id', $idProject)
+            ->update(['status' => 'waiting_contractor']);
         // JSON Encode ให้ถูกต้อง
         $data = json_encode([
             'id_project' =>  $idProject,
@@ -532,6 +486,7 @@ class HomeController extends Controller
         ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
 
         app(NotificationController::class)->CreateNotifications($id, $data, $role);
+        app(NotificationController::class)->CreateNotifications($idSale, $data, $roleSale);
 
 
 
@@ -551,3 +506,7 @@ class HomeController extends Controller
 //รอ PM ตรวจสอบ
 //เสร็จสมบูรณ์
 //}
+//waiting_contractor // ส่งงาน
+//waiting_pm_review  //รอ pm ตรวจ
+//waiting_admin_review //รอ admin ตรวจ
+//completed  //เสร็จ
