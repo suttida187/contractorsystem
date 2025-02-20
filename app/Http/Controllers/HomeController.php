@@ -485,7 +485,7 @@ class HomeController extends Controller
             'status' => 'deliver_work',
         ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
 
-        app(NotificationController::class)->CreateNotifications($id, $data, $role);
+        // app(NotificationController::class)->CreateNotifications($id, $data, $role);
         app(NotificationController::class)->CreateNotifications($idSale, $data, $roleSale);
 
 
