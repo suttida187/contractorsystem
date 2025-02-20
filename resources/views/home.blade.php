@@ -441,7 +441,7 @@
                     div.classList.add("item");
 
                     div.innerHTML = `
-                        <button class="edit-btn btn-sm" data-index="${item.index}">แก้ไข</button>
+                         ${userData.statusImage != 'success' ? `<button class="edit-btn btn-sm" data-index="${item.index}">แก้ไข</button>` : ""}
                         <div class="images">
                             ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
                         </div>
@@ -462,8 +462,7 @@
                             <label>อัปโหลดรูปภาพ</label>
                             <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
 
-                          
-
+                        
                             <div class="extra-fields"></div>
 
                             <button type="submit"  class="btn btn-primary mt-3 btn-sm">บันทึก</button>
