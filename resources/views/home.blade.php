@@ -441,7 +441,7 @@
                     div.classList.add("item");
 
                     div.innerHTML = `
-                         ${userData.statusImage != 'success' ? `<button class="edit-btn btn-sm" data-index="${item.index}">แก้ไข</button>` : ""}
+                         ${userData.statusImage == 'edit_works' ? `<button class="edit-btn btn-sm" data-index="${item.index}">แก้ไข</button>` : ""}
                         <div class="images">
                             ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
                         </div>
