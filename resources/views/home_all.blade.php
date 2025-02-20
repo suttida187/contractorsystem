@@ -1,5 +1,70 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        <style>.container {
+            width: 80%;
+            margin: auto;
+            padding: 10px;
+        }
+
+        .item {
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .images img {
+            width: 100px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .form-group-home {
+            display: none;
+            padding: 10px;
+            border: 1px solid #aaa;
+            margin-top: 10px;
+        }
+
+        .edit-btn {
+            background-color: #ffc107;
+            /* สีเหลือง */
+            color: #000;
+            /* สีตัวอักษรดำ */
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-bottom: 24px;
+        }
+
+        .edit-btn:hover {
+            background-color: #e0a800;
+            /* สีเหลืองเข้มขึ้นเมื่อ hover */
+        }
+
+        .edit-btn:active {
+            background-color: #d39e00;
+            /* สีเหลืองเข้มเมื่อคลิก */
+        }
+
+        .add-btn {
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .details-head {
+            margin-top: 24px;
+            margin-left: 16px;
+        }
+    </style>
     <div class="container">
         <div class="page-inner">
             <div class="card">
@@ -325,6 +390,8 @@
                                 class="form-control no-edit">
                         </div>
                     </div>
+
+                    <div id="output" class="container"></div>
                 </div>
             </div>
         </div>
@@ -343,6 +410,7 @@
 
                             // เรียกฟังก์ชัน (ถ้าต้องการ)
                             userDataFuc(userData);
+                            userImageFuc(userData)
                         } catch (error) {
                             console.error("JSON parse error:", error);
                         }
@@ -366,5 +434,79 @@
                 });
             });
         });
+
+        function userImageFuc(userData) {
+
+
+
+
+            let data = [];
+            if (typeof userData.images === "string") {
+                data = JSON.parse(userData.images);
+            }
+
+
+            const outputDiv = document.getElementById("output");
+
+            outputDiv.innerHTML = "";
+            let basePath = "/storage/uploads/"; // ✅ ตั้งค่าพาธของรูป
+
+
+            if (data.length > 0) {
+
+                outputDiv.classList.add("container"); // ✅ เพิ่ม class="container" ถ้ามีข้อมูล
+
+                data && data.forEach(item => {
+                    const div = document.createElement("div");
+                    div.classList.add("item");
+
+                    div.innerHTML = `
+                        ${userData.statusImage != 'success' ? `<button class="edit-btn btn-sm" data-index="${item.index}">แก้ไข</button>` : ""}
+                        <div class="images">
+                            ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
+                        </div>
+                        <p><strong>Details:</strong> ${item.details}</p>
+                        <p><strong>Status:</strong> ${item.statusImage}</p>
+                        ${userData.message_admin ? `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
+                        ${userData.message_pm ? `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
+
+                        <!-- Form (ซ่อนก่อน) -->
+                        <form method="POST" action="{{ route('edit-upload-image') }}" enctype="multipart/form-data"
+                            class="form-group-home" id="form-${item.index}">
+                            @csrf
+                            <label>รายละเอียด (ลำดับที่ <span class="form-index">${item.index}</span>)</label>
+                            <input type="hidden" name="id" value="${userData.deliverWorkId}">
+                            <input type="hidden" name="indexes[]" value="${item.index}">
+                            <textarea class="form-control" name="details[]" rows="3">${item.details}</textarea>
+
+                            <label>อัปโหลดรูปภาพ</label>
+                            <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+
+
+                            <div class="extra-fields"></div>
+
+                            <button type="submit"  class="btn btn-primary mt-3 btn-sm">บันทึก</button>
+                        </form>
+                        `;
+
+
+                    outputDiv.appendChild(div);
+                });
+            } else {
+
+                outputDiv.classList.remove("container"); // 🔴 ลบ class ถ้าไม่มีข้อมูล
+
+            }
+            document.querySelectorAll(".edit-btn").forEach(button => {
+                button.addEventListener("click", function() {
+                    let index = this.getAttribute("data-index");
+                    let form = document.getElementById(`form-${index}`);
+
+                    form.style.display = (form.style.display === "none" || form.style.display === "") ?
+                        "block" : "none";
+                });
+            });
+
+        }
     </script>
 @endsection

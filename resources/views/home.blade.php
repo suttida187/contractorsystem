@@ -65,7 +65,7 @@
             margin-left: 16px;
         }
     </style>
-    </style>
+
     <div class="container">
         <div class="page-inner">
             <div class="card">

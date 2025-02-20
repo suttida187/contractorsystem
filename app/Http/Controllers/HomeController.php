@@ -367,31 +367,9 @@ class HomeController extends Controller
     {
 
 
-        $query = DB::table('sales_projects')
+        $query = $this->dataHome()
             ->where('sales_projects.id', $id)
-            ->leftJoin('users as sale', 'sales_projects.responsible_sale', '=', 'sale.id') // ✅ ต้องเพิ่ม Join นี้
-            ->leftJoin('users as admin', 'sales_projects.responsible_admin', '=', 'admin.id')
-            ->leftJoin('users as pm', 'sales_projects.responsible_pm', '=', 'pm.id')
-            ->leftJoin('users as contractor', 'sales_projects.responsible_contractor', '=', 'contractor.id')
-            ->select(
-                'sales_projects.*',
-                'sale.prefix as sale_prefix',
-                'sale.first_name as sale_first_name',
-                'sale.last_name as sale_last_name',
-                'sale.phone as sale_phone',
-                'admin.prefix as admin_prefix',
-                'admin.first_name as admin_first_name',
-                'admin.last_name as admin_last_name',
-                'admin.phone as admin_phone',
-                'pm.prefix as pm_prefix',
-                'pm.first_name as pm_first_name',
-                'pm.last_name as pm_last_name',
-                'pm.phone as pm_phone',
-                'contractor.prefix as contractor_prefix',
-                'contractor.first_name as contractor_first_name',
-                'contractor.last_name as contractor_last_name',
-                'contractor.phone as contractor_phone'
-            )->first();
+            ->first();
 
 
         return response()->json($query);
