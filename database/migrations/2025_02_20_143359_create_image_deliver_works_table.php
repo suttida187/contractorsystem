@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('id_project');
             $table->json('image');
-            $table->json('message_admin')->nullable();
-            $table->json('message_pm')->nullable();
+            $table->text('message_admin')->nullable();
+            $table->text('message_pm')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

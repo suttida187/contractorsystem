@@ -227,6 +227,31 @@
                                 class="form-control no-edit">
                         </div>
                     </div>
+                    <style>
+                        .container {
+                            width: 80%;
+                            margin: auto;
+                            border: 1px solid #ddd;
+                            padding: 10px;
+                            border-radius: 8px;
+                            background: #f9f9f9;
+                        }
+
+                        .item {
+                            border-bottom: 1px solid #ccc;
+                            padding: 10px;
+                            margin-bottom: 10px;
+                        }
+
+                        .images img {
+                            width: 100px;
+                            margin: 5px;
+                            border-radius: 5px;
+                        }
+                    </style>
+
+                    <div id="output" class="container"></div>
+
 
 
                     @if (Auth::user()->role == 'contractor')
@@ -258,11 +283,11 @@
                             </div>
                         </form>
                     @endif
+
                 </div>
             </div>
+
         </div>
-
-
 
     </div>
 
@@ -272,22 +297,30 @@
                 btn.addEventListener("click", function() {
                     // ดึงค่า JSON จาก `data-user`
                     var userData = JSON.parse(this.getAttribute("data-user"));
-                    document.getElementById("project-id-image").value = userData.id
 
+
+
+                    // จำลองคลิกเพื่อโหลดข้อมูลตัวแรกเมื่อเปิดหน้า
 
                     userDataFuc(userData);
+                    userImageFuc(userData);
 
                 });
             });
         });
 
-        $(document).ready(function() {
-            let index = 1; // เริ่มต้นที่ 1
+        window.Laravel = {!! json_encode([
+            'isLoggedIn' => Auth::check(),
+            'role' => Auth::user() ? Auth::user()->role : null,
+        ]) !!};
+        if (window.Laravel && window.Laravel.role && window.Laravel.role === 'contractor') {
+            $(document).ready(function() {
+                let index = 1; // เริ่มต้นที่ 1
 
-            $("#add-form").click(function() {
-                index++; // เพิ่มลำดับ
+                $("#add-form").click(function() {
+                    index++; // เพิ่มลำดับ
 
-                let newForm = `
+                    let newForm = `
             <div class="form-container">
                 <div class="form-group">
                     <label>รายละเอียด (ลำดับที่ <span class="form-index">${index}</span>)</label>
@@ -301,24 +334,66 @@
                 <button type="button" class="remove-btn btn btn-danger btn-sm">ลบ</button>
             </div>
             `;
-                $("#form-container").append(newForm);
-            });
-
-            // ฟังก์ชันลบฟอร์มที่เพิ่มขึ้นมา
-            $(document).on("click", ".remove-btn", function() {
-                $(this).closest(".form-container").remove();
-                updateIndexes(); // อัปเดตหมายเลขลำดับใหม่
-            });
-
-            // ฟังก์ชันอัปเดตหมายเลขลำดับ
-            function updateIndexes() {
-                $(".form-container").each(function(i) {
-                    let newIndex = i + 1;
-                    $(this).find(".form-index").text(newIndex);
-                    $(this).find("input[name='indexes[]']").val(newIndex);
-                    $(this).find("input[type='file']").attr("name", `images[${newIndex}][]`);
+                    $("#form-container").append(newForm);
                 });
+
+                // ฟังก์ชันลบฟอร์มที่เพิ่มขึ้นมา
+                $(document).on("click", ".remove-btn", function() {
+                    $(this).closest(".form-container").remove();
+                    updateIndexes(); // อัปเดตหมายเลขลำดับใหม่
+                });
+
+                // ฟังก์ชันอัปเดตหมายเลขลำดับ
+                function updateIndexes() {
+                    $(".form-container").each(function(i) {
+                        let newIndex = i + 1;
+                        $(this).find(".form-index").text(newIndex);
+                        $(this).find("input[name='indexes[]']").val(newIndex);
+                        $(this).find("input[type='file']").attr("name", `images[${newIndex}][]`);
+                    });
+                }
+            });
+        }
+
+        function userImageFuc(userData) {
+
+            let data = [];
+            if (typeof userData.images === "string") {
+                data = JSON.parse(userData.images);
             }
-        });
+
+
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "";
+            let basePath = "/storage/uploads/"; // ✅ ตั้งค่าพาธของรูป
+            console.log("data.length", data.length);
+
+            if (data.length > 0) {
+
+                outputDiv.classList.add("container"); // ✅ เพิ่ม class="container" ถ้ามีข้อมูล
+
+                data && data.forEach(item => {
+                    const div = document.createElement("div");
+                    div.classList.add("item");
+
+                    div.innerHTML = `
+                    <h3>Index: ${item.index}</h3>
+                    <p><strong>Details:</strong> ${item.details}</p>
+                    <p><strong>Status:</strong> ${item.statusImage}</p>
+                    <div class="images">
+                        ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
+                    </div>
+                `;
+
+                    outputDiv.appendChild(div);
+                });
+            } else {
+
+                outputDiv.classList.remove("container"); // 🔴 ลบ class ถ้าไม่มีข้อมูล
+
+            }
+
+
+        }
     </script>
 @endsection
