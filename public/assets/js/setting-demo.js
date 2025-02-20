@@ -519,7 +519,7 @@ async function handleEventSaveClick(projectId, idUser) {
     if (window.Laravel?.role === 'admin' && date.responsible_pm != null) {
       return Swal.fire({
         title: "โครงการนี้ถูกเพิ่มเเล้ว:",
-        text: `กรุณาเลือกผู้จัดการโครงการใหม่:`,
+        text: `กรุณาเลือกโครงการใหม่:`,
         icon: "warning",
         showCancelButton: true,
         showConfirmButton: false, // ซ่อนปุ่ม "ตกลง"
