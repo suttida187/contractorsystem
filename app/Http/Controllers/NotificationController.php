@@ -107,38 +107,43 @@ class NotificationController extends Controller
 
     public function CreateNotifications($id, $data, $role)
     {
-        if ($role == 'sale') {
-            NotificationsSale::create([
-                'notifiable_id' => $id,
-                'data' => $data,
-            ]);
+        try {
+            if ($role == 'sale') {
+                NotificationsSale::create([
+                    'notifiable_id' => $id,
+                    'data' => $data,
+                ]);
+            }
+            if ($role == 'admin') {
+
+                NotificationsAdmin::create([
+                    'notifiable_id' => $id,
+                    'data' => $data,
+                ]);
+            }
+
+
+
+            if ($role == 'pm') {
+                NotificationsPm::create([
+                    'notifiable_id' => $id,
+                    'data' => $data,
+                ]);
+            }
+            if ($role == 'contractor') {
+                NotificationsContractor::create([
+                    'notifiable_id' => $id,
+                    'data' => $data,
+                ]);
+            }
+
+
+            $notifications = "notifications success";
+            event(new UpdateNotification($notifications));
+        } catch (\Exception $e) {
+            \Log::error("Error in CreateNotifications: " . $e->getMessage());
+            return false;
         }
-        if ($role == 'admin') {
-
-            NotificationsAdmin::create([
-                'notifiable_id' => $id,
-                'data' => $data,
-            ]);
-        }
-
-
-
-        if ($role == 'pm') {
-            NotificationsPm::create([
-                'notifiable_id' => $id,
-                'data' => $data,
-            ]);
-        }
-        if ($role == 'contractor') {
-            NotificationsContractor::create([
-                'notifiable_id' => $id,
-                'data' => $data,
-            ]);
-        }
-
-
-        $notifications = "notifications success";
-        event(new UpdateNotification($notifications));
     }
 
 
@@ -177,6 +182,6 @@ class NotificationController extends Controller
         }
 
 
-        return redirect('home');
+        return redirect('home')->with('message', "ส่งงานที่เเก้ไขเรียบร้อย");
     }
 }

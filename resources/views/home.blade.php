@@ -455,12 +455,12 @@
                             class="form-group-home" id="form-${item.index}">
                             @csrf
                             <label>รายละเอียด (ลำดับที่ <span class="form-index">${item.index}</span>)</label>
-                            <input type="hidden" name="projectId" value="${userData.id}">
+                            <input type="hidden" name="id" value="${userData.deliverWorkId}">
                             <input type="hidden" name="indexes[]" value="${item.index}">
                             <textarea class="form-control" name="details[]" rows="3">${item.details}</textarea>
 
                             <label>อัปโหลดรูปภาพ</label>
-                            <input type="file" name="images[${item.index}][]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+                            <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
 
                           
 

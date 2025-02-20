@@ -58,6 +58,7 @@ class HomeController extends Controller
                 DB::raw('GROUP_CONCAT(image_deliver_works.image SEPARATOR ", ") as images'), // ✅ ใช้ GROUP_CONCAT
                 DB::raw('GROUP_CONCAT(image_deliver_works.message_admin SEPARATOR ", ") as message_admin'),
                 DB::raw('GROUP_CONCAT(image_deliver_works.message_pm SEPARATOR ", ") as message_pm'),
+                DB::raw('GROUP_CONCAT(image_deliver_works.id SEPARATOR ", ") as deliverWorkId'),
                 DB::raw('MAX(image_deliver_works.status) as statusImage') // ✅ ถ้าต้องการสถานะเดียวใช้ MAX
             )
             ->groupBy('sales_projects.id')
@@ -495,12 +496,59 @@ class HomeController extends Controller
     }
     public function editUploadImage(Request $request)
     {
-        $indexes = $request->input('indexes');  // ลำดับที่
-        $details = $request->input('details');  // รายละเอียด
-        $idProject = $request->input('projectId');  // รายละเอียด
-        $images = $request->file('images');     // ไฟล์ภาพที่อัปโหลด (เป็น array ตาม index)
-        dd($request->all());
-        /*  $data = [];
+        $eventsData = DB::table('image_deliver_works')->where('id', $request->input('id'))->first();
+
+        if (!$eventsData) {
+            return response()->json(['error' => 'Data not found'], 404);
+        }
+
+        // แปลง image JSON string ให้เป็น array
+        $existingImages = json_decode($eventsData->image, true);
+
+        // ข้อมูลใหม่จากฟอร์ม
+        $newIndexes = $request->input('indexes'); // ex. [2]
+        $newDetails = $request->input('details'); // ex. ["55555555"]
+        $newImages = $request->file('images');   // ex. Uploaded file
+
+
+        foreach ($existingImages as &$item) {
+            if (in_array($item['index'], $newIndexes)) {
+                // แทนค่าของ details ที่ตรงกัน
+                $indexKey = array_search($item['index'], $newIndexes);
+                $item['details'] = $newDetails[$indexKey];
+
+                // 🔥 **ลบภาพเก่า**
+                if (!empty($item['images'])) {
+                    foreach ($item['images'] as $oldImage) {
+                        $imagePath = public_path($oldImage);
+                        if (file_exists($imagePath)) {
+                            unlink($imagePath);
+                        }
+                    }
+                }
+
+                // 🔥 **เพิ่มภาพใหม่**
+                if (!empty($newImages)) {
+                    $uploadedPaths = [];
+                    foreach ($newImages as $image) {
+                        $fileName = time() . '-' . $image->getClientOriginalName();
+                        $image->move(public_path('storage/uploads/'), $fileName);
+                        $uploadedPaths[] = $fileName;
+                    }
+                    $item['images'] = $uploadedPaths;
+                }
+            }
+        }
+
+        DB::table('image_deliver_works')
+            ->where('id', $request->input('id'))
+            ->update([
+                'image' => json_encode($existingImages),
+                'updated_at' => now()
+            ]);
+
+
+        $data = [];
 
         if (!empty($indexes) && !empty($details)) {
             foreach ($indexes as $key => $index) {
@@ -531,16 +579,7 @@ class HomeController extends Controller
             }
         }
 
-
-        // บันทึกข้อมูลลงฐานข้อมูล
-        ImageDeliverWork::create([
-            'id_project' => $idProject,
-            'image' => json_encode($data, JSON_UNESCAPED_UNICODE), // ✅ ใช้ json_encode() แทน json_decode()
-            'start_date' => $request->date ?? now(), // ถ้าไม่มีข้อมูลให้ใช้วันที่ปัจจุบัน
-            'end_date' => $request->date ?? now(), // ถ้าไม่มีข้อมูลให้ใช้วันที่ปัจจุบัน
-            'message' => $request->message ?? '', // ป้องกันค่าที่เป็น null
-            'status' => "success",
-        ]);
+        $idProject =  $eventsData->id_project;
 
 
         $project = SalesProjects::where('id', $idProject)->first();
@@ -549,7 +588,7 @@ class HomeController extends Controller
         $idSale = $project->responsible_sale;
         $role = "pm"; // ส่งเเจ้งเตือนให้กับ Admin
         $roleSale = "sale"; // ส่งเเจ้งเตือนให้กับ Admin
-        $projectName = "contractor  ส่งงาน: $project->project_name เเล้ว";
+        $projectName = "contractor  ส่งงาน : $project->project_name ที่เเก้ไขเเล้ว";
         $updatedAt = Carbon::now()->toDateTimeString(); // เวลาปัจจุบันในรูปแบบ YYYY-MM-DD HH:MM:SS
 
         SalesProjects::where('id', $idProject)
@@ -562,13 +601,14 @@ class HomeController extends Controller
             'status' => 'deliver_work',
         ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
 
-        app(NotificationController::class)->CreateNotifications($id, $data, $role);
-        app(NotificationController::class)->CreateNotifications($idSale, $data, $roleSale);
+        $result1 = app(NotificationController::class)->CreateNotifications($id, $data, $role);
+        $result2 = app(NotificationController::class)->CreateNotifications($idSale, $data, $roleSale);
 
+        if ($result1 === false || $result2 === false) {
+            return redirect('home')->with('error', "เกิดข้อผิดพลาดในการส่ง Notification");
+        }
 
-
-
-        return redirect('home')->with('message', "ส่งงานเรียบร้อย"); */
+        return redirect('home')->with('message', "ส่งงานที่เเก้ไขเรียบร้อย");
     }
 }
 
