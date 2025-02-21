@@ -232,7 +232,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div id="output" class="container"></div>
-                        <div class="text-end">
+                        <div class="text-end" id="update-works-home">
                             <button type="submit" class="btn btn-primary">บันทึก</button>
                         </div>
                     </form>
@@ -381,6 +381,13 @@
                         imagesHtml = item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("");
                     }
 
+                    if (window.location.pathname === "/home" && window.Laravel && window.Laravel.role ===
+                        "contractor" && userData.statusImage === "edit_works") {
+                        document.getElementById(`update-works-home`).style.display = "block";
+                    } else {
+                        document.getElementById(`update-works-home`).style.display = "none";
+                    }
+                    // update - works - home
                     div.innerHTML = `
                 ${window.location.pathname === "/home" && window.Laravel && window.Laravel.role === "contractor"
                     && userData.statusImage === "edit_works" ? 

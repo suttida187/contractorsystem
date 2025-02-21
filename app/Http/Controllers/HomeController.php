@@ -549,7 +549,7 @@ class HomeController extends Controller
             ->where('id', $request->input('id'))
             ->update([
                 'image' => json_encode($existingImages),
-                'status' => "edit_works",
+                'status' => "deliver_work_update",
                 'updated_at' => now()
             ]);
 
