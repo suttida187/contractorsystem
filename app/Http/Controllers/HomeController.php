@@ -736,7 +736,11 @@ class HomeController extends Controller
         app(NotificationController::class)->CreateNotifications($id, $data, $role);
         app(NotificationController::class)->CreateNotifications($idSale, $dataSale, $roleSale);
 
-
+        if ($userRole == "admin") {
+            DB::table('calendars')
+                ->where('projectId', $idProject)
+                ->delete();
+        }
         // dd($request->all());
         // สร้าง Query หลัก
 
