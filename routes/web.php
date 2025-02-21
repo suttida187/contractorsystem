@@ -77,6 +77,7 @@ Route::post('/edit-upload-image', [App\Http\Controllers\HomeController::class, '
 Route::get('/check-work', [App\Http\Controllers\HomeController::class, 'checkWork'])->name('check-work');
 Route::post('/reset-work-image', [App\Http\Controllers\HomeController::class, 'resetWorkImage'])->name('reset-work-image');
 Route::post('/approve-work-image', [App\Http\Controllers\HomeController::class, 'approveWorkImage'])->name('approve-work-image');
+Route::get('/export-pdf/{id}', [App\Http\Controllers\HomeController::class, 'exportPdf'])->name('export-pdf');
 
 // notifications
 Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');

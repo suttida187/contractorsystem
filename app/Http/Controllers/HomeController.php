@@ -10,6 +10,7 @@ use Carbon\Carbon; // ใช้ Carbon เพื่อความสะดว�
 use App\Models\Calendar;
 use App\Models\ImageDeliverWork;
 use App\Models\User;
+use PDF;
 
 class HomeController extends Controller
 {
@@ -750,7 +751,18 @@ class HomeController extends Controller
         $data = $this->dataHome()
             ->where('sales_projects.id', $id)
             ->first();
-        return view('admin.exportPdf', compact('data'));
+        /*   return view('admin.exportPdf', compact('data')); */
+        $pdf = PDF::loadView('admin.exportPdf', [
+            'data' => $data  // ✅ Use an associative array
+        ]);
+
+        $pdf->setPaper('a4', 'landscape') // ✅ Corrected A4 Paper Settings
+            ->setOption('margin-top', 15)
+            ->setOption('margin-bottom', 15)
+            ->setOption('margin-left', 10)
+            ->setOption('margin-right', 10);
+
+        return $pdf->stream('exportPDF.pdf');
     }
 }
 

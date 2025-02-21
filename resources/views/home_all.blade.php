@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
-
     <div class="container">
         <div class="page-inner">
             <div class="card">
                 <div class="card-header">
                     <h2 class="text-center">โครงการทั้งหมด</h2>
+                    <a href="export-pdf/2" target="_blank" rel="noopener noreferrer">PDF</a>
                     <div class="filter-container justify-content-center mt-3">
                         <!-- ฟอร์มค้นหา + ตัวกรอง -->
 
