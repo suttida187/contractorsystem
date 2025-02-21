@@ -228,16 +228,19 @@
                         </div>
                     </div>
 
-                    <form method="POST" action="{{ route('edit-upload-image') }}" style="padding:16px;"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div id="output" class="container"></div>
-                        <div class="text-end" id="update-works-home">
-                            <button type="submit" class="btn btn-primary">บันทึก</button>
-                        </div>
-                    </form>
+
 
                     @if (Auth::user()->role == 'contractor')
+                        <form method="POST" action="{{ route('edit-upload-image') }}" style="padding:16px;"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div id="output" class="container"></div>
+                            <div class="text-end" id="update-works-home">
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
+
+
                         <div id="form-upload-image">
                             <h4 class="details-head">รายละเอียดงานที่ส่งมอบ</h4>
                             <form method="POST" action="{{ route('upload-image') }}" enctype="multipart/form-data"
