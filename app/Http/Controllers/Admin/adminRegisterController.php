@@ -174,7 +174,7 @@ class adminRegisterController extends Controller
 
         $user = User::where('id', Auth::user()->id)->first();
 
-        return view('edit_profile', compact('user'));
+        return view('users.edit_profile', compact('user'));
     }
     public function updateProfile(Request $request, string $id)
     {
@@ -212,6 +212,33 @@ class adminRegisterController extends Controller
 
 
         return redirect()->back()->with('message', 'เเก้ไขข้อมูลเรียบร้อยแล้ว');
+    }
+
+    public function resetPasswordUser()
+    {
+        return view('users.rest_password');
+    }
+    public function updatePasswordUser(Request $request, string $id)
+    {
+
+        $user = User::findOrFail($id); // ถ้าไม่พบ User ให้แจ้ง Error 404
+
+        $validatedData = $request->validate([
+            'password' => 'nullable|confirmed|min:8', // ไม่บังคับ ถ้าใส่ต้องตรงกับ password_confirmation
+            'password_confirmation' => 'nullable|same:password', // ไม่บังคับ ถ้าใส่ต้องตรงกับ password
+        ]);
+
+        // ถ้ามีการเปลี่ยนรหัสผ่านให้ทำการ Hash แล้วอัปเดต
+        if ($request->filled('password')) {
+            $validatedData['password'] = Hash::make($request->password);
+        } else {
+            unset($validatedData['password']); // ถ้าไม่กรอกรหัสผ่าน ให้ใช้ Password เดิม
+        }
+
+        // อัปเดตข้อมูล User
+        $user->update($validatedData);
+
+        return redirect()->back()->with('message', 'เเก้ไขรหัสผ่านเรียบร้อยแล้ว');
     }
     /**
      * Remove the specified resource from storage.

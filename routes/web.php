@@ -54,6 +54,8 @@ Route::get('/list-edit-contractor/{id}', [adminRegisterController::class, 'edit'
 Route::get('/delete-user/{id}', [adminRegisterController::class, 'destroy'])->name('delete-user');
 Route::get('/edit-profile', [adminRegisterController::class, 'editProfile'])->name('edit-profile');
 Route::put('/register-update-user/{id}', [adminRegisterController::class, 'updateProfile'])->name('register-update-user');
+Route::get('/reset-password-user', [adminRegisterController::class, 'resetPasswordUser'])->name('reset-password-user');
+Route::put('/update-password-user/{id}', [adminRegisterController::class, 'updatePasswordUser'])->name('update-password-user');
 
 
 
