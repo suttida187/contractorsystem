@@ -474,7 +474,7 @@ class HomeController extends Controller
     }
     public function editUploadImage(Request $request)
     {
-        dd($request->all());
+
         $eventsData = DB::table('image_deliver_works')->where('id', $request->input('id'))->first();
 
         if (!$eventsData) {
@@ -482,43 +482,66 @@ class HomeController extends Controller
         }
 
         // แปลง image JSON string ให้เป็น array
-        $existingImages = json_decode($eventsData->image, true);
+        $existingImages = json_decode($eventsData->image, true) ?? [];
 
         // ข้อมูลใหม่จากฟอร์ม
-        $newIndexes = $request->input('indexes'); // ex. [2]
-        $newDetails = $request->input('details'); // ex. ["55555555"]
-        $newImages = $request->file('images');   // ex. Uploaded file
+        $newIndexes = $request->input('indexes', []); // ตัวอย่าง: [1, 2]
+        $newDetails = $request->input('details', []); // ตัวอย่าง: ["รายละเอียด 1", "รายละเอียด 2"]
+        $newImages = $request->file('images', []);   // ไฟล์ที่อัปโหลด (อาจเป็น null ถ้าไม่มี)
+
+        $sanitizedIndexes = array_map(function ($value) {
+            return is_array($value) ? reset($value) : $value; // ✅ Ensure only integers/strings
+        }, $newIndexes);
+
+        $indexMapping = array_flip($sanitizedIndexes);
 
 
+        // **วนลูปอัปเดตข้อมูลเดิม**
         foreach ($existingImages as &$item) {
-            if (in_array($item['index'], $newIndexes)) {
-                // แทนค่าของ details ที่ตรงกัน
-                $indexKey = array_search($item['index'], $newIndexes);
-                $item['details'] = $newDetails[$indexKey];
 
-                // 🔥 **ลบภาพเก่า**
+
+            if (isset($indexMapping[$item['index']])) {
+                $indexKey = $indexMapping[$item['index']];
+
+                // ✅ อัปเดตรายละเอียด
+                $item['details'] = $newDetails[$indexKey] ?? '';
+
+                // ✅ ลบภาพเก่าถ้ามี
                 if (!empty($item['images'])) {
                     foreach ($item['images'] as $oldImage) {
-                        $imagePath = public_path($oldImage);
+                        $imagePath = public_path('storage/uploads/' . $oldImage);
                         if (file_exists($imagePath)) {
                             unlink($imagePath);
                         }
                     }
                 }
 
-                // 🔥 **เพิ่มภาพใหม่**
-                if (!empty($newImages)) {
-                    $uploadedPaths = [];
-                    foreach ($newImages as $image) {
-                        $fileName = time() . '-' . $image->getClientOriginalName();
-                        $image->move(public_path('storage/uploads/'), $fileName);
-                        $uploadedPaths[] = $fileName;
+                // ✅ เพิ่มภาพใหม่
+                $uploadedPaths = [];
+
+
+                if (!empty($newImages) && isset($newImages[$item['index']])) { // ✅ Corrected condition
+
+                    foreach ($newImages[$item['index']] as $image) {
+                        if ($image->isValid()) {
+                            $fileName = time() . '-' . $image->getClientOriginalName();
+                            $image->move(public_path('storage/uploads/'), $fileName);
+                            $uploadedPaths[] = $fileName;
+                        }
                     }
+                }
+
+                // ✅ ตรวจสอบว่าอัปโหลดสำเร็จ
+                if (!empty($uploadedPaths)) {
                     $item['images'] = $uploadedPaths;
+                } else {
+                    $item['images'] = []; // เก็บค่าเป็น array เปล่าหากไม่มีอัปโหลด
                 }
             }
         }
 
+
+        // **อัปเดตฐานข้อมูล**
         DB::table('image_deliver_works')
             ->where('id', $request->input('id'))
             ->update([
@@ -526,37 +549,6 @@ class HomeController extends Controller
                 'updated_at' => now()
             ]);
 
-
-        $data = [];
-
-        if (!empty($indexes) && !empty($details)) {
-            foreach ($indexes as $key => $index) {
-                $detailText = $details[$key] ?? '';
-
-                // ตรวจสอบว่ามีรูปภาพที่เกี่ยวข้องกับ index หรือไม่
-                $uploadedImages = [];
-                if (!empty($images) && isset($images[$index])) {
-                    foreach ($images[$index] as $image) {
-                        if ($image->isValid()) {
-                            // ตั้งชื่อไฟล์ใหม่และบันทึก
-                            $fileName = time() . '-' . $image->getClientOriginalName();
-                            $image->storeAs('uploads', $fileName, 'public');
-
-                            // เก็บชื่อไฟล์
-                            $uploadedImages[] = $fileName;
-                        }
-                    }
-                }
-
-                // จัดกลุ่มข้อมูลให้แต่ละ index มีรายละเอียดและไฟล์ภาพของตัวเอง
-                $data[] = [
-                    'index' => $index,
-                    'details' => $detailText,
-                    'images' => $uploadedImages,
-                    'statusImage' => "deliver_work"
-                ];
-            }
-        }
 
         $idProject =  $eventsData->id_project;
 

@@ -228,9 +228,14 @@
                         </div>
                     </div>
 
-
-                    <div id="output" class="container"></div>
-
+                    <form method="POST" action="{{ route('edit-upload-image') }}" style="padding:16px;"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div id="output" class="container"></div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">บันทึก</button>
+                        </div>
+                    </form>
 
                     @if (Auth::user()->role == 'contractor')
                         <div id="form-upload-image">
@@ -354,77 +359,83 @@
         }
 
         function userImageFucHome(userData) {
-
-
             let data = [];
             if (typeof userData.images === "string") {
                 data = JSON.parse(userData.images);
             }
 
-
             const outputDiv = document.getElementById("output");
 
             outputDiv.innerHTML = "";
-            let basePath = "/storage/uploads/"; // ✅ ตั้งค่าพาธของรูป
-
+            let basePath = "/storage/uploads/"; // ✅ Set image path
 
             if (data.length > 0) {
+                outputDiv.classList.add("container"); // ✅ Add class if data exists
 
-                outputDiv.classList.add("container"); // ✅ เพิ่ม class="container" ถ้ามีข้อมูล
-
-                data && data.forEach(item => {
+                data.forEach(item => {
                     const div = document.createElement("div");
                     div.classList.add("item");
 
+                    let imagesHtml = "";
+                    if (Array.isArray(item.images)) {
+                        imagesHtml = item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("");
+                    }
+
                     div.innerHTML = `
-                            ${window.location.pathname === "/home" && window.Laravel && window.Laravel.role === "contractor"
-                                    && userData.statusImage === "edit_works" ? `<button class="edit-btn-work btn-sm" data-index="${item.index}">แก้ไข</button>` : ""}
+                ${window.location.pathname === "/home" && window.Laravel && window.Laravel.role === "contractor"
+                    && userData.statusImage === "edit_works" ? 
+                    `<button type="button" class="edit-btn-work btn btn-primary btn-sm" data-index="${item.index}">แก้ไข</button>` : ""}
+                
+                <p><strong>Details:</strong> ${item.details}</p>
 
-                            <p><strong>Details:</strong> ${item.details}</p>
+                <div class="images-work">${imagesHtml}</div>
 
-                            <div class="images-work">
-                                ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
-                            </div>
+                ${window.Laravel && window.Laravel.role === 'pm' && userData.message_admin ? 
+                    `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
+                ${window.Laravel && window.Laravel.role === 'contractor' && userData.message_pm ? 
+                    `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
 
-                            ${window.Laravel && window.Laravel.role === 'pm' && userData.message_admin ? `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
-                            ${window.Laravel && window.Laravel.role === 'contractor' && userData.message_pm ? `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
-                            <!-- Form (ซ่อนก่อน) -->
-                            <form method="POST" action="{{ route('edit-upload-image') }}" enctype="multipart/form-data"
-                                class="form-group-home-work" id="form-${item.index}">
-                                @csrf
-                                <label>รายละเอียด (ลำดับที่ <span class="form-index">${item.index}</span>)</label>
-                                <input type="hidden" name="id" value="${userData.deliverWorkId || ''}">
-                                <input type="hidden" name="indexes[]" value="${item.index}">
-                            <div class="mb-3">
-                                <textarea class="form-control"  name="details[]"  id="exampleFormControlTextarea1" rows="3"> ${item.details}</textarea>
-                            </div>
-                                <label>อัปโหลดรูปภาพ</label>
-                                <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+                <!-- Form (Initially Hidden) -->
+                <div class="form-id-edit" id="form-${item.index}" style="display: none;">
+                    <label>รายละเอียด (ลำดับที่ <span class="form-index">${item.index}</span>)</label>
+                    <input type="hidden" name="id" value="${userData.deliverWorkId || ''}">
+                    <input type="hidden" name="indexes[${item.index}][]" value="${item.index}">
+                    
+                    <div class="mb-3">
+                        <textarea class="form-control" name="details[${item.index}][]" rows="3">${item.details}</textarea>
+                    </div>
 
-                                <div class="extra-fields"></div>
+                    <label>อัปโหลดรูปภาพ</label>
+                    <input type="file" name="images[${item.index}][]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
 
-                                <button type="submit" class="btn btn-primary mt-3 btn-sm">บันทึก</button>
-                            </form>
-                                `;
-
+                    <div class="extra-fields"></div>
+                </div>
+            `;
 
                     outputDiv.appendChild(div);
                 });
+
             } else {
-
-                outputDiv.classList.remove("container"); // 🔴 ลบ class ถ้าไม่มีข้อมูล
-
+                outputDiv.classList.remove("container"); // 🔴 Remove class if no data
             }
+
+            // Event listener for "แก้ไข" button
             document.querySelectorAll(".edit-btn-work").forEach(button => {
                 button.addEventListener("click", function() {
                     let index = this.getAttribute("data-index");
                     let form = document.getElementById(`form-${index}`);
 
-                    form.style.display = (form.style.display === "none" || form.style.display === "") ?
-                        "block" : "none";
+                    if (form) {
+                        let isHidden = form.style.display === "none" || form.style.display === "";
+                        form.style.display = isHidden ? "block" : "none";
+
+                        // Change button text and color
+                        this.textContent = isHidden ? "ซ่อน" : "แก้ไข";
+                        this.classList.toggle("btn-danger", isHidden); // Red when showing form
+                        this.classList.toggle("btn-primary", !isHidden); // Blue when hiding form
+                    }
                 });
             });
-
         }
     </script>
 @endsection
