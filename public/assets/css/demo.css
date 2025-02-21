@@ -1046,7 +1046,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 
 .calendar-container {
   width: 100%;
-  max-width: 100%;
+  max-width: 95%;
   overflow-x: auto;
   /* เปิดให้เลื่อนแนวนอนได้หากตารางใหญ่เกินไป */
   white-space: nowrap;
