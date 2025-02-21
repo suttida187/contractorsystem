@@ -29,7 +29,7 @@
                                 @endif
 
 
-                                <small>{{ \Carbon\Carbon::parse($da->created_at)->format('d/m/') . (\Carbon\Carbon::parse($da->created_at)->year + 543) . ' ' . \Carbon\Carbon::parse($da->created_at)->format('H:i') }}</small>
+                                <small>{{ \Carbon\Carbon::parse($da->updated_at)->format('d/m/') . (\Carbon\Carbon::parse($da->updated_at)->year + 543) . ' ' . \Carbon\Carbon::parse($da->created_at)->format('H:i') }}</small>
                             </div>
                         </div>
                     @endforeach
