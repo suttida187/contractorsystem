@@ -507,7 +507,10 @@ class HomeController extends Controller
                 $item['details'] = $newDetails[$indexKey] ?? '';
 
                 // ✅ ลบภาพเก่าถ้ามี
-                if (!empty($item['images'])) {
+                // 🛠 Debug Old Images Before Deletion
+
+
+                if (!empty($item['images']) && isset($newImages[$item['index']])) { // ✅ Corrected Condition
                     foreach ($item['images'] as $oldImage) {
                         $imagePath = public_path('storage/uploads/' . $oldImage);
                         if (file_exists($imagePath)) {
@@ -515,6 +518,8 @@ class HomeController extends Controller
                         }
                     }
                 }
+
+
 
                 // ✅ เพิ่มภาพใหม่
                 $uploadedPaths = [];
@@ -534,8 +539,6 @@ class HomeController extends Controller
                 // ✅ ตรวจสอบว่าอัปโหลดสำเร็จ
                 if (!empty($uploadedPaths)) {
                     $item['images'] = $uploadedPaths;
-                } else {
-                    $item['images'] = []; // เก็บค่าเป็น array เปล่าหากไม่มีอัปโหลด
                 }
             }
         }
@@ -546,6 +549,7 @@ class HomeController extends Controller
             ->where('id', $request->input('id'))
             ->update([
                 'image' => json_encode($existingImages),
+                'status' => "edit_works",
                 'updated_at' => now()
             ]);
 
