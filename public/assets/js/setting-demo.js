@@ -457,7 +457,7 @@ function getCalendar(id) {
 
 
         // เพิ่ม option แรกเป็น placeholder
-        if (window.Laravel && window.Laravel.role && window.Laravel.role === 'admin') {
+        if (window.Laravel && window.Laravel.role === 'admin') {
           calendarSelect.append('<option selected disabled>เลือกผู้จัดการ</option>');
         } else {
           calendarSelect.append('<option selected disabled>เลือกผู้รับเหมา</option>');
@@ -604,8 +604,8 @@ function userImageFuc(userData) {
       ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
   </div>
 
-  ${userData.message_admin ? `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
-  ${userData.message_pm ? `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
+  ${window.Laravel && window.Laravel.role === 'pm' && userData.message_admin ? `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
+  ${window.Laravel && window.Laravel.role === 'contractor' && userData.message_pm ? `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
 
   <!-- Form (ซ่อนก่อน) -->
   <form method="POST" action="{{ route('edit-upload-image') }}" enctype="multipart/form-data"

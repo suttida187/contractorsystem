@@ -386,9 +386,8 @@
                                 ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
                             </div>
 
-                            ${userData.message_admin ? `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
-                            ${userData.message_pm ? `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
-
+                            ${window.Laravel && window.Laravel.role === 'pm' && userData.message_admin ? `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
+                            ${window.Laravel && window.Laravel.role === 'contractor' && userData.message_pm ? `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
                             <!-- Form (ซ่อนก่อน) -->
                             <form method="POST" action="{{ route('edit-upload-image') }}" enctype="multipart/form-data"
                                 class="form-group-home-work" id="form-${item.index}">
