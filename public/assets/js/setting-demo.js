@@ -293,7 +293,7 @@ function userDataFuc(userData) {
 
   document.getElementById("caretaker_contractor").value = (userData.contractor_prefix ? userData.contractor_prefix : '') + ' ' +
     (userData.contractor_first_name ? userData.contractor_first_name : '') + ' ' +
-    (userData.contractor_last_name ? userData.contractor_last_name : '');;
+    (userData.contractor_last_name ? userData.contractor_last_name : '');
   document.getElementById("caretaker_contractor_phone").value = userData
     .contractor_phone || "";
 

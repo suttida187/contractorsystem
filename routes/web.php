@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade\Pdf;
+
 
 
 /*
@@ -80,11 +80,7 @@ Route::post('/reset-work-image', [App\Http\Controllers\HomeController::class, 'r
 Route::post('/approve-work-image', [App\Http\Controllers\HomeController::class, 'approveWorkImage'])->name('approve-work-image');
 Route::get('/export-pdf/{id}', [App\Http\Controllers\HomeController::class, 'exportPdf'])->name('export-pdf');
 
-Route::get('/test/pdf', function () {
- 
-    $pdf = Pdf::loadView('testpdf');
-    return $pdf->stream();
-});
+
 
 // notifications
 Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');
