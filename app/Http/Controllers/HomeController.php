@@ -621,6 +621,8 @@ class HomeController extends Controller
 
         return view('check_work', compact('data'));
     }
+
+
     public function resetWorkImage(Request $request)
     {
         $userRole = Auth::user()->role;
@@ -646,14 +648,14 @@ class HomeController extends Controller
             SalesProjects::where('id', $idProject)
                 ->update(['status' => 'waiting_pm_review']);
             ImageDeliverWork::where('id_project', $idProject)
-                ->update(['status' => 'edit_works_pm', 'message_pm' => $request->details]);
+                ->update(['status' => 'edit_works_pm', 'message_admin' => $request->details]);
         }
 
 
 
 
         // Admin
-        $id = $project->responsible_contractor;
+        $id =  $userRole == "admin" ? $project->responsible_pm : $project->responsible_contractor;
         $idSale = $project->responsible_sale;
         $role =  $userRole == "pm" ? "contractor" : "pm"; // ส่งเเจ้งเตือนให้กับ Admin
         $roleSale = "sale"; // ส่งเเจ้งเตือนให้กับ Admin
@@ -677,6 +679,69 @@ class HomeController extends Controller
 
 
         return redirect('check-work')->with('message', "ส่งานกลับไปให้เเก้ไขเรียบร้อย");
+    }
+    public function approveWorkImage(Request $request)
+    {
+        $userRole = Auth::user()->role;
+        $userId = Auth::user()->id;
+
+
+
+
+        $idProject =  $request->idProject;
+
+
+        $project = SalesProjects::where('id', $idProject)->first();
+
+
+
+        if ($userRole == "pm") {
+            SalesProjects::where('id', $idProject)
+                ->update(['status' => 'waiting_admin_review']);
+            ImageDeliverWork::where('id_project', $idProject)
+                ->update(['status' => 'approve_admin_works']);
+        }
+        if ($userRole == "admin") {
+            SalesProjects::where('id', $idProject)
+                ->update(['status' => 'completed']);
+            ImageDeliverWork::where('id_project', $idProject)
+                ->update(['status' => 'success', 'message_admin' => null, 'message_pm' => null]);
+        }
+
+
+
+
+        // Admin
+        $id =  $project->responsible_admin;
+        $idSale = $project->responsible_sale;
+        $role = "admin"; // ส่งเเจ้งเตือนให้กับ Admin
+        $roleSale = "sale"; // ส่งเเจ้งเตือนให้กับ Admin
+        $projectName =  $userRole == "pm" ? "PM ตรวจสอบ โปรเจกต์ $project->project_name เรียบร้อยเเล้ว" : "ADMIN ตรวจสอบ โปรเจกต์ $project->project_name เรียบร้อยเเล้ว";
+        $updatedAt = Carbon::now()->toDateTimeString(); // เวลาปัจจุบันในรูปแบบ YYYY-MM-DD HH:MM:SS
+
+        // JSON Encode ให้ถูกต้อง
+        $data = json_encode([
+            'id_project' =>  $idProject,
+            'message' => $projectName,
+            'time' => $updatedAt,
+            'status' => 'deliver_work',
+        ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
+        $dataSale = json_encode([
+            'id_project' =>  $idProject,
+            'message' => $projectName,
+            'time' => $updatedAt,
+            'status' => 'success',
+        ], JSON_UNESCAPED_UNICODE); // ป้องกันการแปลงอักขระภาษาไทยเป็น Unicode
+
+        app(NotificationController::class)->CreateNotifications($id, $data, $role);
+        app(NotificationController::class)->CreateNotifications($idSale, $dataSale, $roleSale);
+
+
+        // dd($request->all());
+        // สร้าง Query หลัก
+
+
+        return redirect('check-work')->with('message', "ตรวจสอบงานเรียบร้อยเเล้ว");
     }
 }
 

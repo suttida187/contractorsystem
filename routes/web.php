@@ -70,6 +70,7 @@ Route::post('/upload-image', [App\Http\Controllers\HomeController::class, 'uploa
 Route::post('/edit-upload-image', [App\Http\Controllers\HomeController::class, 'editUploadImage'])->name('edit-upload-image');
 Route::get('/check-work', [App\Http\Controllers\HomeController::class, 'checkWork'])->name('check-work');
 Route::post('/reset-work-image', [App\Http\Controllers\HomeController::class, 'resetWorkImage'])->name('reset-work-image');
+Route::post('/approve-work-image', [App\Http\Controllers\HomeController::class, 'approveWorkImage'])->name('approve-work-image');
 // notifications
 Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');
 Route::get('/mark-as-read/{notificationId}/{projectId}', [NotificationController::class, 'UpdateReadAt'])->name('notifications.markAsRead');

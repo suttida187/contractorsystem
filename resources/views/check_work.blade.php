@@ -239,10 +239,19 @@
 
                     <div id="output" class="container"></div>
 
-                    <div class="text-end">
-                        <a href="" class="btn btn-primary" id="approve-btn">อนุมัติ</a>
+                    <div class="text-end d-flex justify-content-end align-items-center">
+                        <form method="POST" action="{{ route('approve-work-image') }}" enctype="multipart/form-data"
+                            style="padding: 16px;">
+                            @csrf
+                            <div id="form-container">
+                                <input name="idProject" type="text" id="project-id-approve" class="form-control"
+                                    hidden>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="approve-btn">อนุมัติ</button>
+                        </form>
                         <button type="button" class="btn btn-primary" id="show-form-btn">ส่งกลับ</button>
                     </div>
+
                     <!-- Form hidden by default -->
                     <div id="form-re-word" style="display: none;">
                         <h3 style="margin-left: 16px;">หมายเหตุการส่งกลับ*</h3>
@@ -290,6 +299,7 @@
 
                     handleEventClickPm(userData.id);
                     document.getElementById("project-id-check").value = userData.id || "";
+                    document.getElementById("project-id-approve").value = userData.id || "";
                     //userDataFuc(date);
 
                 });
