@@ -5,5 +5,11 @@
     "sarabun": {
         "normal": "\/Applications\/XAMPP\/xamppfiles\/htdocs\/project\/contractorsystem\/storage\/fonts\/\/sarabun_normal_bcf01d8d70bbc4a458a8b99c089a29e9",
         "bold": "sarabun_bold_681e04cb4e36d6793599121d224f6f86"
+    },
+    "thsarabunregular": {
+        "normal": "thsarabunregular_normal_21f3aa8b0d33404a2ba8c5e72201c3d8"
+    },
+    "thsarabunbold": {
+        "bold": "thsarabunbold_bold_fad334d1a640a0e8299b867876097028"
     }
 }

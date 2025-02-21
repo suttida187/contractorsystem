@@ -20,15 +20,15 @@
 
     <style>
         @font-face {
-            font-family: 'THSarabunNew';
-            src: url('{{ public_path('fonts/THSarabunNew.ttf') }}') format('truetype');
+            font-family: 'THSarabunRegular';
+            src: url('{{ storage_path('fonts/THSarabunNew.ttf') }}') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
-            font-family: 'THSarabunNew';
-            src: url('{{ public_path('fonts/THSarabunNew-Bold.ttf') }}') format('truetype');
+            font-family: 'THSarabunBold';
+            src: url('{{ storage_path('fonts/THSarabunNew-Bold.ttf') }}') format('truetype');
             font-weight: bold;
             font-style: normal;
         }
@@ -36,7 +36,7 @@
 
         body {
 
-            font-family: 'THSarabunNew', sans-serif !important;
+
             font-size: 12px;
             color: #000;
             margin: 0;
@@ -56,6 +56,7 @@
             border-bottom: 2px solid #000;
             padding-bottom: 10px;
             margin-bottom: 20px;
+
         }
 
         .pdf-header img {
@@ -72,8 +73,10 @@
         .pdf-title {
             text-align: center;
             font-size: 18px;
-            font-weight: bold;
             margin-bottom: 15px;
+            font-family: 'THSarabunBold', sans-serif !important;
+            font-weight: bold;
+            font-size: 26px;
         }
 
         /* Form Inputs */
@@ -84,19 +87,24 @@
         }
 
         .form-label {
+            font-family: 'THSarabunBold', sans-serif !important;
+            font-weight: bold;
             font-size: 18px;
         }
 
         .form-control {
+            font-size: 16px;
             width: 100%;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 3px;
+            font-family: 'THSarabunRegular', sans-serif !important;
         }
 
         /* Section Headers */
         .section-title {
-            font-size: 14px;
+            font-size: 20px;
+            font-family: 'THSarabunBold', sans-serif !important;
             font-weight: bold;
             color: #007bff;
             margin-top: 15px;
