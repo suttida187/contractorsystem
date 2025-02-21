@@ -20,8 +20,8 @@
                     <p>มอบหมายงาน</p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a data-bs-toggle="collapse">
+            <li class="nav-item {{ $activeRoute === 'check-work' ? 'active' : '' }}">
+                <a href="{{ url('check-work') }}">
                     <i class="fa-solid fa-list-check"></i>
                     <p>ตรวจสอบงาน</p>
                 </a>

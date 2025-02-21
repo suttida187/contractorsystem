@@ -4,25 +4,32 @@
         <div class="page-inner">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">อัพเดตสถานะ</div>
+                    <div class="card-title text-center">ตรวจสอบงาน</div>
                 </div>
                 <div class="card-body">
                     @foreach ($data as $da)
-                        <div class="row">
-                            <div class="project-box" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                data-user='@json($da)'>
-                                <span class="project-title">{{ $da->project_name }}</span>
-                                <br>
-                                <span>
-                                    {{ \Carbon\Carbon::parse($da->updated_at)->format('d/m/Y') }}
-                                    {{ ' ' . \Carbon\Carbon::parse($da->updated_at)->format('H:i:s') }}
-                                </span>
-
-                            </div>
+                        <div class="project-card" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            data-user='@json($da)'>
+                            <div><strong>{{ $da->project_name }}</strong></div>
+                            <div class="text-end">
 
 
-                            <div class="project-status">
-                                @include('layouts.status')
+                                @if (Auth::user()->role == 'admin')
+                                    @if ($da->status == 'completed')
+                                        <span class="status-text text-green">ตรวจเเล้ว</span><br>
+                                    @else
+                                        <span class="status-text text-red">ยังไม่ได้ตรวจ</span><br>
+                                    @endif
+                                @elseif (Auth::user()->role == 'pm')
+                                    @if ($da->status == 'waiting_admin_review')
+                                        <span class="status-text text-green">ตรวจเเล้ว</span><br>
+                                    @else
+                                        <span class="status-text text-red">ยังไม่ได้ตรวจ</span><br>
+                                    @endif
+                                @endif
+
+
+                                <small>{{ \Carbon\Carbon::parse($da->created_at)->format('d/m/') . (\Carbon\Carbon::parse($da->created_at)->year + 543) . ' ' . \Carbon\Carbon::parse($da->created_at)->format('H:i') }}</small>
                             </div>
                         </div>
                     @endforeach
@@ -59,6 +66,7 @@
 
 
                         <h1 class="text-center-project" id="exampleModalLabel">รายละเอียดงาน</h1>
+
                         <div class="mb-3" hidden>
                             <label class="form-label">โปรเจกต์ id: </label>
                             <input name="project_id" type="text" id="project_id" class="form-control no-edit">
@@ -86,7 +94,7 @@
                             <label class="form-label">Solution: </label>
                             <input name="solution" type="text" id="solution" class="form-control no-edit">
                             <!-- แสดงช่องกรอกข้อมูลเมื่อเลือก "Other" -->
-                            <div class="mt-2 d-none" id="otherSolutionDiv">
+                            <div class="mt-2 d-none">
                                 <label class="form-label">โปรดระบุ Solution:</label>
                                 <input name="other_solution" type="text" id="other_solution"
                                     class="form-control no-edit">
@@ -231,47 +239,33 @@
 
                     <div id="output" class="container"></div>
 
-
-                    @if (Auth::user()->role == 'contractor')
-                        <div id="form-upload-image">
-                            <h4 class="details-head">รายละเอียดงานที่ส่งมอบ</h4>
-                            <form method="POST" action="{{ route('upload-image') }}" enctype="multipart/form-data"
-                                style="padding:16px;">
-                                @csrf
-                                <div id="form-container">
-                                    <input name="idProjectImage" type="text" id="project-id-image"
-                                        class="form-control">
-                                    <!-- ฟอร์มแรก -->
-                                    <div class="form-container">
-                                        <div class="form-group-home">
-                                            <label>รายละเอียด (ลำดับที่ <span class="form-index">1</span>)</label>
-                                            <input type="hidden" name="indexes[]" value="1">
-                                            <textarea class="form-control" name="details[]" rows="3"></textarea>
-                                        </div>
-                                        <div class="form-group-home">
-                                            <label>อัปโหลดรูปภาพ</label>
-                                            <input type="file" name="images[1][]" class="image-upload form-control"
-                                                multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
-                                        </div>
-                                    </div>
+                    <form method="POST" action="{{ route('upload-image') }}" enctype="multipart/form-data"
+                        style="padding:16px;">
+                        @csrf
+                        <div id="form-container">
+                            <input name="idProject" type="text" id="project-id-image" class="form-control">
+                            <!-- ฟอร์มแรก -->
+                            <div class="form-container">
+                                <div class="form-group-home">
+                                    <textarea class="form-control" name="details" rows="3"></textarea>
                                 </div>
-
-                                <!-- ปุ่มเพิ่มรายละเอียด -->
-                                <div class="d-flex justify-content-between button-top">
-                                    <button id="add-form" type="button" class="btn btn-warning">+
-                                        เพิ่มรายละเอียด</button>
-                                    <button type="submit" class="btn btn-primary">ส่งมอบงาน</button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    @endif
+
+                        <!-- ปุ่มเพิ่มรายละเอียด -->
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">ส่งมอบงาน</button>
+                        </div>
+                    </form>
 
                 </div>
+
+
             </div>
-
         </div>
-
     </div>
+
+
 
     <script>
         window.Laravel = {!! json_encode([
@@ -279,77 +273,73 @@
             'role' => Auth::user() ? Auth::user()->role : null,
         ]) !!};
 
-
-
         document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll(".project-box").forEach(function(btn) {
+            document.querySelectorAll(".project-card").forEach(function(btn) {
                 btn.addEventListener("click", function() {
                     // ดึงค่า JSON จาก `data-user`
                     var userData = JSON.parse(this.getAttribute("data-user"));
 
-                    console.log("userData", userData);
 
+                    handleEventClickPm(userData.id);
 
-                    if (window.Laravel && window.Laravel.role && window.Laravel.role ===
-                        'contractor') {
-                        if (userData.images == null) {
-                            document.getElementById("form-upload-image").style.display = "block";
-                        } else {
-                            document.getElementById("form-upload-image").style.display = "none";
-                        }
-
-                    }
-
-                    // จำลองคลิกเพื่อโหลดข้อมูลตัวแรกเมื่อเปิดหน้า
-
-                    userDataFuc(userData);
-                    userImageFuc(userData);
+                    //userDataFuc(date);
 
                 });
             });
         });
 
+        async function handleEventClickPm(idProject) {
+            try {
+                /*  console.log(`Event Clicked: Project ID ${idProject}`); */
 
-        if (window.Laravel && window.Laravel.role && window.Laravel.role === 'contractor') {
-            $(document).ready(function() {
-                let index = 1; // เริ่มต้นที่ 1
+                // เรียก API ไปที่ `getProject/{idProject}`
+                const response = await fetch(`getProject/${idProject}`);
+                let date = await response.json();
 
-                $("#add-form").click(function() {
-                    index++; // เพิ่มลำดับ
 
-                    let newForm = `
-            <div class="form-container">
-                <div class="form-group">
-                    <label>รายละเอียด (ลำดับที่ <span class="form-index">${index}</span>)</label>
-                    <input type="hidden" name="indexes[]" value="${index}">
-                    <textarea class="form-control" name="details[]" rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>อัปโหลดรูปภาพ</label>
-                    <input type="file" name="images[${index}][]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf" required>
-                </div>
-                <button type="button" class="remove-btn btn btn-danger btn-sm">ลบ</button>
-            </div>
-            `;
-                    $("#form-container").append(newForm);
-                });
+                if (window.Laravel?.role === 'admin' || window.Laravel?.role === 'pm') {
+                    let managerSolution = document.getElementById("manager-solution");
+                    let managerButton = document.getElementById("manager-button");
 
-                // ฟังก์ชันลบฟอร์มที่เพิ่มขึ้นมา
-                $(document).on("click", ".remove-btn", function() {
-                    $(this).closest(".form-container").remove();
-                    updateIndexes(); // อัปเดตหมายเลขลำดับใหม่
-                });
 
-                // ฟังก์ชันอัปเดตหมายเลขลำดับ
-                function updateIndexes() {
-                    $(".form-container").each(function(i) {
-                        let newIndex = i + 1;
-                        $(this).find(".form-index").text(newIndex);
-                        $(this).find("input[name='indexes[]']").val(newIndex);
-                        $(this).find("input[type='file']").attr("name", `images[${newIndex}][]`);
-                    });
+                    if (managerSolution && managerButton) {
+                        if (date.responsible_pm != null) {
+                            managerSolution.style.display = "none";
+                            managerButton.style.display = "none";
+
+                        } else {
+                            managerSolution.style.display = "block";
+                            managerButton.style.display = "block";
+
+                        }
+                        if (date.responsible_contractor != null) {
+                            managerSolution.style.display = "none";
+                            managerButton.style.display = "none";
+
+                        } else {
+                            managerSolution.style.display = "block";
+                            managerButton.style.display = "block";
+
+                        }
+
+                    }
                 }
-            });
+
+
+
+                userDataFuc(date);
+
+                userImageFuc(date);
+                // ตรวจสอบว่าการตอบกลับสำเร็จหรือไม่
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+            } catch (error) {
+                console.error("Error fetching project data:", error);
+            }
         }
+
+        
     </script>
 @endsection

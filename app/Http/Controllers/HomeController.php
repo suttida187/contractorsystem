@@ -588,6 +588,39 @@ class HomeController extends Controller
 
         return redirect('home')->with('message', "ส่งงานที่เเก้ไขเรียบร้อย");
     }
+
+    public function checkWork()
+    {
+        $userRole = Auth::user()->role;
+        $userId = Auth::user()->id;
+
+        // สร้าง Query หลัก
+
+        $query = $this->dataHome();
+
+
+        // เงื่อนไข Role ของผู้ใช้
+        switch ($userRole) {
+            case "admin":
+                $query->where('responsible_admin', $userId)
+                    ->where(function ($q) {
+                        $q->where('sales_projects.status', '=', 'waiting_pm_review');
+                    });
+                break;
+
+            case "pm":
+                $query->where('responsible_pm', $userId)->where(function ($q) {
+                    $q->where('sales_projects.status', '=', 'waiting_contractor');
+                });
+        }
+
+        // ดึงข้อมูลเรียงตามวันที่สร้าง
+        $data = $query->orderBy('sales_projects.created_at', 'DESC')->get();
+
+
+
+        return view('check_work', compact('data'));
+    }
 }
 
 

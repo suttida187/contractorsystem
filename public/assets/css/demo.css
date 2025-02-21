@@ -1157,3 +1157,67 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin-top: 24px;
   margin-bottom: 24px;
 }
+
+<style>.container-work {
+  width: 80%;
+  margin: auto;
+  padding: 10px;
+}
+
+.item-work {
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.images-work img {
+  width: 100px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.form-group-home-work {
+  display: none;
+  padding: 10px;
+  border: 1px solid #aaa;
+  margin-top: 10px;
+}
+
+.edit-btn-work {
+  background-color: #ffc107;
+  /* สีเหลือง */
+  color: #000;
+  /* สีตัวอักษรดำ */
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-bottom: 24px;
+}
+
+.edit-btn-work:hover {
+  background-color: #e0a800;
+  /* สีเหลืองเข้มขึ้นเมื่อ hover */
+}
+
+.edit-btn-work:active {
+  background-color: #d39e00;
+  /* สีเหลืองเข้มเมื่อคลิก */
+}
+
+.add-btn-work {
+  background: #28a745;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.details-head-work {
+  margin-top: 24px;
+  margin-left: 16px;
+}
