@@ -328,9 +328,9 @@ function userDataFuc(userData) {
 
   // HTML Template สำหรับ Progress Bar
   let progressHTML = `
-      <div class="progress-line-status step-1 ${currentStep >= 2 ? 'active' : 'dashed-line'}"></div>
-      <div class="progress-line-status step-2 ${currentStep >= 3 ? 'active' : 'dashed-line'}"></div>
-      <div class="progress-line-status step-3 ${currentStep >= 4 ? 'active' : 'dashed-line'}"></div>
+      <div class="progress-line-status step-1 ${currentStep >= 2 ? 'active' : 'dashed-line-status'}"></div>
+      <div class="progress-line-status step-2 ${currentStep >= 3 ? 'active' : 'dashed-line-status'}"></div>
+      <div class="progress-line-status step-3 ${currentStep >= 4 ? 'active' : 'dashed-line-status'}"></div>
 
       <!-- สเต็ป 1 -->
       <div class="text-center">
