@@ -156,9 +156,16 @@ class NotificationController extends Controller
         if ($role == 'sale') {
             NotificationsSale::where('id', $notificationId)
                 ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+
+            $not_data = DB::table('notifications_sales')
+                ->where('id', $notificationId)
+                ->first();
+
+            if (json_decode($not_data->data)->status  == 'success') {
+                return redirect('home-all');
+            }
         }
         if ($role == 'admin') {
-
 
             NotificationsAdmin::where('id', $notificationId)
                 ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
