@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="text-center">โครงการทั้งหมด</h2>
-                    <a href="export-pdf/2" target="_blank" rel="noopener noreferrer">PDF</a>
+
                     <div class="filter-container justify-content-center mt-3">
                         <!-- ฟอร์มค้นหา + ตัวกรอง -->
 
@@ -328,12 +328,21 @@
                     </div>
 
                     <div id="output" class="container"></div>
+                    <div class="text-end">
+                        <a id="id-pdf"></a>
+
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        window.Laravel = {!! json_encode([
+            'isLoggedIn' => Auth::check(),
+            'role' => Auth::user() ? Auth::user()->role : null,
+        ]) !!};
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll(".icon-action.view").forEach(function(btn) { // ✅ แก้ selector
                 btn.addEventListener("click", function() {
@@ -347,6 +356,17 @@
                             // เรียกฟังก์ชัน (ถ้าต้องการ)
                             userDataFuc(userData);
                             userImageFuc(userData)
+
+                            if (window.Laravel && window.Laravel.role == 'admin' && userData
+                                .status == 'completed') {
+                                const pdfContainer = document.getElementById("id-pdf");
+                                if (pdfContainer) {
+                                    pdfContainer.outerHTML =
+                                        `<a href="export-pdf/${userData.id}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">PDF</a>`;
+                                }
+                            }
+
+
                         } catch (error) {
                             console.error("JSON parse error:", error);
                         }
