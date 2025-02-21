@@ -170,11 +170,22 @@ class NotificationController extends Controller
             if (json_decode($not_data->data)->status  == 'newProject') {
                 return redirect('assign-work');
             }
+            if (json_decode($not_data->data)->status  == 'deliver_work') {
+                return redirect('check-work');
+            }
         }
 
         if ($role == 'pm') {
             NotificationsPm::where('id', $notificationId)
                 ->update(['read_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+
+            $not_data = DB::table('notifications_pms')
+                ->where('id', $notificationId)
+                ->first();
+
+            if (json_decode($not_data->data)->status  == 'deliver_work') {
+                return redirect('check-work');
+            }
         }
         if ($role == 'contractor') {
             NotificationsContractor::where('id', $notificationId)

@@ -240,7 +240,7 @@
                                 @csrf
                                 <div id="form-container">
                                     <input name="idProjectImage" type="text" id="project-id-image"
-                                        class="form-control">
+                                        class="form-control" hidden>
                                     <!-- ฟอร์มแรก -->
                                     <div class="form-container">
                                         <div class="form-group-home">
@@ -303,7 +303,7 @@
                     // จำลองคลิกเพื่อโหลดข้อมูลตัวแรกเมื่อเปิดหน้า
 
                     userDataFuc(userData);
-                    userImageFuc(userData);
+                    userImageFucHome(userData);
 
                 });
             });
@@ -318,19 +318,19 @@
                     index++; // เพิ่มลำดับ
 
                     let newForm = `
-            <div class="form-container">
-                <div class="form-group">
-                    <label>รายละเอียด (ลำดับที่ <span class="form-index">${index}</span>)</label>
-                    <input type="hidden" name="indexes[]" value="${index}">
-                    <textarea class="form-control" name="details[]" rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>อัปโหลดรูปภาพ</label>
-                    <input type="file" name="images[${index}][]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf" required>
-                </div>
-                <button type="button" class="remove-btn btn btn-danger btn-sm">ลบ</button>
-            </div>
-            `;
+                    <div class="form-container">
+                        <div class="form-group-work">
+                            <label>รายละเอียด (ลำดับที่ <span class="form-index">${index}</span>)</label>
+                            <input type="hidden" name="indexes[]" value="${index}">
+                            <textarea class="form-control-work" name="details[]" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group-work">
+                            <label>อัปโหลดรูปภาพ</label>
+                            <input type="file" name="images[${index}][]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf" required>
+                        </div>
+                        <button type="button" class="remove-btn btn btn-danger btn-sm">ลบ</button>
+                    </div>
+                    `;
                     $("#form-container").append(newForm);
                 });
 
@@ -350,6 +350,81 @@
                     });
                 }
             });
+        }
+
+        function userImageFucHome(userData) {
+
+
+            let data = [];
+            if (typeof userData.images === "string") {
+                data = JSON.parse(userData.images);
+            }
+
+
+            const outputDiv = document.getElementById("output");
+
+            outputDiv.innerHTML = "";
+            let basePath = "/storage/uploads/"; // ✅ ตั้งค่าพาธของรูป
+
+
+            if (data.length > 0) {
+
+                outputDiv.classList.add("container"); // ✅ เพิ่ม class="container" ถ้ามีข้อมูล
+
+                data && data.forEach(item => {
+                    const div = document.createElement("div");
+                    div.classList.add("item");
+
+                    div.innerHTML = `
+                            ${window.location.pathname === "/home" && window.Laravel && window.Laravel.role === "contractor"
+                                    && userData.statusImage === "edit_works" ? `<button class="edit-btn-work btn-sm" data-index="${item.index}">แก้ไข</button>` : ""}
+
+                            <p><strong>Details:</strong> ${item.details}</p>
+
+                            <div class="images-work">
+                                ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
+                            </div>
+
+                            ${userData.message_admin ? `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
+                            ${userData.message_pm ? `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
+
+                            <!-- Form (ซ่อนก่อน) -->
+                            <form method="POST" action="{{ route('edit-upload-image') }}" enctype="multipart/form-data"
+                                class="form-group-home-work" id="form-${item.index}">
+                                @csrf
+                                <label>รายละเอียด (ลำดับที่ <span class="form-index">${item.index}</span>)</label>
+                                <input type="hidden" name="id" value="${userData.deliverWorkId || ''}">
+                                <input type="hidden" name="indexes[]" value="${item.index}">
+                            <div class="mb-3">
+                                <textarea class="form-control"  name="details[]"  id="exampleFormControlTextarea1" rows="3"> ${item.details}</textarea>
+                            </div>
+                                <label>อัปโหลดรูปภาพ</label>
+                                <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+
+                                <div class="extra-fields"></div>
+
+                                <button type="submit" class="btn btn-primary mt-3 btn-sm">บันทึก</button>
+                            </form>
+                                `;
+
+
+                    outputDiv.appendChild(div);
+                });
+            } else {
+
+                outputDiv.classList.remove("container"); // 🔴 ลบ class ถ้าไม่มีข้อมูล
+
+            }
+            document.querySelectorAll(".edit-btn-work").forEach(button => {
+                button.addEventListener("click", function() {
+                    let index = this.getAttribute("data-index");
+                    let form = document.getElementById(`form-${index}`);
+
+                    form.style.display = (form.style.display === "none" || form.style.display === "") ?
+                        "block" : "none";
+                });
+            });
+
         }
     </script>
 @endsection

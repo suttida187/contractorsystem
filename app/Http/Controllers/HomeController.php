@@ -570,7 +570,7 @@ class HomeController extends Controller
         $updatedAt = Carbon::now()->toDateTimeString(); // เวลาปัจจุบันในรูปแบบ YYYY-MM-DD HH:MM:SS
 
         SalesProjects::where('id', $idProject)
-            ->update(['status' => 'waiting_contractor']);
+            ->update(['status' => 'waiting_pm_review']);
         // JSON Encode ให้ถูกต้อง
         $data = json_encode([
             'id_project' =>  $idProject,

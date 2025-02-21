@@ -1217,6 +1217,10 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin-top: 10px;
 }
 
+#output form {
+  margin-bottom: 32px;
+}
+
 .details-head-work {
   margin-top: 24px;
   margin-left: 16px;

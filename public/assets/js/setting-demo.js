@@ -558,7 +558,7 @@ async function handleEventSaveClick(projectId, idUser) {
 
 
 
-    console.log("date", date.responsible_pm);
+
 
     document.getElementById("exampleModalAutoClick").click();
     userDataFuc(date);
@@ -597,31 +597,32 @@ function userImageFuc(userData) {
       div.classList.add("item");
 
       div.innerHTML = `
-   ${userData.statusImage == 'edit_works' ? `<button class="edit-btn-work btn-sm" data-index="${item.index}">แก้ไข</button>` : ""}
+
+  <p><strong>Details:</strong> ${item.details}</p>
+  
   <div class="images-work">
       ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
   </div>
-   <p><strong>Details:</strong> ${item.details}</p>
-  <p><strong>Status:</strong> ${item.statusImage}</p>
+
   ${userData.message_admin ? `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
   ${userData.message_pm ? `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
 
   <!-- Form (ซ่อนก่อน) -->
   <form method="POST" action="{{ route('edit-upload-image') }}" enctype="multipart/form-data"
       class="form-group-home-work" id="form-${item.index}">
-      @csrf
+       @csrf
       <label>รายละเอียด (ลำดับที่ <span class="form-index">${item.index}</span>)</label>
-      <input type="hidden" name="id" value="${userData.deliverWorkId}">
+      <input type="hidden" name="id" value="${userData.deliverWorkId || ''}">
       <input type="hidden" name="indexes[]" value="${item.index}">
-      <textarea class="form-control-work" name="details[]" rows="3">${item.details}</textarea>
-
+    <div class="mb-3">
+      <textarea class="form-control"  name="details[]"  id="exampleFormControlTextarea1" rows="3"> ${item.details}</textarea>
+    </div>
       <label>อัปโหลดรูปภาพ</label>
       <input type="file" name="images[]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
-
   
       <div class="extra-fields"></div>
 
-      <button type="submit"  class="btn btn-primary mt-3 btn-sm">บันทึก</button>
+      <button type="submit" class="btn btn-primary mt-3 btn-sm">บันทึก</button>
   </form>
       `;
 
@@ -633,17 +634,11 @@ function userImageFuc(userData) {
     outputDiv.classList.remove("container"); // 🔴 ลบ class ถ้าไม่มีข้อมูล
 
   }
-  document.querySelectorAll(".edit-btn").forEach(button => {
-    button.addEventListener("click", function () {
-      let index = this.getAttribute("data-index");
-      let form = document.getElementById(`form-${index}`);
 
-      form.style.display = (form.style.display === "none" || form.style.display === "") ?
-        "block" : "none";
-    });
-  });
 
 }
+
+
 
 
 fetchNotifications(); // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้า
