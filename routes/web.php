@@ -52,6 +52,10 @@ Route::get('/list-contractor', [adminRegisterController::class, 'index'])->name(
 Route::get('/list-edit-admin/{id}', [adminRegisterController::class, 'edit'])->name('list-edit-admin');
 Route::get('/list-edit-contractor/{id}', [adminRegisterController::class, 'edit'])->name('list-edit-contractor');
 Route::get('/delete-user/{id}', [adminRegisterController::class, 'destroy'])->name('delete-user');
+Route::get('/edit-profile', [adminRegisterController::class, 'editProfile'])->name('edit-profile');
+Route::put('/register-update-user/{id}', [adminRegisterController::class, 'updateProfile'])->name('register-update-user');
+
+
 
 
 
@@ -71,6 +75,7 @@ Route::post('/edit-upload-image', [App\Http\Controllers\HomeController::class, '
 Route::get('/check-work', [App\Http\Controllers\HomeController::class, 'checkWork'])->name('check-work');
 Route::post('/reset-work-image', [App\Http\Controllers\HomeController::class, 'resetWorkImage'])->name('reset-work-image');
 Route::post('/approve-work-image', [App\Http\Controllers\HomeController::class, 'approveWorkImage'])->name('approve-work-image');
+
 // notifications
 Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');
 Route::get('/mark-as-read/{notificationId}/{projectId}', [NotificationController::class, 'UpdateReadAt'])->name('notifications.markAsRead');

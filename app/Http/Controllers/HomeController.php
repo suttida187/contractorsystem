@@ -9,6 +9,7 @@ use App\Models\SalesProjects;
 use Carbon\Carbon; // ใช้ Carbon เพื่อความสะดวก
 use App\Models\Calendar;
 use App\Models\ImageDeliverWork;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -744,6 +745,7 @@ class HomeController extends Controller
 
         return redirect('check-work')->with('message', "ตรวจสอบงานเรียบร้อยเเล้ว");
     }
+  
 }
 
 

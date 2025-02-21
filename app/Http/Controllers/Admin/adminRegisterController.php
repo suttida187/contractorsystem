@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class adminRegisterController extends Controller
 {
@@ -167,6 +168,51 @@ class adminRegisterController extends Controller
             ->with('message', "แก้ไขข้อมูลเรียบร้อยแล้ว");
     }
 
+
+    public function editProfile()
+    {
+
+        $user = User::where('id', Auth::user()->id)->first();
+
+        return view('edit_profile', compact('user'));
+    }
+    public function updateProfile(Request $request, string $id)
+    {
+
+        $user = User::findOrFail($id); // ถ้าไม่พบ User ให้แจ้ง Error 404
+
+        $validatedData = $request->validate([
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($user->id), // อนุญาตให้ Email ซ้ำเดิมได้
+            ],
+            'username' => [
+                'required',
+                Rule::unique('users', 'username')->ignore($user->id), // อนุญาตให้ Username ซ้ำเดิมได้
+            ],
+            'prefix' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'company_name' => 'required|string',
+            'address' => 'required|string',
+            'street' => 'required|string',
+            'sub_district' => 'required|string',
+            'district' => 'required|string',
+            'province' => 'required|string',
+            'phone' => 'required|numeric|digits:10',
+            'postal_code' => 'required|numeric|digits:5',
+
+        ]);
+
+
+        // อัปเดตข้อมูล User
+        $user->update($validatedData);
+
+
+
+        return redirect()->back()->with('message', 'เเก้ไขข้อมูลเรียบร้อยแล้ว');
+    }
     /**
      * Remove the specified resource from storage.
      */
