@@ -474,6 +474,7 @@ class HomeController extends Controller
     }
     public function editUploadImage(Request $request)
     {
+        dd($request->all());
         $eventsData = DB::table('image_deliver_works')->where('id', $request->input('id'))->first();
 
         if (!$eventsData) {
