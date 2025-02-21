@@ -298,6 +298,7 @@
                             document.getElementById("form-upload-image").style.display = "none";
                         }
 
+                        document.getElementById("project-id-image").value = userData.id || "";
                     }
 
                     // จำลองคลิกเพื่อโหลดข้อมูลตัวแรกเมื่อเปิดหน้า
