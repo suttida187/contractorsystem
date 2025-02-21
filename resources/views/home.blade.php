@@ -390,9 +390,9 @@
 
                 <div class="images-work">${imagesHtml}</div>
 
-                ${window.Laravel && window.Laravel.role === 'pm' && userData.message_admin ? 
+                ${window.Laravel && window.Laravel.role === 'pm' || window.Laravel.role === 'admin'  && userData.message_admin ? 
                     `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
-                ${window.Laravel && window.Laravel.role === 'contractor' && userData.message_pm ? 
+                ${window.Laravel && window.Laravel.role === 'contractor' || window.Laravel.role === 'pm'  && userData.message_pm ? 
                     `<p><strong>Message PM:</strong> ${userData.message_pm}</p>` : ""}
 
                 <!-- Form (Initially Hidden) -->
