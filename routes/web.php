@@ -69,6 +69,7 @@ Route::post('/create-calendars', [App\Http\Controllers\HomeController::class, 'c
 Route::post('/upload-image', [App\Http\Controllers\HomeController::class, 'uploadImage'])->name('upload-image');
 Route::post('/edit-upload-image', [App\Http\Controllers\HomeController::class, 'editUploadImage'])->name('edit-upload-image');
 Route::get('/check-work', [App\Http\Controllers\HomeController::class, 'checkWork'])->name('check-work');
+Route::post('/reset-work-image', [App\Http\Controllers\HomeController::class, 'resetWorkImage'])->name('reset-work-image');
 // notifications
 Route::get('/notifications-fetch', [NotificationController::class, 'fetch'])->name('notifications-fetch');
 Route::get('/mark-as-read/{notificationId}/{projectId}', [NotificationController::class, 'UpdateReadAt'])->name('notifications.markAsRead');

@@ -239,25 +239,33 @@
 
                     <div id="output" class="container"></div>
 
-                    <form method="POST" action="{{ route('upload-image') }}" enctype="multipart/form-data"
-                        style="padding:16px;">
-                        @csrf
-                        <div id="form-container">
-                            <input name="idProject" type="text" id="project-id-image" class="form-control">
-                            <!-- ฟอร์มแรก -->
-                            <div class="form-container">
-                                <div class="form-group-home">
-                                    <textarea class="form-control" name="details" rows="3"></textarea>
+                    <div class="text-end">
+                        <a href="" class="btn btn-primary" id="approve-btn">อนุมัติ</a>
+                        <button type="button" class="btn btn-primary" id="show-form-btn">ส่งกลับ</button>
+                    </div>
+                    <!-- Form hidden by default -->
+                    <div id="form-re-word" style="display: none;">
+                        <h3 style="margin-left: 16px;">หมายเหตุการส่งกลับ*</h3>
+                        <form method="POST" action="{{ route('reset-work-image') }}" enctype="multipart/form-data"
+                            style="padding:16px;">
+                            @csrf
+                            <div id="form-container">
+                                <input name="idProject" type="text" id="project-id-check" class="form-control"
+                                    hidden>
+                                <div class="form-container">
+                                    <div class="form-group-home">
+                                        <textarea class="form-control" name="details" rows="3"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- ปุ่มเพิ่มรายละเอียด -->
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-primary">ส่งมอบงาน</button>
-                        </div>
-                    </form>
-
+                            <!-- Hide Form Button -->
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary">ส่งกลับ</button>
+                                <button type="button" class="btn btn-secondary" id="hide-form-btn">ซ่อนกลับ</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
 
@@ -281,7 +289,7 @@
 
 
                     handleEventClickPm(userData.id);
-
+                    document.getElementById("project-id-check").value = userData.id || "";
                     //userDataFuc(date);
 
                 });
@@ -340,6 +348,25 @@
             }
         }
 
-        
+        document.addEventListener("DOMContentLoaded", function() {
+            const formReWord = document.getElementById("form-re-word");
+            const showFormBtn = document.getElementById("show-form-btn");
+            const hideFormBtn = document.getElementById("hide-form-btn");
+            const approveBtn = document.getElementById("approve-btn");
+
+            // Show the form when "ส่งกลับ" is clicked
+            showFormBtn.addEventListener("click", function() {
+                formReWord.style.display = "block";
+                showFormBtn.style.display = "none";
+                approveBtn.style.display = "none"; // Hide "อนุมัติ" button
+            });
+
+            // Hide the form when "ซ่อนกลับ" is clicked
+            hideFormBtn.addEventListener("click", function() {
+                formReWord.style.display = "none";
+                showFormBtn.style.display = "inline-block";
+                approveBtn.style.display = "inline-block"; // Show "อนุมัติ" button again
+            });
+        });
     </script>
 @endsection
