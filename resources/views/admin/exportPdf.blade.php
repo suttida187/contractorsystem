@@ -13,8 +13,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ URL::asset('/assets/img/icon.jpg') }}" />
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
-
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+ --}}
 
     <!-- thai font -->
 
@@ -27,7 +27,7 @@
         }
 
         @font-face {
-            font-family: 'THSarabunNew';
+            font-family: 'THSarabunBold';
             src: url('{{ public_path('fonts/THSarabunNew-Bold.ttf') }}') format('truetype');
             font-weight: bold;
             font-style: normal;
@@ -36,7 +36,7 @@
 
         body {
 
-            font-family: 'Sarabun', sans-serif !important;
+
             font-size: 12px;
             color: #000;
             margin: 0;
@@ -84,14 +84,17 @@
         }
 
         .form-label {
-            font-weight: bold;
+            font-family: 'THSarabunBold', sans-serif;
+
         }
 
         .form-control {
             width: 100%;
+            font-family: 'THSarabunNew', sans-serif !important;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 3px;
+
         }
 
         /* Section Headers */
