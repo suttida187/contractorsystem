@@ -319,12 +319,12 @@
 
                     let newForm = `
                     <div class="form-container">
-                        <div class="form-group-work">
+                        <div class="form-group">
                             <label>รายละเอียด (ลำดับที่ <span class="form-index">${index}</span>)</label>
                             <input type="hidden" name="indexes[]" value="${index}">
-                            <textarea class="form-control-work" name="details[]" rows="3" required></textarea>
+                            <textarea class="form-control" name="details[]" rows="3" required></textarea>
                         </div>
-                        <div class="form-group-work">
+                        <div class="form-group">
                             <label>อัปโหลดรูปภาพ</label>
                             <input type="file" name="images[${index}][]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf" required>
                         </div>
