@@ -114,7 +114,7 @@ class HomeController extends Controller
         }
 
         // ดึงข้อมูลเรียงตามวันที่สร้าง
-        $data = $query->orderBy('sales_projects.created_at', 'DESC')->get();
+        $data = $query->orderBy('sales_projects.updated_at', 'DESC')->get();
 
 
 
@@ -150,7 +150,7 @@ class HomeController extends Controller
         }
 
         // ดึงข้อมูลเรียงตามวันที่สร้าง และแบ่งหน้า
-        $data = $query->orderBy('sales_projects.created_at', 'DESC')->paginate(100);
+        $data = $query->orderBy('sales_projects.updated_at', 'DESC')->paginate(100);
 
 
 
@@ -199,7 +199,7 @@ class HomeController extends Controller
         }
 
         // ดึงข้อมูลเรียงตามวันที่สร้าง และแบ่งหน้า
-        $data = $query->orderBy('sales_projects.created_at', 'DESC')->paginate(100);
+        $data = $query->orderBy('sales_projects.updated_at', 'DESC')->paginate(100);
 
         return view('home_all', compact('data', 'searchQuery', 'filterStatus'));
     }
@@ -243,7 +243,7 @@ class HomeController extends Controller
         }
 
         // ดึงข้อมูลเรียงตามวันที่สร้าง และแบ่งหน้า
-        $data = $query->orderBy('sales_projects.created_at', 'DESC')->paginate(100);
+        $data = $query->orderBy('sales_projects.updated_at', 'DESC')->paginate(100);
 
         return view('assign_work', compact('data'));
     }
@@ -613,7 +613,7 @@ class HomeController extends Controller
         }
 
         // ดึงข้อมูลเรียงตามวันที่สร้าง
-        $data = $query->orderBy('sales_projects.created_at', 'DESC')->get();
+        $data = $query->orderBy('sales_projects.updated_at', 'DESC')->get();
 
 
 
@@ -745,7 +745,13 @@ class HomeController extends Controller
 
         return redirect('check-work')->with('message', "ตรวจสอบงานเรียบร้อยเเล้ว");
     }
-  
+    public function exportPdf($id)
+    {
+        $data = $this->dataHome()
+            ->where('sales_projects.id', $id)
+            ->first();
+        return view('admin.exportPdf', compact('data'));
+    }
 }
 
 
