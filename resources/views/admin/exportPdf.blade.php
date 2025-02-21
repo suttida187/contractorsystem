@@ -104,22 +104,31 @@
             padding-bottom: 5px;
         }
 
+        /* จัดกลุ่มรูปภาพแต่ละชุด */
+        .image-group {
+            margin-bottom: 20px;
+            margin-top: 24px;
+        }
+
         /* Image Display */
         .image-gallery {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 24px;
+            gap: 16px;
+            margin-top: 32px;
         }
 
         .image-gallery img {
             width: 120px;
-            /* Adjust image size */
+            /* ✅ ปรับขนาดรูปภาพ */
             height: auto;
             border-radius: 5px;
             border: 1px solid #ddd;
             padding: 5px;
+            object-fit: cover;
+            /* ✅ ให้ภาพคงสัดส่วน */
         }
+
 
         /* Page Layout */
         .page-break {
@@ -228,7 +237,7 @@
     </div>
     <div class="form-group">
         <label class="form-label">เบอร์ติดต่อ: </label>
-        <div class="form-control">{{ $data->needs_documents }}</div>
+        <div class="form-control">{{ $data->sale_phone }}</div>
     </div>
     <div class="form-group">
         <label class="form-label">Admin: </label>
@@ -238,7 +247,7 @@
     </div>
     <div class="form-group">
         <label class="form-label">เบอร์ติดต่อ: </label>
-        <div class="form-control">{{ $data->needs_documents }}</div>
+        <div class="form-control">{{ $data->admin_phone }}</div>
     </div>
     <div class="form-group">
         <label class="form-label">ผู้จัดการโครงการ: </label>
@@ -246,7 +255,7 @@
     </div>
     <div class="form-group">
         <label class="form-label">เบอร์ติดต่อ: </label>
-        <div class="form-control">{{ $data->needs_documents }}</div>
+        <div class="form-control">{{ $data->pm_phone }}</div>
     </div>
     <div class="form-group">
         <label class="form-label">ผู้รับเหมา: </label>
@@ -257,7 +266,7 @@
     <div class="form-group">
         <label class="form-label">เบอร์ติดต่อ: </label>
         <div class="form-control">
-            {{ $data->contractor_prefix }}</div>
+            {{ $data->contractor_phone }}</div>
     </div>
 
     @php
@@ -266,19 +275,23 @@
 
     <h2 class="section-title">ภาพงานที่ส่งมอบ</h2>
 
-    <div class="image-gallery">
-        @if (!empty($image))
-            @foreach ($image as $item)
-                @if (!empty($item['images']) && is_array($item['images']))
-                    @foreach ($item['images'] as $img)
-                        <img src="{{ public_path('storage/uploads/' . $img) }}" alt="Uploaded Image">
-                    @endforeach
-                @endif
-            @endforeach
-        @else
-            <p>ไม่มีรูปภาพ</p>
-        @endif
-    </div>
+
+    @if (!empty($image))
+        @foreach ($image as $item)
+            <div class="image-group">
+                <label class="form-label">Details: {{ $item['details'][0] }}</label>
+                <div class="image-gallery">
+                    @if (!empty($item['images']) && is_array($item['images']))
+                        @foreach ($item['images'] as $img)
+                            <img src="{{ public_path('storage/uploads/' . $img) }}" alt="Uploaded Image">
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        @endforeach
+    @else
+        <p>ไม่มีรูปภาพ</p>
+    @endif
 
 
 
