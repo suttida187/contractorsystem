@@ -1,37 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>ContractorSystem</title>
-    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="{{ URL::asset('/assets/img/icon.jpg') }}" type="image/x-icon" />
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Language" content="th" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-
+    <title>ContractorSystem</title>
     <meta http-equiv="Content-Language" content="th" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ URL::asset('/assets/img/icons/icon-2.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ URL::asset('/assets/img/icon.jpg') }}" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <!-- Date dd/mm/yyyy -->
+    <!-- Bootstrap 3.x only : DOMPDF support float, not flexbox -->
+
+    <!-- thai font -->
+
     <style>
+        body {
+            font-family: 'thsarabunnew', sans-serif;
+            /* ✅ ต้องตรงกับชื่อใน config */
+            font-size: 16px;
+            color: #000;
+        }
+
+
         /* General styles */
 
 
-        body {
-            font-family: 'Sarabun', sans-serif;
-            line-height: 1;
-
-
-        }
 
         /* Header */
         .pdf-header {
