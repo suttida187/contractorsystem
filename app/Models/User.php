@@ -33,6 +33,7 @@ class User extends Authenticatable
         'province',
         'phone',
         'postal_code',
+        'images',
         'tax_id', // อนุญาตให้ tax_id ถูกบันทึกได้
     ];
 

@@ -10,8 +10,15 @@
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
-
+                        <div class="col-md-6 mb-3">
+                            <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
+                            <label class="form-label">Upload Image:</label>
+                            <input name="image" type="file" accept="image/*"
+                                class="form-control @error('image') is-invalid @enderror">
+                            @error('image')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Email: </label>
                             <input name="email" type="email" value="{{ $user->email }}"
@@ -107,7 +114,8 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label">อำเภอ/เขต: </label>
                             <input name="district" type="text"
-                                class="form-control @error('district') is-invalid @enderror" value="{{ $user->district }}">
+                                class="form-control @error('district') is-invalid @enderror"
+                                value="{{ $user->district }}">
                             @error('district')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
