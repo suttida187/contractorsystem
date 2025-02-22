@@ -6,7 +6,8 @@
                 <div class="card-header">
                     <div class="card-title mt-3 text-center">เเก้ไข profile</div>
                 </div>
-                <form method="POST" action="{{ route('register-update-user', $user->id) }}" style="padding:16px;">
+                <form method="POST" action="{{ route('register-update-user', $user->id) }}" style="padding:16px;"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row">

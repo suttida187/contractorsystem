@@ -181,6 +181,8 @@ class adminRegisterController extends Controller
 
         $user = User::findOrFail($id); // ถ้าไม่พบ User ให้แจ้ง Error 404
 
+
+
         $validatedData = $request->validate([
             'email' => [
                 'required',
@@ -202,12 +204,30 @@ class adminRegisterController extends Controller
             'province' => 'required|string',
             'phone' => 'required|numeric|digits:10',
             'postal_code' => 'required|numeric|digits:5',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);
 
 
-        // อัปเดตข้อมูล User
+        if ($user->images != null) {
+            $imagePath = public_path('uploads/' . $user->images);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            // ตั้งชื่อไฟล์ใหม่เพื่อป้องกันการซ้ำกัน
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            // ย้ายไฟล์ไปยังโฟลเดอร์ public/uploads (ตรวจสอบให้มีโฟลเดอร์นี้อยู่แล้ว)
+            $file->move(public_path('uploads'), $filename);
+            // เพิ่ม key image ลงใน validatedData เพื่อ update ลงฐานข้อมูล
+            $validatedData['images'] = $filename;
+        }
+
+        // อัปเดตข้อมูล user ด้วย validated data
         $user->update($validatedData);
+
 
 
 
