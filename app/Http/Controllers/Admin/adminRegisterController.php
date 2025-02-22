@@ -210,7 +210,7 @@ class adminRegisterController extends Controller
 
 
         if ($user->images != null) {
-            $imagePath = public_path('uploads/' . $user->images);
+            $imagePath = public_path('storage/uploads/' . $user->images);
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }
@@ -220,7 +220,7 @@ class adminRegisterController extends Controller
             // ตั้งชื่อไฟล์ใหม่เพื่อป้องกันการซ้ำกัน
             $filename = time() . '.' . $file->getClientOriginalExtension();
             // ย้ายไฟล์ไปยังโฟลเดอร์ public/uploads (ตรวจสอบให้มีโฟลเดอร์นี้อยู่แล้ว)
-            $file->move(public_path('uploads'), $filename);
+            $file->move(public_path('storage/uploads'), $filename);
             // เพิ่ม key image ลงใน validatedData เพื่อ update ลงฐานข้อมูล
             $validatedData['images'] = $filename;
         }
