@@ -152,6 +152,7 @@ class adminRegisterController extends Controller
                 'numeric',
                 Rule::unique('users', 'tax_id')->ignore($user->id), // อนุญาตให้ Tax ID ซ้ำเดิมได้
             ],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         // ถ้ามีการเปลี่ยนรหัสผ่านให้ทำการ Hash แล้วอัปเดต
@@ -159,6 +160,22 @@ class adminRegisterController extends Controller
             $validatedData['password'] = Hash::make($request->password);
         } else {
             unset($validatedData['password']); // ถ้าไม่กรอกรหัสผ่าน ให้ใช้ Password เดิม
+        }
+
+        if ($user->images != null) {
+            $imagePath = public_path('storage/uploads/' . $user->images);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            // ตั้งชื่อไฟล์ใหม่เพื่อป้องกันการซ้ำกัน
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            // ย้ายไฟล์ไปยังโฟลเดอร์ public/uploads (ตรวจสอบให้มีโฟลเดอร์นี้อยู่แล้ว)
+            $file->move(public_path('storage/uploads'), $filename);
+            // เพิ่ม key image ลงใน validatedData เพื่อ update ลงฐานข้อมูล
+            $validatedData['images'] = $filename;
         }
 
         // อัปเดตข้อมูล User
