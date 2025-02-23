@@ -27,7 +27,14 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        // ผู้ใช้ล็อกอินแล้ว
+        return redirect('home');
+        // ดำเนินการตามที่ต้องการ
+    } else {
+        // 
+        return view('welcome');
+    }
 });
 
 // Auth
