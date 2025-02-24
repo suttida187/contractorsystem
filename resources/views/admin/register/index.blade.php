@@ -86,6 +86,12 @@
                 </div>
                 <div class="modal-body">
 
+                    <div class="col-md-12 text-center mb-3">
+                        <img src="/assets/img/profile.jpg"
+                            alt="image profile" class="profile-me" id="profile-me">
+
+                    </div>
+                    
                     <div class="row">
                         @if ($routeActive == 'list-sale-pm-admin')
                             <div class="mb-3">
