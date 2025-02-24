@@ -638,9 +638,17 @@ body[data-background-color="dark"] .demo-icon .icon-class {
     justify-content: space-between;
     width: 100%;
     max-width: 600px;
-    margin: 20px 20px !important;
     position: relative;
   }
+}
+
+.progress-step-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* จัดวงกลมไว้บนข้อความ */
+  align-items: center;
+  /* จัดกึ่งกลางในแนวนอน */
+  position: relative;
 }
 
 
@@ -679,17 +687,17 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 /* ✅ ทำให้เส้นแต่ละช่วงยาวไม่เกิน progress-step */
 .progress-line-status.step-1 {
   width: 30%;
-  left: 35px;
+  left: 45px;
 }
 
 .progress-line-status.step-2 {
   width: 30%;
-  left: 30%;
+  left: 36%;
 }
 
 .progress-line-status.step-3 {
   width: 30%;
-  left: 50%;
+  left: 60%;
 }
 
 /* ✅ เส้น Active */
@@ -716,14 +724,11 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin-top: 5px;
   color: #333;
   word-wrap: break-word;
-  margin-left: -16px;
   text-align: center;
   font-size: 14px;
   margin-top: 5px;
   color: #333;
   word-wrap: break-word;
-  margin-left: -16px;
-  margin-right: 16px;
   /* หรือ word-break: break-word; */
 }
 

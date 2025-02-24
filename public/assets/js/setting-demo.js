@@ -333,25 +333,25 @@ function userDataFuc(userData) {
       <div class="progress-line-status step-3 ${currentStep >= 4 ? 'active' : 'dashed-line-status'}"></div>
 
       <!-- สเต็ป 1 -->
-      <div class="text-center">
+      <div class="progress-step-wrapper">
           <div class="progress-step-status ${currentStep >= 1 ? 'active' : ''}">1</div>
           <div class="progress-text-status">Sale กำลังดำเนินงาน</div>
       </div>
 
       <!-- สเต็ป 2 -->
-      <div class="text-center">
+      <div class="progress-step-wrapper">
           <div class="progress-step-status ${currentStep >= 2 ? 'active' : ''}">2</div>
           <div class="progress-text-status">รอ Admin ดำเนินการ</div>
       </div>
 
       <!-- สเต็ป 3 -->
-      <div class="text-center">
+      <div class="progress-step-wrapper">
           <div class="progress-step-status ${currentStep >= 3 ? 'active' : ''}">3</div>
           <div class="progress-text-status">รอ PM ดำเนินการ</div>
       </div>
 
       <!-- สเต็ป 4 -->
-      <div class="text-center">
+      <div class="progress-step-wrapper">
           <div class="progress-step-status ${currentStep >= 4 ? 'active' : ''}">4</div>
           <div class="progress-text-status">รอผู้รับเหมาดำเนินงาน</div>
       </div>
