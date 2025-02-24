@@ -44,7 +44,7 @@ Route::get('register', function () {
 }); //
 
 
-//Sale
+//Sale test
 Route::get('/create-form', [FormSaleController::class, 'create'])->name('create-form');
 Route::post('/create-project-store', [FormSaleController::class, 'store'])->name('create-project-store');
 

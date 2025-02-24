@@ -401,9 +401,25 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   transition: color .2s ease;
 }
 
+.ml-progress-container-status {
+  width: 100%;
+}
+
 @media screen and (max-width: 1200px) {
   #modalShowcase .modal-dialog {
     padding: 3rem !important;
+  }
+
+  .ml-progress-container-status {
+    margin-left: 32px;
+  }
+}
+
+@media screen and (min-width: 1201px) {
+
+
+  .ml-progress-container-status {
+    margin-left: 32px;
   }
 }
 
@@ -441,6 +457,10 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   .form-show-notify>.text-right,
   .form-show-validation>.text-right {
     text-align: left !important;
+  }
+
+  .ml-progress-container-status {
+    margin-left: 0px;
   }
 }
 
@@ -669,7 +689,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 
 .progress-line-status.step-3 {
   width: 30%;
-  left: 55%;
+  left: 50%;
 }
 
 /* ✅ เส้น Active */
