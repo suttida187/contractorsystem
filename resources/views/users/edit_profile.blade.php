@@ -11,7 +11,7 @@
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="mb-3">
                             <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
                             <label class="form-label">Upload Image:</label>
                             <input name="image" type="file" accept="image/*"

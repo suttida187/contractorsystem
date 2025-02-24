@@ -3,7 +3,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="card">
-                <form method="POST" action="{{ route('register-store') }}" style="padding:16px;">
+                <form method="POST" action="{{ route('register-store') }}" style="padding:16px;" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -15,7 +15,17 @@
                                     ลงทะเบียนผู้รับเหมา
                                 @endif
                             </strong></h5>
-
+                            
+                            <div class="mb-3">
+                                <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
+                                <label class="form-label">อัพโหลดรูปโปรไฟล์</label>
+                                <input name="image" type="file" accept="image/*"
+                                    class="form-control @error('image') is-invalid @enderror">
+                                @error('image')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        
 
                         @if ($status_name == 0)
                             <div class="mb-3">

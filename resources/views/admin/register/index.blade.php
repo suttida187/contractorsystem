@@ -113,7 +113,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label class="form-label">คำนำหน้า: </label>
                             <input name="prefix" id="modalPrefix" type="text" class="form-control  no-edit">
                         </div>

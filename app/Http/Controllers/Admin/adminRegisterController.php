@@ -79,9 +79,18 @@ class adminRegisterController extends Controller
             'phone' => 'required|numeric|digits:10',
             'postal_code' => 'required|numeric|digits:5',
             'tax_id' => 'nullable|digits:13|numeric|unique:users,tax_id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            // ตั้งชื่อไฟล์ใหม่เพื่อป้องกันการซ้ำกัน
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            // ย้ายไฟล์ไปยังโฟลเดอร์ public/uploads (ตรวจสอบให้มีโฟลเดอร์นี้อยู่แล้ว)
+            $file->move(public_path('storage/uploads'), $filename);
+            // เพิ่ม key image ลงใน validatedData เพื่อ update ลงฐานข้อมูล
+            $validatedData['images'] = $filename;
+        }
 
         User::create($validatedData);
 
@@ -162,7 +171,7 @@ class adminRegisterController extends Controller
             unset($validatedData['password']); // ถ้าไม่กรอกรหัสผ่าน ให้ใช้ Password เดิม
         }
 
-        if ($user->images != null) {
+        if ($user->images != null && $request->hasFile('image')) {
             $imagePath = public_path('storage/uploads/' . $user->images);
             if (file_exists($imagePath)) {
                 unlink($imagePath);
@@ -226,7 +235,7 @@ class adminRegisterController extends Controller
         ]);
 
 
-        if ($user->images != null) {
+        if ($user->images != null && $request->hasFile('image')) {
             $imagePath = public_path('storage/uploads/' . $user->images);
             if (file_exists($imagePath)) {
                 unlink($imagePath);
