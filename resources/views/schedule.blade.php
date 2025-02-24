@@ -45,7 +45,7 @@
                             <span id="monthYear"></span>
                             <button id="nextMonth">▶</button>
                         </div>
-                        <table class="table table-bordered calendar-table">
+                        <table class="table calendar-table">
                             <thead>
                                 <tr>
                                     <th>อา</th>
