@@ -13,11 +13,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ URL::asset('/assets/img/icon.jpg') }}" />
-    {{--   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
- --}}
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet"> --}}
 
     <!-- thai font -->
-
     <style>
         @font-face {
             font-family: 'THSarabunRegular';
@@ -33,20 +31,12 @@
             font-style: normal;
         }
 
-
         body {
-
-
             font-size: 12px;
             color: #000;
             margin: 0;
             padding: 0;
         }
-
-
-        /* General styles */
-
-
 
         /* Header */
         .pdf-header {
@@ -56,12 +46,10 @@
             border-bottom: 2px solid #000;
             padding-bottom: 10px;
             margin-bottom: 20px;
-
         }
 
         .pdf-header img {
             width: 100px;
-            /* Adjust the logo size */
         }
 
         .pdf-header .date-time {
@@ -96,8 +84,7 @@
             font-size: 16px;
             width: 100%;
             padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            border: none; /* เอาขอบออก */
             font-family: 'THSarabunRegular', sans-serif !important;
         }
 
@@ -128,23 +115,18 @@
 
         .image-gallery img {
             width: 120px;
-            /* ✅ ปรับขนาดรูปภาพ */
             height: auto;
             border-radius: 5px;
             border: 1px solid #ddd;
             padding: 5px;
             object-fit: cover;
-            /* ✅ ให้ภาพคงสัดส่วน */
         }
-
 
         /* Page Layout */
         .page-break {
             page-break-before: always;
         }
     </style>
-
-
 </head>
 
 <body>
@@ -176,7 +158,6 @@
         <div class="form-control">{{ $data->solution }}</div>
     </div>
 
-
     <div class="form-group">
         <label class="form-label">คำอธิบายงาน:</label>
         <div class="form-control">{{ $data->work_description }}</div>
@@ -195,7 +176,6 @@
     <div class="form-group">
         <label class="form-label">วันที่สิ้นสุดงาน: </label>
         <div class="form-control">{{ $data->end_date }}</div>
-
     </div>
 
     <!-- Customer Information -->
@@ -215,66 +195,74 @@
         <label class="form-label">เบอร์ติดต่อ:</label>
         <div class="form-control">{{ $data->contact_phone }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">ตำแหน่งของผู้ติดต่อ: </label>
         <div class="form-control">{{ $data->contact_position }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">พิกัด (ลิงก์จาก Google Map): </label>
         <div class="form-control">{{ $data->location }}</div>
     </div>
+
     <h2 class="section-title">รายละเอียดเพิ่มเติมเกี่ยวกับงาน</h2>
     <div class="form-group">
         <label class="form-label">การรับประกัน: </label>
         <div class="form-control">{{ $data->warranty }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">หมายเหตุ/คำแนะนำเพิ่มเติม: </label>
         <div class="form-control">{{ $data->additional_notes }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">ต้องการเอกสารส่งหรือไม่: </label>
         <div class="form-control">{{ $data->needs_documents }}</div>
     </div>
+
     <!-- Job Images -->
     <h2 class="section-title">รายละเอียดผู้ดูเเล</h2>
+
     <div class="form-group">
         <label class="form-label">Sale: </label>
-        <div class="form-control">{{ $data->sale_prefix . ' ' . $data->sale_first_name . ' ' . $data->sale_last_name }}
-        </div>
+        <div class="form-control">{{ $data->sale_prefix . ' ' . $data->sale_first_name . ' ' . $data->sale_last_name }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">เบอร์ติดต่อ: </label>
         <div class="form-control">{{ $data->sale_phone }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">Admin: </label>
-        <div class="form-control">
-            {{ $data->admin_prefix . ' ' . $data->admin_first_name . ' ' . $data->admin_last_name }}
-        </div>
+        <div class="form-control">{{ $data->admin_prefix . ' ' . $data->admin_first_name . ' ' . $data->admin_last_name }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">เบอร์ติดต่อ: </label>
         <div class="form-control">{{ $data->admin_phone }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">ผู้จัดการโครงการ: </label>
         <div class="form-control">{{ $data->pm_prefix . ' ' . $data->pm_first_name . ' ' . $data->pm_last_name }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">เบอร์ติดต่อ: </label>
         <div class="form-control">{{ $data->pm_phone }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">ผู้รับเหมา: </label>
-        <div class="form-control">
-            {{ $data->contractor_prefix . ' ' . $data->contractor_first_name . ' ' . $data->contractor_last_name }}
-        </div>
+        <div class="form-control">{{ $data->contractor_prefix . ' ' . $data->contractor_first_name . ' ' . $data->contractor_last_name }}</div>
     </div>
+
     <div class="form-group">
         <label class="form-label">เบอร์ติดต่อ: </label>
-        <div class="form-control">
-            {{ $data->contractor_phone }}</div>
+        <div class="form-control">{{ $data->contractor_phone }}</div>
     </div>
 
     @php
@@ -282,7 +270,6 @@
     @endphp
 
     <h2 class="section-title">ภาพงานที่ส่งมอบ</h2>
-
 
     @if (!empty($image))
         @foreach ($image as $item)
@@ -300,8 +287,6 @@
     @else
         <p>ไม่มีรูปภาพ</p>
     @endif
-
-
 
 </body>
 

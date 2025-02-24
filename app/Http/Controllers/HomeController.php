@@ -756,7 +756,7 @@ class HomeController extends Controller
             'data' => $data  // ✅ Use an associative array
         ]);
 
-        $pdf->setPaper('a4', 'landscape') // ✅ Corrected A4 Paper Settings
+        $pdf->setPaper('a4', 'portrait') // ✅ Corrected A4 Paper Settings
             ->setOption('margin-top', 15)
             ->setOption('margin-bottom', 15)
             ->setOption('margin-left', 10)
