@@ -651,14 +651,6 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   position: relative;
 }
 
-.progress-step-wrapper {
-  display: flex;
-  flex-direction: column;
-  /* จัดวงกลมไว้บนข้อความ */
-  align-items: center;
-  /* จัดกึ่งกลางในแนวนอน */
-  position: relative;
-}
 
 /* ✅ Step */
 .progress-step-status {
@@ -737,8 +729,6 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin-top: 5px;
   color: #333;
   word-wrap: break-word;
-  margin-left: -16px;
-  margin-right: 16px;
   /* หรือ word-break: break-word; */
 }
 
@@ -1193,7 +1183,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin-bottom: 24px;
 }
 
-.container-work {
+<style>.container-work {
   width: 80%;
   margin: auto;
   padding: 10px;
