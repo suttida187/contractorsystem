@@ -108,10 +108,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลเกี่ยวกับบริษัท</strong></h5>
-
-
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลเกี่ยวกับบริษัท</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">ชื่อบริษัท: </label>
                             <input name="company_name" type="text"
