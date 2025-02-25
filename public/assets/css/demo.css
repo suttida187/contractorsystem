@@ -638,9 +638,17 @@ body[data-background-color="dark"] .demo-icon .icon-class {
     justify-content: space-between;
     width: 100%;
     max-width: 600px;
-    margin: 20px 20px !important;
     position: relative;
   }
+}
+
+.progress-step-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* จัดวงกลมไว้บนข้อความ */
+  align-items: center;
+  /* จัดกึ่งกลางในแนวนอน */
+  position: relative;
 }
 
 .progress-step-wrapper {
@@ -729,7 +737,8 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin-top: 5px;
   color: #333;
   word-wrap: break-word;
-
+  margin-left: -16px;
+  margin-right: 16px;
   /* หรือ word-break: break-word; */
 }
 
