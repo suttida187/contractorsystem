@@ -8,14 +8,16 @@
 
                     <div class="row">
                         <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
-                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>
+                        <div class="card-title text-center" style="font-size: 30px; font-weight: bold;"><strong>
                                 @if ($status_name == 0)
                                     ลงทะเบียน Sale / PM / Admin
                                 @else
                                     ลงทะเบียนผู้รับเหมา
                                 @endif
-                            </strong></h5>
+                            </strong></div>
                             
+                            <div class="row">
+                            <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลเกี่ยวกับบริษัท</strong></h5>
                             <div class="mb-3">
                                 <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
                                 <label class="form-label">อัพโหลดรูปโปรไฟล์</label>
@@ -116,10 +118,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลเกี่ยวกับบริษัท</strong></h5>
-
-
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลเกี่ยวกับบริษัท</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">ชื่อบริษัท: </label>
                             <input name="company_name" type="text"

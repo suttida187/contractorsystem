@@ -54,7 +54,7 @@
                                             <td>{{ $user->role }}</td>
                                             <td>
                                                 <a class="icon-action view" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal" data-user='@json($user)'>
+                                                data-bs-target="#exampleModal" data-user='@json($user)'>
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                                 <a href="{{ $routeActive == 'list-contractor' ? url('list-edit-contractor', $user->id) : url('list-edit-admin', $user->id) }}"
@@ -85,6 +85,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
+                <p class="text-center">รูปโปรไฟล์</p>
 
                     <div class="col-md-12 text-center mb-3">
                         <img src="/assets/img/profile.jpg"
@@ -304,6 +306,7 @@
                     var userData = JSON.parse(this.getAttribute("data-user"));
 
                     console.log("userData", userData);
+                    document.getElementById("profile-me").src = userData.images ? '/storage/uploads/' + userData.images : "/assets/img/profile.jpg";
 
 
                     // ใส่ข้อมูลลงใน Modal

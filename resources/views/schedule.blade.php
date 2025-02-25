@@ -4,7 +4,7 @@
         <div class="page-inner">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title text-center">ตารางงาน</div>
+                    <div class="card-title text-center" style="font-size: 30px; font-weight: bold;">ตารางงาน</div>
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3" {{ Auth::user()->role == 'contractor' ? 'hidden' : '' }}>
@@ -112,8 +112,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6
-                                mb-3">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label">Solution: </label>
                             <input name="solution" type="text" id="solution" class="form-control no-edit">
                             <!-- แสดงช่องกรอกข้อมูลเมื่อเลือก "Other" -->
@@ -147,8 +146,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">ชื่อบริษัท/นิติบุคคล: </label>
                             <input name="company_name" type="text" id="company_name" class="form-control no-edit">
@@ -180,8 +179,8 @@
 
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">การรับประกัน: </label>
                             <input name="warranty" type="text" id="warranty" class="form-control no-edit">
@@ -201,8 +200,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดผู้ดูเเล</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดผู้ดูเเล</strong></h5>
                         <div class="col-md-8 mb-3">
                             <label class="form-label">Sale: </label>
                             <input name="caretaker_sale" type="text" id="caretaker_sale"

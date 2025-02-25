@@ -4,7 +4,7 @@
         <div class="page-inner">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title text-center">ตรวจสอบงาน</div>
+                    <div class="card-title text-center" style="font-size: 30px; font-weight: bold;">ตรวจสอบงาน</div>
                 </div>
                 <div class="card-body">
                     @foreach ($data as $da)
@@ -124,8 +124,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">ชื่อบริษัท/นิติบุคคล: </label>
                             <input name="company_name" type="text" id="company_name" class="form-control no-edit">
@@ -157,8 +157,8 @@
 
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">การรับประกัน: </label>
                             <input name="warranty" type="text" id="warranty" class="form-control no-edit">
@@ -178,8 +178,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดผู้ดูเเล</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดผู้ดูเเล</strong></h5>
                         <div class="col-md-8 mb-3">
                             <label class="form-label">Sale: </label>
                             <input name="caretaker_sale" type="text" id="caretaker_sale"
@@ -249,12 +249,12 @@
                             </div>
                             <button type="submit" class="btn btn-primary" id="approve-btn">อนุมัติ</button>
                         </form>
-                        <button type="button" class="btn btn-primary" id="show-form-btn">ส่งกลับ</button>
+                        <button type="button" class="btn btn-danger" id="show-form-btn" style="margin-right: 35px;">ส่งกลับ</button>
                     </div>
 
                     <!-- Form hidden by default -->
                     <div id="form-re-word" style="display: none;">
-                        <h3 style="margin-left: 16px;">หมายเหตุการส่งกลับ*</h3>
+                        <h5 style="margin-left: 16px;">หมายเหตุการส่งกลับ*</h5>
                         <form method="POST" action="{{ route('reset-work-image') }}" enctype="multipart/form-data"
                             style="padding:16px;">
                             @csrf
@@ -270,8 +270,8 @@
 
                             <!-- Hide Form Button -->
                             <div class="text-end">
-                                <button type="submit" class="btn btn-primary">ส่งกลับ</button>
-                                <button type="button" class="btn btn-secondary" id="hide-form-btn">ซ่อนกลับ</button>
+                                <button type="button" class="btn btn-primary" id="hide-form-btn">ซ่อนกลับ</button>
+                                <button type="submit" class="btn btn-danger">ส่งกลับ</button>
                             </div>
                         </form>
                     </div>

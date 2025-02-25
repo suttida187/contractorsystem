@@ -8,13 +8,15 @@
                     @method('PUT')
                     <div class="row">
                         <!-- ส่วนที่ 1: ข้อมูลพื้นฐาน -->
-                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>
+                        <h5 class="col-12 mt-3 mb-3" style="font-size: 30px; font-weight: bold;">
+                            <strong>
                                 @if ($status_name == 0)
                                     เเก้ไขลงทะเบียน Sale / PM / Admin
                                 @else
                                     เเก้ไขลงทะเบียนผู้รับเหมา
                                 @endif
-                            </strong></h5>
+                            </strong>
+                        </h5>
 
 
                         @if ($status_name == 0)

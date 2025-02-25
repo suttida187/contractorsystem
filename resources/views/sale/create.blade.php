@@ -6,6 +6,7 @@
                 <form method="POST" action="{{ route('create-project-store') }}" style="padding:16px;">
                     @csrf
                     <div class="row">
+                        <div class="card-title text-center" style="font-size: 30px; font-weight: bold;">แบบฟอร์มขอคิวงาน</div>
                         <!-- ข้อมูลพื้นฐาน -->
                         <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลรายละเอียดงาน</strong></h5>
 
@@ -112,8 +113,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">ชื่อบริษัท/นิติบุคคล: </label>
                             <input name="company_name" type="text" value="{{ old('company_name') }}"
@@ -161,8 +162,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">การรับประกัน: </label>
                             <select name="warranty" class="form-select @error('warranty') is-invalid @enderror">

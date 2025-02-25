@@ -4,7 +4,7 @@
         <div class="page-inner">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">โครงการทั้งหมด</h2>
+                    <div class="card-title text-center" style="font-size: 30px; font-weight: bold;">โครงการทั้งหมด</div>
 
                     <div class="filter-container justify-content-center mt-3">
                         <!-- ฟอร์มค้นหา + ตัวกรอง -->
@@ -30,7 +30,7 @@
                                         data-value="waiting_contractor">รอผู้รับเหมาส่งงาน</button>
                                     <button type="submit"
                                         class="filter-btn    {{ $filterStatus == 'waiting_pm_review' ? 'active' : '' }}"
-                                        data-value="waiting_pm_review">รอ PM ตรวจสอบ</button>
+                                        data-value="waiting_pm_review">รอผู้จัดการโครงการตรวจสอบ</button>
                                     <button type="submit"
                                         class="filter-btn  {{ $filterStatus == 'waiting_admin_review' ? 'active' : '' }}"
                                         data-value="waiting_admin_review">รอแอดมินตรวจสอบ</button>
@@ -44,16 +44,26 @@
 
                         </form>
                     </div>
-
-
-
                 </div>
+                
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-bordered">
+                            <colgroup>
+                                <col style="width: 4%;">
+                                <col style="width: 23%;">
+                                <col style="width: 12%;">
+                                <col style="width: 10%;">
+                                <col style="width: 10%;">
+                                <col style="width: 10%;">
+                                <col style="width: 10%;">
+                                <col style="width: 8%;">
+                                <col style="width: 8%;">
+                                <col style="width: 5%;">
+                            </colgroup>
                             <thead>
-                                <tr>
-                                    <th scope="col">#</th>
+                                <tr style="text-align: center; vertical-align: middle;">
+                                    <th scope="col">ลำดับ</th>
                                     <th scope="col">ชื่อโครงการ</th>
                                     <th scope="col">สถานะ</th>
                                     <th scope="col">เซลล์</th>
@@ -69,9 +79,9 @@
                                 @php $i = 1; @endphp
                                 @foreach ($data as $da)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td style="text-align: center; vertical-align: middle;">{{ $i++ }}</td>
                                         <td>{{ $da->project_name }}</td>
-                                        <td>
+                                        <td style="text-align: center; vertical-align: middle;">
                                             @if ($da->status == null)
                                                 @if (is_null($da->responsible_admin) && is_null($da->responsible_pm) && is_null($da->responsible_contractor))
                                                     Sale กำลังดำเนินงาน
@@ -94,25 +104,26 @@
                                                 @endif
                                             @endif
                                         </td>
-                                        <td>
+                                        <td style="text-align: center; vertical-align: middle;">
                                             {{ $da->sale_prefix }} {{ $da->sale_first_name }} {{ $da->sale_last_name }}
                                         </td>
-                                        <td>
+                                        <td style="text-align: center; vertical-align: middle;">
                                             {{ $da->admin_prefix }} {{ $da->admin_first_name }}
                                             {{ $da->admin_last_name }}
                                         </td>
-                                        <td>
+                                        <td style="text-align: center; vertical-align: middle;">
                                             {{ $da->pm_prefix }} {{ $da->pm_first_name }} {{ $da->pm_last_name }}
                                         </td>
-                                        <td> {{ $da->contractor_prefix }} {{ $da->contractor_first_name }}
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            {{ $da->contractor_prefix }} {{ $da->contractor_first_name }}
                                             {{ $da->contractor_last_name }}</td>
 
-                                        <td> {{ \Carbon\Carbon::parse($da->meeting_date)->format('d/m/') . (\Carbon\Carbon::parse($da->meeting_date)->year + 543) }}
+                                        <td style="text-align: center; vertical-align: middle;"> {{ \Carbon\Carbon::parse($da->meeting_date)->format('d/m/') . (\Carbon\Carbon::parse($da->meeting_date)->year + 543) }}
                                         </td>
 
-                                        <td> {{ \Carbon\Carbon::parse($da->end_date)->format('d/m/') . (\Carbon\Carbon::parse($da->end_date)->year + 543) }}
+                                        <td style="text-align: center; vertical-align: middle;"> {{ \Carbon\Carbon::parse($da->end_date)->format('d/m/') . (\Carbon\Carbon::parse($da->end_date)->year + 543) }}
                                         </td>
-                                        <td>
+                                        <td style="text-align: center; vertical-align: middle;">
                                             <a class="icon-action view" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal" data-user='@json($da)'>
                                                 <i class="fas fa-eye"></i>
@@ -215,8 +226,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>ข้อมูลลูกค้า</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">ชื่อบริษัท/นิติบุคคล: </label>
                             <input name="company_name" type="text" id="company_name" class="form-control no-edit">
@@ -248,8 +259,8 @@
 
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดเพิ่มเติมเกี่ยวกับงาน</strong></h5>
                         <div class="mb-3">
                             <label class="form-label">การรับประกัน: </label>
                             <input name="warranty" type="text" id="warranty" class="form-control no-edit">
@@ -269,8 +280,8 @@
                         </div>
                     </div>
 
-                    <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดผู้ดูเเล</strong></h5>
                     <div class="row">
+                        <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดผู้ดูเเล</strong></h5>
                         <div class="col-md-8 mb-3">
                             <label class="form-label">Sale: </label>
                             <input name="caretaker_sale" type="text" id="caretaker_sale"
