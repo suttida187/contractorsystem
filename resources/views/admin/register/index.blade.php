@@ -34,7 +34,7 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
+                                        <th scope="col">ลำดับ</th>
                                         <th scope="col">บริษัท</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">ชื่อ-นามสกุล</th>
