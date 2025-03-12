@@ -2,11 +2,13 @@
 @section('content')
     <div class="container">
         <div class="page-inner">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-title">รายชื่อทั้งหมด</div>
-                        <!-- Select Dropdown สำหรับเลือกประเภท -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title text-center" style="font-size: 30px; font-weight: bold;">รายชื่อทั้งหมด</div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card-body">                        
                         <div class="d-flex align-items-center">
                             <div class="col-md-6 col-lg-6" {{ $routeActive == 'list-contractor' ? 'hidden' : '' }}>
                                 <div class="mt-3 d-flex align-items-center">
@@ -21,56 +23,57 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- ใช้ ms-auto เพื่อให้ปุ่มชิดขวา -->
+                                <!-- ใช้ ms-auto เพื่อให้ปุ่มชิดขวา -->
                             <a href="{{ $routeActive == 'list-contractor' ? url('register-contractor') : url('register-admin') }}"
                                 class="btn btn-primary ms-auto">เพิ่มรายชื่อ</a>
                         </div>
-                        <!-- ช่องค้นหาข้อมูล -->
+                            <!-- ช่องค้นหาข้อมูล -->
                         <div class="mb-3 mt-3">
-                            <input type="text" id="searchInput" placeholder="Search ..." class="form-control" />
+                                <input type="text" id="searchInput" placeholder="Search ..." class="form-control" />
 
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ลำดับ</th>
-                                        <th scope="col">บริษัท</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">ชื่อ-นามสกุล</th>
-                                        <th scope="col">สถานะ</th>
-                                        <th scope="col" class="col-2">จัดการ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="userTable">
-                                    @php $i = 1; @endphp
-                                    @foreach ($users as $user)
-                                        <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $user->company_name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ implode(' ', [$user->prefix, $user->first_name, $user->last_name]) }}
-                                            </td>
-                                            <td>{{ $user->role }}</td>
-                                            <td>
-                                                <a class="icon-action view" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal" data-user='@json($user)'>
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ $routeActive == 'list-contractor' ? url('list-edit-contractor', $user->id) : url('list-edit-admin', $user->id) }}"
-                                                    class="icon-action edit"><i class="far fa-edit"></i></a>
-                                                <a href="javascript:void(0);" class="icon-action delete"
-                                                    data-email="{{ $user->email }}" data-user-id="{{ $user->id }}">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr style="text-align: center; vertical-align: middle;">
+                                            <th scope="col">ลำดับ</th>
+                                            <th scope="col">บริษัท</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">ชื่อ-นามสกุล</th>
+                                            <th scope="col">สถานะ</th>
+                                            <th scope="col" class="col-2">จัดการ</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody id="userTable">
+                                        @php $i = 1; @endphp
+                                        @foreach ($users as $user)
+                                            <tr>
+                                                <td style="text-align: center; vertical-align: middle;">{{ $i++ }}</td>
+                                                <td>{{ $user->company_name }}</td>
+                                                <td style="text-align: center; vertical-align: middle;">{{ $user->email }}</td>
+                                                <td style="text-align: center; vertical-align: middle;">{{ implode(' ', [$user->prefix, $user->first_name, $user->last_name]) }}
+                                                </td>
+                                                <td style="text-align: center; vertical-align: middle;">{{ $user->role }}</td>
+                                                <td style="text-align: center; vertical-align: middle;">
+                                                    <a class="icon-action view" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" data-user='@json($user)'>
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ $routeActive == 'list-contractor' ? url('list-edit-contractor', $user->id) : url('list-edit-admin', $user->id) }}"
+                                                        class="icon-action edit"><i class="far fa-edit"></i></a>
+                                                    <a href="javascript:void(0);" class="icon-action delete"
+                                                        data-email="{{ $user->email }}" data-user-id="{{ $user->id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
 
-                    </div>
+                        </div>
+                    
                 </div>
             </div>
         </div>

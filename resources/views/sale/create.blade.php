@@ -205,7 +205,7 @@
                         </div>
                     </div>
 
-                    <div class="text-end">
+                    <div class="text-end" style="margin-right: 30px; margin-bottom: 15px;">
                         <button type="submit" class="btn btn-primary">บันทึก</button>
                     </div>
                 </form>

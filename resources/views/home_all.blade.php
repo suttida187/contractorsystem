@@ -5,7 +5,8 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title text-center" style="font-size: 30px; font-weight: bold;">โครงการทั้งหมด</div>
-
+                </div>
+                <div>
                     <div class="filter-container justify-content-center mt-3">
                         <!-- ฟอร์มค้นหา + ตัวกรอง -->
 

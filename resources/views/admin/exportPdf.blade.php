@@ -244,7 +244,7 @@
             <label class="form-label" style="width: 120px;">Sale:</label>
             <span class="form-control" style="font-weight: normal;">{{ $data->sale_prefix . ' ' . $data->sale_first_name . ' ' . $data->sale_last_name }}</span>
 
-            <label class="form-label" style="text-align: right;margin-left: 183px;">เบอร์ติดต่อ:</label>
+            <label class="form-label" style="text-align: right;margin-left: 195px;">เบอร์ติดต่อ:</label>
             <span class="form-control" style="font-weight: normal;">{{ $data->sale_phone }}</span>
         </div>
     </div>
@@ -287,22 +287,23 @@
 
     <h2 class="section-title">รายละเอียดรูปภาพงานที่ผู้รับเหมาส่งมอบ</h2>
 
-    @if (!empty($image))   
-    @foreach ($image as $item)
-        <div class="image-group">
-            <label class="form-label" style="margin-top: -30px;">
-                รายละเอียด รายการที่ {{ $loop->iteration }} : {{ $item['details'][0] }}
-            </label>
-            <div class="image-gallery" 
-                style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
-                @if (!empty($item['images']) && is_array($item['images']))
+    @if (!empty($image))    
+    @foreach ($image as $item) 
+    <div class="image-group" style="margin-top: 10px; margin-bottom: -30px;">
+        <label class="form-label"> 
+            รายละเอียด รายการที่ {{ $loop->iteration }} : {{ $item['details']}}
+        </label>
+        <div class="image-gallery" 
+            style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px;">
+            @if (!empty($item['images']) && is_array($item['images']))
                 @foreach ($item['images'] as $img) 
                     <img src="{{ public_path('storage/uploads/' . $img) }}" alt="Uploaded Image"
-                        style="width: 40%; height: 180px; object-fit: cover; border-radius: 8px; margin-right: 20px; margin-top: 20px;">
+                        style="width: 40%; height: 180px; object-fit: cover; border-radius: 8px; 
+                        margin-right: 20px; margin-left: 20px; margin-top: 10px;" >
                 @endforeach
-                @endif
-            </div>
+            @endif
         </div>
+    </div>
     @endforeach
     @else
         <p>ไม่มีรูปภาพ</p>
