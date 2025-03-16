@@ -341,7 +341,7 @@
 
 
                 userDataFuc(date);
-                // ตรวจสอบว่าการตอบกลับสำเร็จหรือไม่
+                // ตรวจสอบว่าการตอบกลับสำเร็จหรือไม่..
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
