@@ -87,7 +87,7 @@
             border: none;
         }
 
-        .form-label {
+        .detail-list {
             font-family: 'THSarabunBold', sans-serif !important;
             font-weight: bold;
             font-size: 18px;
@@ -121,27 +121,26 @@
 
         /* Image Display */
         .image-gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-top: 32px;
+            display: flex !important;
+            justify-content: center !important; /* ✅ จัดกลางแนวนอน */
+            align-items: center !important; /* ✅ จัดกลางแนวตั้ง */
         }
 
-        .image-gallery img {
-            width: 120px;
-            /* ✅ ปรับขนาดรูปภาพ */
-            height: auto;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            padding: 5px;
-            object-fit: cover;
-            /* ✅ ให้ภาพคงสัดส่วน */
+        .img-pdf1 {
+            width: 50% !important; /* ✅ กำหนดให้แต่ละรูปใช้พื้นที่ 45% ของหน้าจอ */
+            max-width: 300px; /* ✅ จำกัดขนาดกว้างสุด */
+            height: 100% !important;
+            max-height: 200px !important;
+            object-fit: contain !important;
+            border-radius: 8px !important;
+            position: relative;
         }
 
         /* Page Layout */
         .page-break {
             page-break-before: always;
         }
+
     </style>
 
 </head>
@@ -289,17 +288,14 @@
 
     @if (!empty($image))    
     @foreach ($image as $item) 
-    <div class="image-group" style="margin-top: 10px; margin-bottom: -30px;">
-        <label class="form-label"> 
+    <div class="image-group">
+        <div class="detail-list"> 
             รายละเอียด รายการที่ {{ $loop->iteration }} :   {{ is_array($item['details']) ? implode(', ', $item['details']) : $item['details'] }}
-        </label>
-        <div class="image-gallery" 
-            style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px;">
+        </div>
+        <div class="image-gallery">
             @if (!empty($item['images']) && is_array($item['images']))
                 @foreach ($item['images'] as $img) 
-                    <img src="{{ public_path('storage/uploads/' . $img) }}" alt="Uploaded Image"
-                        style="width: 40%; height: 180px; object-fit: cover; border-radius: 8px; 
-                        margin-right: 20px; margin-left: 20px; margin-top: 10px;" >
+                    <img src="{{ public_path('storage/uploads/' . $img) }}" alt="Uploaded Image" class="img-pdf1">
                 @endforeach
             @endif
         </div>
