@@ -363,19 +363,29 @@
                     if (userDataAttr) {
                         try {
                             let userData = JSON.parse(userDataAttr);
-                            console.log("userData", userData);
-
+                   /*          console.log("userData", userData.id);
+ */
                             // เรียกฟังก์ชัน (ถ้าต้องการ)
                             userDataFuc(userData);
                             userImageFuc(userData)
 
                             if (window.Laravel && window.Laravel.role == 'admin' && userData
                                 .status == 'completed') {
-                                const pdfContainer = document.getElementById("id-pdf");
-                                if (pdfContainer) {
-                                    pdfContainer.outerHTML =
-                                        `<a href="export-pdf/${userData.id}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">PDF</a>`;
-                                }
+
+                                  
+                                    const pdfContainer = document.getElementById("id-pdf");
+
+                                        if (pdfContainer) {
+                                            let pdfLink = pdfContainer.querySelector("a");
+
+                                            if (pdfLink) {
+                                                pdfLink.href = `export-pdf/${userData.id}`; // แก้ไข href เท่านั้น
+                                            } else {
+                                                pdfContainer.innerHTML = `
+                                                    <a href="export-pdf/${userData.id}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">PDF</a>
+                                                `;
+                                            }
+                                        }
                             }
 
 
