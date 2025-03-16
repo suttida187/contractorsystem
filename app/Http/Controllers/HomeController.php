@@ -413,12 +413,12 @@ class HomeController extends Controller
                 // ตรวจสอบว่ามีรูปภาพที่เกี่ยวข้องกับ index หรือไม่
                 $uploadedImages = [];
                 if (!empty($images) && isset($images[$index])) {
+
                     foreach ($images[$index] as $image) {
                         if ($image->isValid()) {
                             // ตั้งชื่อไฟล์ใหม่และบันทึก
                             $fileName = time() . '-' . $image->getClientOriginalName();
-                            $image->storeAs('uploads', $fileName, 'public');
-
+                            $image->move(public_path('storage/uploads/'), $fileName);
                             // เก็บชื่อไฟล์
                             $uploadedImages[] = $fileName;
                         }
