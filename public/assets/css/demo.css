@@ -1265,3 +1265,60 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   margin: 5px;         /* เพิ่มระยะห่างระหว่างรูปภาพ */
 }
 
+.preview-container {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.preview-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 2px;
+  cursor: pointer;
+}
+
+/* Ensure the modal is visible above everything */
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999 !important; /* Force it to be above everything */
+}
+
+.image-modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.full-image {
+  width: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

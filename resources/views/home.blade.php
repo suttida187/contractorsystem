@@ -257,8 +257,10 @@
                                         </div>
                                         <div class="form-group-home">
                                             <label>อัปโหลดรูปภาพ</label>
-                                            <input type="file" name="images[1][]" class="image-upload form-control"
+                                            <input type="file" name="images[1][]" class="image-upload form-control  preview-upload"
                                                 multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+                                                <div class="preview-container"></div> <!-- ✅ Preview Area -->
+
                                         </div>
                                     </div>
                                 </div>
@@ -334,8 +336,9 @@
                         </div>
                         <div class="form-group">
                             <label>อัปโหลดรูปภาพ</label>
-                            <input type="file" name="images[${index}][]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf" required>
-                        </div>
+                            <input type="file" name="images[${index}][]" class="image-upload form-control  preview-upload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf" required>
+                            <div class="preview-container"></div> <!-- ✅ Preview Area -->
+                            </div>
                         <button type="button" class="remove-btn btn btn-danger btn-sm">ลบ</button>
                     </div>
                     `;
@@ -380,7 +383,10 @@
 
                     let imagesHtml = "";
                     if (Array.isArray(item.images)) {
-                        imagesHtml = item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("");
+                        imagesHtml = item.images.map(img => `
+                            <img src="${basePath}${img}" alt="Image" class="preview-image" onclick="openFullImage('${basePath}${img}')">
+                        `).join("");
+
                     }
 
                     if (window.Laravel && window.Laravel.role ===
@@ -417,9 +423,8 @@
                     </div>
 
                     <label>อัปโหลดรูปภาพ</label>
-                    <input type="file" name="images[${item.index}][]" class="image-upload form-control" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+                    <input type="file" name="images[${item.index}][]" class="image-upload " multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
 
-                    <div class="extra-fields"></div>
                 </div>
             `;
 
@@ -448,5 +453,69 @@
                 });
             });
         }
+
+
+        /* $(document).on("change", ".preview-upload", function (event) {
+            let previewContainer = $(this).siblings(".preview-container"); // Only affect current form
+            previewContainer.html(""); // Clear only its own preview
+
+            const files = event.target.files;
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    let file = files[i];
+
+                    if (file.type.startsWith("image/")) { // ✅ Check if file is an image
+                        let reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            let imgElement = $("<img>").attr("src", e.target.result).addClass("preview-image");
+                            previewContainer.append(imgElement);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        let pElement = $("<p>").text(file.name + " (Cannot preview)");
+                        previewContainer.append(pElement);
+                    }
+                }
+            }
+        }); */
+
+        $(document).on("change", ".preview-upload", function (event) {
+    let previewContainer = $(this).siblings(".preview-container"); // Only affect the current form
+    previewContainer.html(""); // Clear only its own preview
+
+    const files = event.target.files;
+    if (files.length > 0) {
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+
+            if (file.type.startsWith("image/")) { // ✅ Check if file is an image
+                let reader = new FileReader();
+
+                reader.onload = function (e) {
+                    let imgElement = $("<img>")
+                        .attr("src", e.target.result)
+                        .addClass("preview-image")
+                        .attr("data-fullsize", e.target.result) // Store full-size URL
+                        .on("click", function () { // Click event to enlarge image
+                            openFullImage(e.target.result);
+                        });
+
+                    previewContainer.append(imgElement);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                let pElement = $("<p>").text(file.name + " (Cannot preview)");
+                previewContainer.append(pElement);
+            }
+        }
+    }
+});
+
+
+
+
+
+
     </script>
 @endsection

@@ -601,7 +601,7 @@ function userImageFuc(userData) {
   <p><strong>Details:</strong> ${item.details}</p>
   
   <div class="images-work">
-      ${item.images.map(img => `<img src="${basePath}${img}" alt="Image">`).join("")}
+      ${item.images.map(img => `<img src="${basePath}${img}" alt="Image"  class="cursor-pointer" onclick="openFullImage('${basePath}${img}')">`).join("")}
   </div>
 
   ${window.Laravel && window.Laravel.role === 'pm' && userData.message_admin ? `<p><strong>Message Admin:</strong> ${userData.message_admin}</p>` : ""}
@@ -637,7 +637,29 @@ function userImageFuc(userData) {
 
 
 }
+// ✅ Function to Open Fullscreen Image
+function openFullImage(src) {
+  let modal = `
+      <div class="image-modal" id="image-modal">
+          <div class="image-modal-content">
+              <span class="close-btn">&times;</span>
+              <img src="${src}" class="full-image">
+          </div>
+      </div>
+  `;
 
+  $("body").append(modal); // Add modal to body
+
+  // Close modal on clicking X or outside the image
+  $(".close-btn, #image-modal").on("click", function () {
+      $("#image-modal").remove();
+  });
+
+  // Prevent closing when clicking the image
+  $(".full-image").on("click", function (e) {
+      e.stopPropagation();
+  });
+}
 
 
 
