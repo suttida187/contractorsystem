@@ -291,7 +291,7 @@
     @foreach ($image as $item) 
     <div class="image-group" style="margin-top: 10px; margin-bottom: -30px;">
         <label class="form-label"> 
-            รายละเอียด รายการที่ {{ $loop->iteration }} : {{ $item['details']}}
+            รายละเอียด รายการที่ {{ $loop->iteration }} :   {{ is_array($item['details']) ? implode(', ', $item['details']) : $item['details'] }}
         </label>
         <div class="image-gallery" 
             style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px;">

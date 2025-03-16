@@ -455,31 +455,7 @@
         }
 
 
-        /* $(document).on("change", ".preview-upload", function (event) {
-            let previewContainer = $(this).siblings(".preview-container"); // Only affect current form
-            previewContainer.html(""); // Clear only its own preview
-
-            const files = event.target.files;
-            if (files.length > 0) {
-                for (let i = 0; i < files.length; i++) {
-                    let file = files[i];
-
-                    if (file.type.startsWith("image/")) { // ✅ Check if file is an image
-                        let reader = new FileReader();
-
-                        reader.onload = function (e) {
-                            let imgElement = $("<img>").attr("src", e.target.result).addClass("preview-image");
-                            previewContainer.append(imgElement);
-                        };
-                        reader.readAsDataURL(file);
-                    } else {
-                        let pElement = $("<p>").text(file.name + " (Cannot preview)");
-                        previewContainer.append(pElement);
-                    }
-                }
-            }
-        }); */
-
+      
         $(document).on("change", ".preview-upload", function (event) {
     let previewContainer = $(this).siblings(".preview-container"); // Only affect the current form
     previewContainer.html(""); // Clear only its own preview
