@@ -19,8 +19,7 @@
     <!-- thai font -->
 
     <style>
-
-         @page {
+        @page {
             size: A4 portrait;
             margin: 2cm;
         }
@@ -87,7 +86,7 @@
             border: none;
         }
 
-        .detail-list {
+        .form-label {
             font-family: 'THSarabunBold', sans-serif !important;
             font-weight: bold;
             font-size: 18px;
@@ -110,37 +109,50 @@
             color: #007bff;
             margin-top: 15px;
             border-bottom: 1px solid #007bff;
-            padding-bottom: 5px;
+
         }
 
         /* จัดกลุ่มรูปภาพแต่ละชุด */
         .image-group {
             margin-bottom: 20px;
-            margin-top: 24px;
+
         }
 
-        /* Image Display */
+        .form-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
         .image-gallery {
-            display: flex !important;
-            justify-content: center !important; /* ✅ จัดกลางแนวนอน */
-            align-items: center !important; /* ✅ จัดกลางแนวตั้ง */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
         }
 
         .img-pdf1 {
-            width: 50% !important; /* ✅ กำหนดให้แต่ละรูปใช้พื้นที่ 45% ของหน้าจอ */
-            max-width: 300px; /* ✅ จำกัดขนาดกว้างสุด */
-            height: 100% !important;
-            max-height: 200px !important;
-            object-fit: contain !important;
-            border-radius: 8px !important;
-            position: relative;
+            width: 300px;
+            /* Adjust image size as needed */
+            height: 200px;
+            /* Keep aspect ratio */
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 0px 4px 8px 4px !important;
+            /* Rounded corners */
         }
 
-        /* Page Layout */
+        .image-br {
+            margin-top: 48px !important;
+        }
+
+        .br-image-text-1 {
+            margin-bottom: 48px !important;
+        }
+
         .page-break {
             page-break-before: always;
         }
-
     </style>
 
 </head>
@@ -148,8 +160,9 @@
 <body>
 
     <!-- Header -->
-    <div class="pdf-header" style="margin-top: -20px; display: flex; align-items: center; justify-content: space-between; width: 100%;">
-        <img src="{{ public_path('/assets/img/logo.jpg') }}" alt="Company Logo" 
+    <div class="pdf-header"
+        style="margin-top: -20px; display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <img src="{{ public_path('/assets/img/logo.jpg') }}" alt="Company Logo"
             style="border: none; width: 150px; height: auto;"> <!-- ปรับขนาดรูป -->
         <div class="date-time" style="font-size: 14px; white-space: nowrap;">
             {{ \Carbon\Carbon::now()->format('d-m-Y H:i:s') }}
@@ -164,7 +177,8 @@
         <span class="form-control" style="font-weight: normal;">{{ $data->project_name }}</span>
     </div>
 
-    <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;"> 
+    <div class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;">
         <!-- ประเภทงาน -->
         <div style="display: flex; align-items: center; gap: 5px; flex-grow: 1;">
             <label class="form-label" style="width: 120px;">ประเภทงาน:</label>
@@ -174,15 +188,16 @@
             <span class="form-control" style="font-weight: normal;">{{ $data->solution }}</span>
         </div>
     </div>
-    
-    
-    
+
+
+
     <div class="form-group" style="margin-top: -10px;">
         <label class="form-label">คำอธิบายงาน:</label>
         <span class="form-control" style="font-weight: normal;">{{ $data->work_description }}</span>
     </div>
-    
-    <div class="form-group" style="display: flex; align-items: center; gap: 30px; white-space: nowrap; margin-top: -10px;">
+
+    <div class="form-group"
+        style="display: flex; align-items: center; gap: 30px; white-space: nowrap; margin-top: -10px;">
         <label class="form-label">วันที่นัดหมาย:</label>
         <span class="form-control" style="font-weight: normal;">{{ $data->meeting_date }}</span>
 
@@ -200,10 +215,11 @@
     <h2 class="section-title" style="margin-top: -10px;">ข้อมูลลูกค้า</h2>
 
     <div class="form-group" style="margin-top: -10px;">
-        <label class="form-label" >ชื่อบริษัท:</label>
+        <label class="form-label">ชื่อบริษัท:</label>
         <span class="form-control" style="font-weight: normal;">{{ $data->company_name }}</span>
     </div>
-    <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;"> 
+    <div class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;">
         <div style="display: flex; align-items: center; gap: 5px; flex-grow: 1;">
             <label class="form-label" style="width: 120px;">ชื่อผู้ติดต่อ:</label>
             <span class="form-control" style="font-weight: normal;">{{ $data->contact_name }}</span>
@@ -238,39 +254,47 @@
 
     <!-- Job Images -->
     <h2 class="section-title" style="margin-top: -10px;">รายละเอียดผู้ดูเเล</h2>
-    <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;"> 
+    <div class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;">
         <div style="display: flex; align-items: center; gap: 5px; flex-grow: 1;">
             <label class="form-label" style="width: 120px;">Sale:</label>
-            <span class="form-control" style="font-weight: normal;">{{ $data->sale_prefix . ' ' . $data->sale_first_name . ' ' . $data->sale_last_name }}</span>
+            <span class="form-control"
+                style="font-weight: normal;">{{ $data->sale_prefix . ' ' . $data->sale_first_name . ' ' . $data->sale_last_name }}</span>
 
             <label class="form-label" style="text-align: right;margin-left: 195px;">เบอร์ติดต่อ:</label>
             <span class="form-control" style="font-weight: normal;">{{ $data->sale_phone }}</span>
         </div>
     </div>
-    <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;"> 
+    <div class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;">
         <div style="display: flex; align-items: center; gap: 5px; flex-grow: 1;">
             <label class="form-label" style="width: 120px;">Admin:</label>
-            <span class="form-control" style="font-weight: normal;">{{ $data->admin_prefix . ' ' . $data->admin_first_name . ' ' . $data->admin_last_name }}</span>
+            <span class="form-control"
+                style="font-weight: normal;">{{ $data->admin_prefix . ' ' . $data->admin_first_name . ' ' . $data->admin_last_name }}</span>
 
             <label class="form-label" style="text-align: right;margin-left: 159px;">เบอร์ติดต่อ:</label>
             <span class="form-control" style="font-weight: normal;">{{ $data->admin_phone }}</span>
         </div>
     </div>
 
-    <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;"> 
+    <div class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;">
         <div style="display: flex; align-items: center; gap: 5px; flex-grow: 1;">
             <label class="form-label" style="width: 120px;">ผู้จัดการโครงการ:</label>
-            <span class="form-control" style="font-weight: normal;">{{ $data->pm_prefix . ' ' . $data->pm_first_name . ' ' . $data->pm_last_name }}</span>
+            <span class="form-control"
+                style="font-weight: normal;">{{ $data->pm_prefix . ' ' . $data->pm_first_name . ' ' . $data->pm_last_name }}</span>
 
             <label class="form-label" style="text-align: right;margin-left: 143px;">เบอร์ติดต่อ:</label>
             <span class="form-control" style="font-weight: normal;">{{ $data->pm_phone }}</span>
         </div>
     </div>
 
-    <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;"> 
+    <div class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; white-space: nowrap; margin-top: -10px;">
         <div style="display: flex; align-items: center; gap: 5px; flex-grow: 1;">
             <label class="form-label" style="width: 120px;">ผู้รับเหมา: </label>
-            <span class="form-control" style="font-weight: normal;">{{ $data->contractor_prefix . ' ' . $data->contractor_first_name . ' ' . $data->contractor_last_name }}</span>
+            <span class="form-control"
+                style="font-weight: normal;">{{ $data->contractor_prefix . ' ' . $data->contractor_first_name . ' ' . $data->contractor_last_name }}</span>
 
             <label class="form-label" style="text-align: right;margin-left: 109px;">เบอร์ติดต่อ:</label>
             <span class="form-control" style="font-weight: normal;">{{ $data->contractor_phone }}</span>
@@ -286,23 +310,30 @@
 
     <h2 class="section-title">รายละเอียดรูปภาพงานที่ผู้รับเหมาส่งมอบ</h2>
 
-    @if (!empty($image))    
-    @foreach ($image as $item) 
-    <div class="image-group">
-        <div class="detail-list"> 
-            รายละเอียด รายการที่ {{ $loop->iteration }} :   {{ is_array($item['details']) ? implode(', ', $item['details']) : $item['details'] }}
-        </div>
-        <div class="image-gallery">
-            @if (!empty($item['images']) && is_array($item['images']))
-                @foreach ($item['images'] as $img) 
-                    <img src="{{ public_path('storage/uploads/' . $img) }}" alt="Uploaded Image" class="img-pdf1">
-                @endforeach
-            @endif
-        </div>
-    </div>
-    @endforeach
+    @if (!empty($image))
+        @foreach ($image as $index => $item)
+            <div class="image-group">
+                <div class="form-label @if (count($image) == 1) br-image-text-1 @endif">
+
+
+                    รายละเอียด รายการที่ {{ $loop->iteration }} :
+                    {{ is_array($item['details']) ? implode(', ', $item['details']) : $item['details'] }}
+                </div>
+                <div class="image-gallery @if ($index > 0) image-br @endif">
+
+                    @if (!empty($item['images']) && is_array($item['images']))
+                        @foreach ($item['images'] as $img)
+                            <img src="{{ public_path('storage/uploads/' . $img) }}" alt="Uploaded Image"
+                                class="img-pdf1">
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        @endforeach
     @else
         <p>ไม่มีรูปภาพ</p>
     @endif
+
 </body>
+
 </html>
