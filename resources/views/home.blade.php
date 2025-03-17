@@ -424,7 +424,7 @@
                     </div>
 
                     <label>อัปโหลดรูปภาพ</label>
-                    <input type="file" name="images[${item.index}][]" class="image-upload preview-upload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+                    <input type="file" name="images[${item.index}][]" class="image-upload form-control preview-upload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
                     <div class="preview-container"></div> 
                 </div>
             `;
