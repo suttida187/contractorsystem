@@ -129,6 +129,7 @@
             flex-wrap: wrap;
             gap: 10px;
 
+
         }
 
         .img-pdf1 {
@@ -144,6 +145,10 @@
 
         .image-br {
             margin-top: 48px !important;
+        }
+
+        .image-br-2 {
+            margin-top: 32px !important;
         }
 
         .br-image-text-1 {
@@ -319,7 +324,8 @@
                     รายละเอียด รายการที่ {{ $loop->iteration }} :
                     {{ is_array($item['details']) ? implode(', ', $item['details']) : $item['details'] }}
                 </div>
-                <div class="image-gallery @if ($index > 0) image-br @endif">
+                <div
+                    class="image-gallery @if ($index > 0 && count($item['images']) > 1) image-br @endif  @if (count($item['images']) > 1) image-br @endif">
 
                     @if (!empty($item['images']) && is_array($item['images']))
                         @foreach ($item['images'] as $img)
