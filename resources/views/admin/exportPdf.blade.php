@@ -324,8 +324,7 @@
                     รายละเอียด รายการที่ {{ $loop->iteration }} :
                     {{ is_array($item['details']) ? implode(', ', $item['details']) : $item['details'] }}
                 </div>
-                <div
-                    class="image-gallery @if ($index > 0 && count($item['images']) > 1) image-br @endif  @if (count($item['images']) > 1) image-br @endif">
+                <div class="image-gallery @if (count($item['images']) > 1) image-br @endif">
 
                     @if (!empty($item['images']) && is_array($item['images']))
                         @foreach ($item['images'] as $img)
