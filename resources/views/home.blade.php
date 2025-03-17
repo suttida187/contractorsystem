@@ -6,7 +6,7 @@
                 <div class="card-header">
                     <div class="card-title" style="font-size: 30px; font-weight: bold; margin-left: 30px;">อัพเดตสถานะ</div>
                 </div>
-                
+
                 <div class="card-body">
                     @foreach ($data as $da)
                         <div class="row">
@@ -241,38 +241,39 @@
                     @if (Auth::user()->role == 'contractor')
                         <div id="form-upload-image">
                             <div class="row">
-                            <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดงานที่ส่งมอบ</h5></strong>
-                            <form method="POST" action="{{ route('upload-image') }}" enctype="multipart/form-data"
-                                style="padding:16px;">
-                                @csrf
-                                <div id="form-container">
-                                    <input name="idProjectImage" type="text" id="project-id-image"
-                                        class="form-control" hidden>
-                                    <!-- ฟอร์มแรก -->
-                                    <div class="form-container">
-                                        <div class="form-group-home">
-                                            <label>รายละเอียด (ลำดับที่ <span class="form-index">1</span>)</label>
-                                            <input type="hidden" name="indexes[]" value="1">
-                                            <textarea class="form-control" name="details[]" rows="3"></textarea>
-                                        </div>
-                                        <div class="form-group-home">
-                                            <label>อัปโหลดรูปภาพ</label>
-                                            <input type="file" name="images[1][]" class="image-upload form-control  preview-upload"
-                                                multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+                                <h5 class="col-12 mt-3 mb-3 text-primary"><strong>รายละเอียดงานที่ส่งมอบ</h5></strong>
+                                <form method="POST" action="{{ route('upload-image') }}" enctype="multipart/form-data"
+                                    style="padding:16px;">
+                                    @csrf
+                                    <div id="form-container">
+                                        <input name="idProjectImage" type="text" id="project-id-image"
+                                            class="form-control" hidden>
+                                        <!-- ฟอร์มแรก -->
+                                        <div class="form-container">
+                                            <div class="form-group-home">
+                                                <label>รายละเอียด (ลำดับที่ <span class="form-index">1</span>)</label>
+                                                <input type="hidden" name="indexes[]" value="1">
+                                                <textarea class="form-control" name="details[]" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group-home">
+                                                <label>อัปโหลดรูปภาพ</label>
+                                                <input type="file" name="images[1][]"
+                                                    class="image-upload form-control  preview-upload" multiple
+                                                    accept=".jpg,.jpeg,.png,.gif,.pdf">
                                                 <div class="preview-container"></div> <!-- ✅ Preview Area -->
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- ปุ่มเพิ่มรายละเอียด -->
-                                <div class="d-flex justify-content-between button-top">
-                                    <button id="add-form" type="button" class="btn btn-warning">+
-                                        เพิ่มรายละเอียด</button>
-                                    <button type="submit" class="btn btn-primary">ส่งมอบงาน</button>
-                                </div>
-                            </form>
-                        </div>
+                                    <!-- ปุ่มเพิ่มรายละเอียด -->
+                                    <div class="d-flex justify-content-between button-top">
+                                        <button id="add-form" type="button" class="btn btn-warning">+
+                                            เพิ่มรายละเอียด</button>
+                                        <button type="submit" class="btn btn-primary">ส่งมอบงาน</button>
+                                    </div>
+                                </form>
+                            </div>
                     @endif
 
                 </div>
@@ -423,8 +424,8 @@
                     </div>
 
                     <label>อัปโหลดรูปภาพ</label>
-                    <input type="file" name="images[${item.index}][]" class="image-upload " multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
-
+                    <input type="file" name="images[${item.index}][]" class="image-upload preview-upload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf">
+                    <div class="preview-container"></div> 
                 </div>
             `;
 
@@ -455,43 +456,37 @@
         }
 
 
-      
-        $(document).on("change", ".preview-upload", function (event) {
-    let previewContainer = $(this).siblings(".preview-container"); // Only affect the current form
-    previewContainer.html(""); // Clear only its own preview
 
-    const files = event.target.files;
-    if (files.length > 0) {
-        for (let i = 0; i < files.length; i++) {
-            let file = files[i];
+        $(document).on("change", ".preview-upload", function(event) {
+            let previewContainer = $(this).siblings(".preview-container"); // Only affect the current form
+            previewContainer.html(""); // Clear only its own preview
 
-            if (file.type.startsWith("image/")) { // ✅ Check if file is an image
-                let reader = new FileReader();
+            const files = event.target.files;
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    let file = files[i];
 
-                reader.onload = function (e) {
-                    let imgElement = $("<img>")
-                        .attr("src", e.target.result)
-                        .addClass("preview-image")
-                        .attr("data-fullsize", e.target.result) // Store full-size URL
-                        .on("click", function () { // Click event to enlarge image
-                            openFullImage(e.target.result);
-                        });
+                    if (file.type.startsWith("image/")) { // ✅ Check if file is an image
+                        let reader = new FileReader();
 
-                    previewContainer.append(imgElement);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                let pElement = $("<p>").text(file.name + " (Cannot preview)");
-                previewContainer.append(pElement);
+                        reader.onload = function(e) {
+                            let imgElement = $("<img>")
+                                .attr("src", e.target.result)
+                                .addClass("preview-image")
+                                .attr("data-fullsize", e.target.result) // Store full-size URL
+                                .on("click", function() { // Click event to enlarge image
+                                    openFullImage(e.target.result);
+                                });
+
+                            previewContainer.append(imgElement);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        let pElement = $("<p>").text(file.name + " (Cannot preview)");
+                        previewContainer.append(pElement);
+                    }
+                }
             }
-        }
-    }
-});
-
-
-
-
-
-
+        });
     </script>
 @endsection
